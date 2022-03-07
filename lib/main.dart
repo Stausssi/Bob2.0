@@ -1,4 +1,7 @@
+import 'package:bob/constants.dart';
 import 'package:flutter/material.dart';
+
+import 'conversation.dart';
 
 void main() {
   runApp(const BobApp());
@@ -11,7 +14,7 @@ class BobApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bob 2.0',
-      theme: ThemeData.dark(),
+      theme: ThemeData.light(),
       home: const MainPage(title: 'Bob 2.0 - Your PDA'),
     );
   }
@@ -27,38 +30,54 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  int _pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      // appBar: null,
+      body: Stack(
+        children: [
+          FractionallySizedBox(
+            alignment: Alignment.topCenter,
+            heightFactor: 0.4,
+            widthFactor: 1,
+            child: Container(
+              decoration:
+                  const BoxDecoration(color: CustomColors.blackBackground),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _pageIndex,
+        onTap: (index) => index == 1
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const Conversation(),
+                ),
+              )
+            : setState(() {
+                _pageIndex = index;
+              }),
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black26,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline_rounded),
+            label: "Conversation",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            label: "Settings",
+          ),
+        ],
       ),
     );
   }
