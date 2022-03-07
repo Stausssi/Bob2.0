@@ -1,8 +1,10 @@
 import 'package:bob/constants.dart';
 import 'package:bob/microphone_circle.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as chat_types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,7 +23,8 @@ class _ConversationState extends State<Conversation> {
   final Uuid uuidGen = const Uuid();
 
   final _speechToText = SpeechToText();
-  bool _speechEnabled = false;
+
+  String loadingText = "Please wait while we're enabling your microphone...";
 
   @override
   void initState() {
@@ -39,26 +42,40 @@ class _ConversationState extends State<Conversation> {
       text: "I sent this message!",
     ));
 
-    _initSpeechToText();
-  }
-
-  void _initSpeechToText() async {
-    _speechEnabled = await _speechToText.initialize();
-    setState(() {});
+    _speechToText.initialize(
+      onError: (e) {
+        if (e.errorMsg == "error_speech_timeout") {
+          setState(() {
+            loadingText = "";
+          });
+        } else {
+          print("Holy we're fucked: $e");
+        }
+      },
+    ).then(
+      (_) => setState(() {
+        loadingText = "";
+      }),
+    );
   }
 
   void _startListening() async {
+    setState(() {
+      loadingText = "We're listening...";
+    });
+
     await _speechToText.listen(
       onResult: (result) => sendMessage(result.recognizedWords),
       partialResults: false,
       localeId: "de_DE",
     );
-    setState(() {});
   }
 
   void _stopListening() async {
     await _speechToText.stop();
-    setState(() {});
+    setState(() {
+      loadingText = "";
+    });
   }
 
   void sendMessage(String text) {
@@ -71,6 +88,10 @@ class _ConversationState extends State<Conversation> {
               id: uuidGen.v1(),
               text: text,
             ));
+      });
+
+      setState(() {
+        loadingText = "";
       });
     }
   }
@@ -85,20 +106,70 @@ class _ConversationState extends State<Conversation> {
         foregroundColor: Colors.black,
         shadowColor: Colors.transparent,
       ),
-      body: _speechEnabled
-          ? Chat(
-              customBottomWidget: InputWidget(
-                micCallback: _speechToText.isListening
-                    ? _stopListening
-                    : _startListening,
-                onSendMessage: sendMessage,
+      body: Stack(
+        children: [
+          Chat(
+            customBottomWidget: InputWidget(
+              micCallback: _startListening,
+              onSendMessage: sendMessage,
+            ),
+            messages: _messages,
+            user: thisUser,
+            onSendPressed: (_) => null,
+          ),
+          if (loadingText.isNotEmpty)
+            Container(
+              // padding: const EdgeInsets.all(120),
+              decoration: const BoxDecoration(
+                color: Colors.white38,
               ),
-              messages: _messages,
-              user: thisUser,
-              onSendPressed: (_) => null,
-            )
-          : const Text(
-              "Please wait while we're getting your microphone ready..."),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 125),
+                    child: LoadingIndicator(
+                      indicatorType: Indicator.lineScaleParty,
+                      colors: [
+                        Colors.red,
+                        Colors.orange,
+                        Colors.yellow,
+                        Colors.green,
+                        Colors.blue,
+                        Colors.indigo,
+                        Colors.purple,
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Text(
+                      loadingText,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  if (_speechToText.isListening)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 125),
+                      child: ElevatedButton(
+                        onPressed: _stopListening,
+                        child: const Text(
+                          "Stop listening",
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
