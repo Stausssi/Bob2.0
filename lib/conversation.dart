@@ -3,6 +3,7 @@ import 'package:bob/microphone_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as chat_types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import 'package:uuid/uuid.dart';
 
 class Conversation extends StatefulWidget {
@@ -19,7 +20,8 @@ class _ConversationState extends State<Conversation> {
   final List<chat_types.Message> _messages = [];
   final Uuid uuidGen = const Uuid();
 
-  bool displayChatWidget = false;
+  final _speechToText = SpeechToText();
+  bool _speechEnabled = false;
 
   @override
   void initState() {
@@ -36,18 +38,41 @@ class _ConversationState extends State<Conversation> {
       id: uuidGen.v1(),
       text: "I sent this message!",
     ));
+
+    _initSpeechToText();
+  }
+
+  void _initSpeechToText() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  void _startListening() async {
+    await _speechToText.listen(
+      onResult: (result) => sendMessage(result.recognizedWords),
+      partialResults: false,
+      localeId: "de_DE",
+    );
+    setState(() {});
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    setState(() {});
   }
 
   void sendMessage(String text) {
-    setState(() {
-      _messages.insert(
-          0,
-          chat_types.TextMessage(
-            author: thisUser,
-            id: uuidGen.v1(),
-            text: text,
-          ));
-    });
+    if (text.isNotEmpty) {
+      setState(() {
+        _messages.insert(
+            0,
+            chat_types.TextMessage(
+              author: thisUser,
+              id: uuidGen.v1(),
+              text: text,
+            ));
+      });
+    }
   }
 
   @override
@@ -60,22 +85,31 @@ class _ConversationState extends State<Conversation> {
         foregroundColor: Colors.black,
         shadowColor: Colors.transparent,
       ),
-      body: Chat(
-        customBottomWidget: InputWidget(
-          onSendMessage: sendMessage,
-        ),
-        messages: _messages,
-        onSendPressed: (value) => print(value),
-        user: thisUser,
-      ),
+      body: _speechEnabled
+          ? Chat(
+              customBottomWidget: InputWidget(
+                micCallback: _speechToText.isListening
+                    ? _stopListening
+                    : _startListening,
+                onSendMessage: sendMessage,
+              ),
+              messages: _messages,
+              user: thisUser,
+              onSendPressed: (_) => null,
+            )
+          : const Text(
+              "Please wait while we're getting your microphone ready..."),
     );
   }
 }
 
 class InputWidget extends StatefulWidget {
-  const InputWidget({Key? key, required this.onSendMessage}) : super(key: key);
+  const InputWidget(
+      {Key? key, required this.micCallback, required this.onSendMessage})
+      : super(key: key);
 
   final Function(String) onSendMessage;
+  final Function() micCallback;
 
   @override
   State<StatefulWidget> createState() => _InputWidgetState();
@@ -139,7 +173,10 @@ class _InputWidgetState extends State<InputWidget> {
               width: 8,
             ),
             MicrophoneCircle(
-              clickCallback: () => setState(() => showExtendedInput = false),
+              clickCallback: () {
+                setState(() => showExtendedInput = false);
+                widget.micCallback();
+              },
               size: 30,
             ),
           ],
@@ -188,7 +225,7 @@ class _InputWidgetState extends State<InputWidget> {
                 color: Colors.white,
               ),
               child: MicrophoneCircle(
-                clickCallback: () => print("stt here"),
+                clickCallback: widget.micCallback,
               ),
             ),
           ),

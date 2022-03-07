@@ -30,6 +30,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  List<Widget> pages = [
+    // One item is the home page
+    Container(),
+    // This container is representing the "Conversation" tab.
+    // DO NOT REMOVE
+    Container(),
+    // One item is the settings page
+    Container()
+  ];
   int _pageIndex = 0;
 
   @override
@@ -47,6 +56,7 @@ class _MainPageState extends State<MainPage> {
                   const BoxDecoration(color: CustomColors.blackBackground),
             ),
           ),
+          pages[_pageIndex],
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
