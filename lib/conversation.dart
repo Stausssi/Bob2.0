@@ -1,10 +1,11 @@
 import 'package:bob/constants.dart';
+import 'package:bob/handler/conversation_handler.dart';
 import 'package:bob/microphone_circle.dart';
+import 'package:bob/speech_processing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as chat_types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 import 'package:uuid/uuid.dart';
 
 class Conversation extends StatefulWidget {
@@ -15,13 +16,15 @@ class Conversation extends StatefulWidget {
 }
 
 class _ConversationState extends State<Conversation> {
+  ConversationHandler conversationHandler = ConversationHandler.instance;
+
   final thisUser = const chat_types.User(id: "not_bob");
   final bob = const chat_types.User(id: "bob");
 
   final List<chat_types.Message> _messages = [];
   final Uuid uuidGen = const Uuid();
 
-  final _speechToText = SpeechToText();
+  late final SpeechProcessing _speechProcessing;
 
   String loadingText = "Please wait while we're enabling your microphone...";
 
@@ -41,37 +44,40 @@ class _ConversationState extends State<Conversation> {
       text: "I sent this message!",
     ));
 
-    _speechToText.initialize(
-      onError: (e) {
-        if (e.errorMsg == "error_speech_timeout") {
-          setState(() {
-            loadingText = "";
-          });
-        } else {
-          print("Holy we're fucked: $e");
-        }
-      },
-    ).then(
-      (_) => setState(() {
-        loadingText = "";
-      }),
+    // Get the speech processing instance
+    _speechProcessing = SpeechProcessing(
+      onReady: _onSpeechReady,
     );
+
+    if (_speechProcessing.isReady) {
+      _onSpeechReady();
+    }
   }
 
-  void _startListening() async {
+  void _onSpeechReady() {
+    setState(() {
+      loadingText = "";
+    });
+
+    _speechProcessing.read("Hallo hier ist TTS");
+  }
+
+  void _startListening() {
     setState(() {
       loadingText = "We're listening...";
     });
 
-    await _speechToText.listen(
-      onResult: (result) => sendMessage(result.recognizedWords),
-      partialResults: false,
-      localeId: "de_DE",
-    );
+    _speechProcessing.listen((String result) {
+      print("listen() done: $result");
+      sendMessage(result);
+      setState(() {
+        loadingText = "";
+      });
+    });
   }
 
-  void _stopListening() async {
-    await _speechToText.stop();
+  void _stopListening() {
+    _speechProcessing.stopListening();
     setState(() {
       loadingText = "";
     });
@@ -81,16 +87,13 @@ class _ConversationState extends State<Conversation> {
     if (text.isNotEmpty) {
       setState(() {
         _messages.insert(
-            0,
-            chat_types.TextMessage(
-              author: thisUser,
-              id: uuidGen.v1(),
-              text: text,
-            ));
-      });
-
-      setState(() {
-        loadingText = "";
+          0,
+          chat_types.TextMessage(
+            author: thisUser,
+            id: uuidGen.v1(),
+            text: text,
+          ),
+        );
       });
     }
   }
@@ -154,7 +157,7 @@ class _ConversationState extends State<Conversation> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  if (_speechToText.isListening)
+                  if (_speechProcessing.isListening)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 125),
                       child: ElevatedButton(
