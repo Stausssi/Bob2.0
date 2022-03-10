@@ -1,7 +1,7 @@
 import 'package:bob/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'conversation.dart';
+import 'chat/conversation.dart';
 
 void main() {
   runApp(const BobApp());

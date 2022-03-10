@@ -1,7 +1,7 @@
+import 'package:bob/chat/microphone_circle.dart';
+import 'package:bob/chat/speech_processing.dart';
 import 'package:bob/constants.dart';
 import 'package:bob/handler/conversation_handler.dart';
-import 'package:bob/microphone_circle.dart';
-import 'package:bob/speech_processing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as chat_types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
@@ -16,81 +16,87 @@ class Conversation extends StatefulWidget {
 }
 
 class _ConversationState extends State<Conversation> {
-  ConversationHandler conversationHandler = ConversationHandler.instance;
+  ConversationHandler conversationHandler = ConversationHandler();
 
-  final thisUser = const chat_types.User(id: "not_bob");
-  final bob = const chat_types.User(id: "bob");
+  // Users to display messages accordingly
+  final _thisUser = const chat_types.User(id: "not_bob");
+  final _bobUser = const chat_types.User(id: "bob");
 
   final List<chat_types.Message> _messages = [];
-  final Uuid uuidGen = const Uuid();
+
+  // Needed for the generation of identifiers of messages
+  final Uuid _uuidGen = const Uuid();
 
   late final SpeechProcessing _speechProcessing;
 
+  // The text to display on the loading screen
   String loadingText = "Please wait while we're enabling your microphone...";
 
   @override
   void initState() {
     super.initState();
 
+    // Add dummy messages
     _messages.add(chat_types.TextMessage(
-      author: bob,
-      id: uuidGen.v1(),
+      author: _bobUser,
+      id: _uuidGen.v1(),
       text: "Bob sent this message!",
     ));
 
     _messages.add(chat_types.TextMessage(
-      author: thisUser,
-      id: uuidGen.v1(),
+      author: _thisUser,
+      id: _uuidGen.v1(),
       text: "I sent this message!",
     ));
 
     // Get the speech processing instance
-    _speechProcessing = SpeechProcessing(
-      onReady: _onSpeechReady,
-    );
-
-    if (_speechProcessing.isReady) {
-      _onSpeechReady();
-    }
+    _speechProcessing = SpeechProcessing(onReady: _onSpeechReady);
   }
 
-  void _onSpeechReady() {
+  /// (Re)sets the loading screen to the given [text], or "" if [text] is null
+  void _setLoadingText([String? text]) {
+    text ??= "";
+
     setState(() {
-      loadingText = "";
+      loadingText = text!;
     });
+  }
+
+  /// Callback for [SpeechProcessing] to call once TTS and STT are initialized
+  void _onSpeechReady() {
+    _setLoadingText();
 
     _speechProcessing.read("Hallo hier ist TTS");
   }
 
+  /// Prompt STT to listen to the user
   void _startListening() {
-    setState(() {
-      loadingText = "We're listening...";
-    });
+    _setLoadingText("We're listening...");
 
-    _speechProcessing.listen((String result) {
-      print("listen() done: $result");
-      sendMessage(result);
-      setState(() {
-        loadingText = "";
-      });
-    });
+    _speechProcessing.listen(
+      (String result) {
+        sendMessage(result);
+        _setLoadingText();
+      },
+      onTimeout: _setLoadingText,
+    );
   }
 
+  /// Stop STT listen
   void _stopListening() {
     _speechProcessing.stopListening();
-    setState(() {
-      loadingText = "";
-    });
+    _setLoadingText();
   }
 
+  /// Add a message with the given [text] to the Chat
   void sendMessage(String text) {
     if (text.isNotEmpty) {
       setState(() {
         _messages.insert(
           0,
           chat_types.TextMessage(
-            author: thisUser,
-            id: uuidGen.v1(),
+            author: _thisUser,
+            id: _uuidGen.v1(),
             text: text,
           ),
         );
@@ -116,7 +122,7 @@ class _ConversationState extends State<Conversation> {
               onSendMessage: sendMessage,
             ),
             messages: _messages,
-            user: thisUser,
+            user: _thisUser,
             onSendPressed: (_) => print("send pressed and ignored"),
           ),
           if (loadingText.isNotEmpty)
@@ -176,12 +182,18 @@ class _ConversationState extends State<Conversation> {
   }
 }
 
+/// The input layout to show on the bottom of the chat
 class InputWidget extends StatefulWidget {
-  const InputWidget(
-      {Key? key, required this.micCallback, required this.onSendMessage})
-      : super(key: key);
+  const InputWidget({
+    Key? key,
+    required this.micCallback,
+    required this.onSendMessage,
+  }) : super(key: key);
 
+  /// Called once the user presses the "send" button
   final Function(String) onSendMessage;
+
+  /// Called once the mic button is clicked
   final Function() micCallback;
 
   @override
@@ -189,27 +201,38 @@ class InputWidget extends StatefulWidget {
 }
 
 class _InputWidgetState extends State<InputWidget> {
-  bool showExtendedInput = false;
-  bool showSendButton = false;
-  String message = "";
   final TextEditingController _controller = TextEditingController();
+
+  // Whether the text input field should be shown
+  bool _showExtendedInput = false;
+
+  // bool _showSendButton = false;
+
+  // The message in the text input box
+  String _message = "";
+
+  /// Called on every letter change
   void onTextChanged(String text) {
     setState(() {
-      message = text;
+      _message = text;
     });
   }
 
+  /// Send a chat message
   void sendMessage(String messageText) {
     widget.onSendMessage(messageText);
+
+    // Clear and reset the text input field
     _controller.clear();
     setState(() {
-      message = "";
+      _message = "";
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (showExtendedInput) {
+    if (_showExtendedInput) {
+      // Create a widget with a text box
       return Container(
         padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
@@ -229,7 +252,7 @@ class _InputWidgetState extends State<InputWidget> {
                   filled: true,
                   fillColor: Colors.white,
                   suffixIcon: IconButton(
-                    onPressed: () => sendMessage(message),
+                    onPressed: () => sendMessage(_message),
                     icon: const Icon(
                       Icons.send,
                       color: CustomColors.blackBackground,
@@ -247,7 +270,7 @@ class _InputWidgetState extends State<InputWidget> {
             ),
             MicrophoneCircle(
               clickCallback: () {
-                setState(() => showExtendedInput = false);
+                setState(() => _showExtendedInput = false);
                 widget.micCallback();
               },
               size: 30,
@@ -256,6 +279,7 @@ class _InputWidgetState extends State<InputWidget> {
         ),
       );
     } else {
+      // Create the mic overlay
       return Stack(
         children: [
           Column(
@@ -278,7 +302,7 @@ class _InputWidgetState extends State<InputWidget> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () => setState(() {
-                        showExtendedInput = true;
+                        _showExtendedInput = true;
                       }),
                       child: const Text("Write instead"),
                       style: TextButton.styleFrom(
