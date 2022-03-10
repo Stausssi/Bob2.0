@@ -1,6 +1,5 @@
 import 'package:bob/constants.dart';
 import 'package:bob/microphone_circle.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as chat_types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
@@ -115,7 +114,7 @@ class _ConversationState extends State<Conversation> {
             ),
             messages: _messages,
             user: thisUser,
-            onSendPressed: (_) => null,
+            onSendPressed: (_) => print("send pressed and ignored"),
           ),
           if (loadingText.isNotEmpty)
             Container(
