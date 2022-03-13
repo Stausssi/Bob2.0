@@ -7,7 +7,9 @@ import '../util.dart';
 /// Handles the communication between app and backend
 class ConversationHandler {
   // Private constructor
-  ConversationHandler._();
+  ConversationHandler._() {
+    _initConnection();
+  }
 
   /// The instance of this handler
   static ConversationHandler? _instance;
