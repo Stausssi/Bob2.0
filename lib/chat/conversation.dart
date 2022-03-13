@@ -27,12 +27,12 @@ class _ConversationState extends State<Conversation> {
     firstName: "Bob",
     lastName: "2.0",
     role: chat_types.Role.agent,
+    // TODO: Use custom picture (hosted on own Server at BW Cloud)
     imageUrl: "https://freesvg.org/img/1538298822.png",
     id: "bob",
   );
 
   final List<chat_types.Message> _messages = [];
-  late chat_types.Message _lastResponse;
 
   // Needed for the generation of identifiers of messages
   final Uuid _uuidGen = const Uuid();
