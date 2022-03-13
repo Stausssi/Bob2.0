@@ -19,8 +19,17 @@ class _ConversationState extends State<Conversation> {
   ConversationHandler conversationHandler = ConversationHandler();
 
   // Users to display messages accordingly
-  final _thisUser = const chat_types.User(id: "not_bob");
-  final _bobUser = const chat_types.User(id: "bob");
+  final _thisUser = const chat_types.User(
+    firstName: "You",
+    id: "not_bob",
+  );
+  final _bobUser = const chat_types.User(
+    firstName: "Bob",
+    lastName: "2.0",
+    role: chat_types.Role.agent,
+    imageUrl: "https://freesvg.org/img/1538298822.png",
+    id: "bob",
+  );
 
   final List<chat_types.Message> _messages = [];
   late chat_types.Message _lastResponse;
@@ -104,34 +113,28 @@ class _ConversationState extends State<Conversation> {
     _speechProcessing.read(response);
 
     // ... and display it
-    _lastResponse = chat_types.TextMessage(
+    chat_types.Message answer = chat_types.TextMessage(
       author: _bobUser,
       id: _uuidGen.v1(),
       text: response,
       repliedMessage: userMessage,
-      updatedAt: DateTime.now().millisecondsSinceEpoch,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
     );
 
     setState(() {
-      _messages.insert(
-        0,
-        _lastResponse,
-      );
+      _messages.insert(0, answer);
     });
 
     if (hasFurtherQuestions) {
-      _lastResponse = chat_types.CustomMessage(
+      answer = chat_types.CustomMessage(
         author: _bobUser,
         id: _uuidGen.v1(),
         metadata: {"questions": backendAnswer?.furtherQuestions},
-        updatedAt: DateTime.now().millisecondsSinceEpoch,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
       );
 
       setState(() {
-        _messages.insert(
-          0,
-          _lastResponse,
-        );
+        _messages.insert(0, answer);
       });
     }
   }
@@ -149,10 +152,19 @@ class _ConversationState extends State<Conversation> {
       body: Stack(
         children: [
           Chat(
+            // showUserNames: true,
+            showUserAvatars: true,
             customBottomWidget: InputWidget(
               micCallback: _startListening,
               onSendMessage: sendMessage,
             ),
+            emptyState: Center(
+              child: Text(
+                "Bob is waiting for your questions...",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+            groupMessagesThreshold: 5000,
             messages: _messages,
             user: _thisUser,
             onSendPressed: (_) => print("send pressed and ignored"),
@@ -160,47 +172,7 @@ class _ConversationState extends State<Conversation> {
               messageInsetsVertical: 12,
               primaryColor: CustomColors.purpleForeground,
             ),
-            customMessageBuilder: (message, {required int messageWidth}) {
-              List<Widget> questionButtons = [];
-
-              // Display a list of possible further questions after the most
-              // recent message if the author is bob and further questions are provided
-              if (message.author == _bobUser && message == _lastResponse) {
-                if (message.metadata != null &&
-                    message.metadata!.containsKey("questions") &&
-                    message.metadata!["questions"] != null) {
-                  for (String question in message.metadata!["questions"]) {
-                    questionButtons.add(
-                      ElevatedButton(
-                        onPressed: () => sendMessage(question),
-                        child: Text(question),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            Colors.white,
-                          ),
-                          foregroundColor: MaterialStateProperty.all(
-                            Colors.black,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                }
-              }
-
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 0,
-                  horizontal: 12,
-                ),
-                decoration: const BoxDecoration(
-                  color: Colors.white60,
-                ),
-                child: Column(
-                  children: questionButtons,
-                ),
-              );
-            },
+            customMessageBuilder: _buildQuestionChoices,
           ),
           if (loadingText.isNotEmpty)
             Container(
@@ -254,6 +226,54 @@ class _ConversationState extends State<Conversation> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildQuestionChoices(message, {required int messageWidth}) {
+    List<Widget> questionButtons = [];
+
+    // Display a list of possible further questions after the most
+    // recent message if the author is bob and further questions are provided
+    if (message.author == _bobUser) {
+      if (message.metadata != null &&
+          message.metadata!.containsKey("questions") &&
+          message.metadata!["questions"] != null) {
+        for (String question in message.metadata!["questions"]) {
+          questionButtons.add(
+            ElevatedButton(
+              onPressed: () {
+                // Remove this message
+                _messages.remove(message);
+
+                // Send the answer to the backend
+                sendMessage(question);
+              },
+              child: Text(question),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  Colors.white,
+                ),
+                foregroundColor: MaterialStateProperty.all(
+                  Colors.black,
+                ),
+              ),
+            ),
+          );
+        }
+      }
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 0,
+        horizontal: 12,
+      ),
+      decoration: const BoxDecoration(
+        color: Colors.white60,
+      ),
+      child: Column(
+        children: questionButtons,
       ),
     );
   }
