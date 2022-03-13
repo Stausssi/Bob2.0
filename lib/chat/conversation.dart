@@ -1,7 +1,7 @@
 import 'package:bob/chat/microphone_circle.dart';
 import 'package:bob/chat/speech_processing.dart';
-import 'package:bob/constants.dart';
 import 'package:bob/handler/conversation_handler.dart';
+import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as chat_types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
@@ -88,20 +88,44 @@ class _ConversationState extends State<Conversation> {
     _setLoadingText();
   }
 
-  /// Add a message with the given [text] to the Chat
-  void sendMessage(String text) {
+  /// Parse the voice / text input of the user and request an answer from the backend
+  void sendMessage(String text) async {
+    // Add the message of the user to the chat history
+    chat_types.Message? userMessage = chat_types.TextMessage(
+      author: _thisUser,
+      id: _uuidGen.v1(),
+      text: text,
+    );
+
     if (text.isNotEmpty) {
       setState(() {
-        _messages.insert(
-          0,
-          chat_types.TextMessage(
-            author: _thisUser,
-            id: _uuidGen.v1(),
-            text: text,
-          ),
-        );
+        _messages.insert(0, userMessage);
       });
     }
+
+    final backendAnswer = await conversationHandler.askQuestion(text);
+
+    String response = "Sorry, Bob couldn't find an answer to that question :(";
+    if (backendAnswer != null) {
+      response = backendAnswer.tts;
+    }
+
+    // Read the text ...
+    _speechProcessing.read(response);
+
+    // ... and display it
+    setState(() {
+      _messages.insert(
+        0,
+        chat_types.TextMessage(
+          author: _bobUser,
+          id: _uuidGen.v1(),
+          text: response,
+          repliedMessage: userMessage,
+          metadata: {"questions": backendAnswer?.furtherQuestions},
+        ),
+      );
+    });
   }
 
   @override
@@ -124,6 +148,40 @@ class _ConversationState extends State<Conversation> {
             messages: _messages,
             user: _thisUser,
             onSendPressed: (_) => print("send pressed and ignored"),
+            textMessageBuilder: (message,
+                {required int messageWidth, required bool showName}) {
+              List<Widget> messageContents = [
+                Text(
+                  message.text,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ];
+
+              if (message.metadata != null && message.metadata!.isNotEmpty) {
+                for (String question in message.metadata!["questions"]) {
+                  messageContents.add(
+                    ElevatedButton(
+                      onPressed: () => print("Question $question selected!"),
+                      child: Text(question),
+                    ),
+                  );
+                }
+              }
+              return Container(
+                // width: messageWidth.toDouble(),
+                decoration: const BoxDecoration(
+                  color: CustomColors.blackBackground,
+                ),
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  children: messageContents,
+                ),
+              );
+            },
           ),
           if (loadingText.isNotEmpty)
             Container(

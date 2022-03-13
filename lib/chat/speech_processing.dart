@@ -109,6 +109,7 @@ class SpeechProcessing {
           _state = _SpeechProcessingState.idle;
         }
       },
+      partialResults: false,
       localeId: "de_DE",
     );
 

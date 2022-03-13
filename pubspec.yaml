@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.0.13
   uuid: ^3.0.6
   loading_indicator: ^3.0.3
+  dio: ^4.0.4
 
 dev_dependencies:
   flutter_test:

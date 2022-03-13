@@ -1,4 +1,4 @@
-import 'package:bob/constants.dart';
+import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
 
 import 'chat/conversation.dart';
