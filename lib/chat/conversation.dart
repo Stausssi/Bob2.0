@@ -23,6 +23,7 @@ class _ConversationState extends State<Conversation> {
   final _bobUser = const chat_types.User(id: "bob");
 
   final List<chat_types.Message> _messages = [];
+  late chat_types.Message _lastResponse;
 
   // Needed for the generation of identifiers of messages
   final Uuid _uuidGen = const Uuid();
@@ -35,19 +36,6 @@ class _ConversationState extends State<Conversation> {
   @override
   void initState() {
     super.initState();
-
-    // Add dummy messages
-    _messages.add(chat_types.TextMessage(
-      author: _bobUser,
-      id: _uuidGen.v1(),
-      text: "Bob sent this message!",
-    ));
-
-    _messages.add(chat_types.TextMessage(
-      author: _thisUser,
-      id: _uuidGen.v1(),
-      text: "I sent this message!",
-    ));
 
     // Get the speech processing instance
     _speechProcessing = SpeechProcessing(onReady: _onSpeechReady);
@@ -106,26 +94,46 @@ class _ConversationState extends State<Conversation> {
     final backendAnswer = await conversationHandler.askQuestion(text);
 
     String response = "Sorry, Bob couldn't find an answer to that question :(";
+    bool hasFurtherQuestions = false;
     if (backendAnswer != null) {
       response = backendAnswer.tts;
+      hasFurtherQuestions = backendAnswer.furtherQuestions.isNotEmpty;
     }
 
     // Read the text ...
     _speechProcessing.read(response);
 
     // ... and display it
+    _lastResponse = chat_types.TextMessage(
+      author: _bobUser,
+      id: _uuidGen.v1(),
+      text: response,
+      repliedMessage: userMessage,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+    );
+
     setState(() {
       _messages.insert(
         0,
-        chat_types.TextMessage(
-          author: _bobUser,
-          id: _uuidGen.v1(),
-          text: response,
-          repliedMessage: userMessage,
-          metadata: {"questions": backendAnswer?.furtherQuestions},
-        ),
+        _lastResponse,
       );
     });
+
+    if (hasFurtherQuestions) {
+      _lastResponse = chat_types.CustomMessage(
+        author: _bobUser,
+        id: _uuidGen.v1(),
+        metadata: {"questions": backendAnswer?.furtherQuestions},
+        updatedAt: DateTime.now().millisecondsSinceEpoch,
+      );
+
+      setState(() {
+        _messages.insert(
+          0,
+          _lastResponse,
+        );
+      });
+    }
   }
 
   @override
@@ -148,37 +156,48 @@ class _ConversationState extends State<Conversation> {
             messages: _messages,
             user: _thisUser,
             onSendPressed: (_) => print("send pressed and ignored"),
-            textMessageBuilder: (message,
-                {required int messageWidth, required bool showName}) {
-              List<Widget> messageContents = [
-                Text(
-                  message.text,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ];
+            theme: const DefaultChatTheme(
+              messageInsetsVertical: 12,
+              primaryColor: CustomColors.purpleForeground,
+            ),
+            customMessageBuilder: (message, {required int messageWidth}) {
+              List<Widget> questionButtons = [];
 
-              if (message.metadata != null && message.metadata!.isNotEmpty) {
-                for (String question in message.metadata!["questions"]) {
-                  messageContents.add(
-                    ElevatedButton(
-                      onPressed: () => print("Question $question selected!"),
-                      child: Text(question),
-                    ),
-                  );
+              // Display a list of possible further questions after the most
+              // recent message if the author is bob and further questions are provided
+              if (message.author == _bobUser && message == _lastResponse) {
+                if (message.metadata != null &&
+                    message.metadata!.containsKey("questions") &&
+                    message.metadata!["questions"] != null) {
+                  for (String question in message.metadata!["questions"]) {
+                    questionButtons.add(
+                      ElevatedButton(
+                        onPressed: () => sendMessage(question),
+                        child: Text(question),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            Colors.white,
+                          ),
+                          foregroundColor: MaterialStateProperty.all(
+                            Colors.black,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
                 }
               }
+
               return Container(
-                // width: messageWidth.toDouble(),
-                decoration: const BoxDecoration(
-                  color: CustomColors.blackBackground,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 0,
+                  horizontal: 12,
                 ),
-                padding: const EdgeInsets.all(12),
+                decoration: const BoxDecoration(
+                  color: Colors.white60,
+                ),
                 child: Column(
-                  children: messageContents,
+                  children: questionButtons,
                 ),
               );
             },
@@ -278,13 +297,17 @@ class _InputWidgetState extends State<InputWidget> {
 
   /// Send a chat message
   void sendMessage(String messageText) {
-    widget.onSendMessage(messageText);
+    messageText = messageText.trim();
 
-    // Clear and reset the text input field
-    _controller.clear();
-    setState(() {
-      _message = "";
-    });
+    if (messageText.isNotEmpty) {
+      widget.onSendMessage(messageText);
+
+      // Clear and reset the text input field
+      _controller.clear();
+      setState(() {
+        _message = "";
+      });
+    }
   }
 
   @override
