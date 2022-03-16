@@ -93,7 +93,9 @@ class ConversationHandler {
   }
 
   BackendAnswer? _parseBackendAnswer(Map<String, dynamic> responseData) {
-    currentUseCase = useCaseFromString(responseData["useCase"]);
+    // TODO: dont use random use case
+    // currentUseCase = useCaseFromString(responseData["useCase"]);
+    currentUseCase = UseCase.values[Random().nextInt(4)];
 
     return BackendAnswer(
         useCase: currentUseCase!,

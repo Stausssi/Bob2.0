@@ -1,7 +1,10 @@
+import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-void main() {
+void main() async {
+  await StorageHandler.init();
+
   testWidgets('Navigation bar test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const BobApp());

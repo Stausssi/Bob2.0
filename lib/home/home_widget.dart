@@ -71,7 +71,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             color: CustomColors.purpleForeground,
             padding: 0,
           ),
-          const ConversationList(),
+          ConversationList(key: Key("${getLastConversationDate()}_list")),
         ],
       ),
     );
@@ -137,9 +137,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     MaterialPageRoute(
                       builder: (_) => const Conversation(),
                     ),
-                  ).whenComplete(() {
-                    setState(() {});
-                  });
+                  ).whenComplete(() => setState(() {}));
                 },
                 child: Text(
                   "Request assistance from Bob 2.0",
@@ -199,26 +197,6 @@ class ConversationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> columnChildren = [
-      const Text(
-        "Recent Conversations",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      const Padding(padding: EdgeInsets.all(6)),
-    ];
-
-    columnChildren.addAll(_buildConversationWidgets());
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: columnChildren,
-      ),
-    );
-  }
-
-  List<Widget> _buildConversationWidgets() {
     List<String> previousConversations = StorageHandler.getValue(
       SettingKeys.previousConversations,
     );
@@ -226,63 +204,140 @@ class ConversationList extends StatelessWidget {
       SettingKeys.previousConversationDates,
     );
 
+    List<Widget> listContents = [
+      const Text(
+        "Recent Conversations",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      )
+    ];
+
     if (previousConversations.length != previousDates.length) {
       StorageHandler.resetKey(SettingKeys.previousConversations);
       StorageHandler.resetKey(SettingKeys.previousConversationDates);
-      return [
+      listContents = [
         const Text(
           "Something went wrong while retrieving your last conversations.",
         )
       ];
-    }
-
-    if (previousConversations.isEmpty) {
-      return [const Text("Your recent conversations will be listed here")];
-    }
-
-    List<Widget> conversationBubbles = [];
-
-    int count = 0;
-    for (String useCase in previousConversations) {
-      ColoredBubble conversationWidget = ColoredBubble(
-        padding: 10,
-        margin: 0,
-        child: Row(
-          children: [
-            Flexible(
-              child: CircleAvatar(
-                foregroundImage: const Image(
-                  image: AssetImage("assets/bob_head.png"),
-                ).image,
-                backgroundColor: CustomColors.purpleForeground,
-                radius: 25,
-              ),
-            ),
-            const Padding(padding: EdgeInsets.all(6)),
-            Column(
+    } else {
+      if (previousConversations.isEmpty) {
+        listContents = [
+          const Text("Your recent conversations will be listed here")
+        ];
+      } else {
+        int count = 0;
+        for (String useCase in previousConversations) {
+          ColoredBubble conversationWidget = ColoredBubble(
+            padding: 10,
+            margin: 0,
+            child: Row(
               children: [
-                Text(
-                  useCase,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                // On the left, show a picture of the use case
+                Flexible(
+                  child: CircleAvatar(
+                    foregroundImage: Image(
+                      image: AssetImage("assets/useCases/$useCase.png"),
+                    ).image,
+                    backgroundColor: Colors.transparent,
+                    radius: 25,
+                  ),
                 ),
-                Text(
-                  DateTime.parse(previousDates[count])
-                      .difference(DateTime.now())
-                      .toString(),
-                ),
+                const Padding(padding: EdgeInsets.all(6)),
+                // Show the use case of the conversation and the time difference
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      useCase.capitalize(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      DateTime.now()
+                          .difference(DateTime.parse(previousDates[count]))
+                          .toFancyString(),
+                      style: GoogleFonts.actor(
+                        color: Colors.black38,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
-        color: Colors.white,
-      );
+            ),
+            color: Colors.white,
+          );
 
-      // Add the widget and a small padding
-      conversationBubbles.add(conversationWidget);
-      conversationBubbles.add(const Padding(padding: EdgeInsets.all(6)));
-      count++;
+          // Add the widget and a small padding
+          listContents.add(conversationWidget);
+          count++;
+        }
+      }
     }
 
-    return conversationBubbles;
+    return Flexible(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
+        // Show all items in a list separated by padding
+        child: ListView.separated(
+          shrinkWrap: true,
+          itemBuilder: (_, index) {
+            return listContents[index];
+          },
+          separatorBuilder: (_, __) => const Padding(
+            padding: EdgeInsets.all(6),
+          ),
+          itemCount: listContents.length,
+          // We don't need scrolling, item extent is limited by the StorageHandler
+          physics: const NeverScrollableScrollPhysics(),
+        ),
+      ),
+    );
+  }
+}
+
+extension DurationString on Duration {
+  /// Returns the duration as string following the schema "X Y ago", where X is
+  /// a number and Y is either days, hours or minutes.
+  ///
+  /// In extreme cases (> 30 days or < 1 minute) a special String is returned:
+  /// "a long time ago" or "just now" respectively
+  String toFancyString() {
+    // Handle a duration which is longer than a day
+    Duration difference = abs();
+
+    if (difference.inDays > 0) {
+      if (difference.inDays > 30) {
+        return "a long time ago";
+      }
+
+      if (difference.inDays == 1) {
+        return "1 day ago";
+      }
+
+      return "${difference.inDays} days ago";
+    }
+
+    // Handle 1d > duration >= 1h
+    if (difference.inHours > 0) {
+      if (difference.inHours == 1) {
+        return "1 hour ago";
+      }
+
+      return "${difference.inHours} hours ago";
+    }
+
+    // Handle small durations (1h > duration >= 1m)
+    if (difference.inMinutes > 0) {
+      if (difference.inMinutes == 1) {
+        return "1 minute ago";
+      }
+
+      return "${difference.inMinutes} minutes ago";
+    }
+
+    return "just now";
   }
 }

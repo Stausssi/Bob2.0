@@ -38,19 +38,20 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Widget> pages = [
-    // One item is the home page
-    const HomeWidget(),
-    // This container is representing the "Conversation" tab.
-    // !! DO NOT REMOVE !!
-    Container(),
-    // One item is the settings page
-    Container()
-  ];
   int _pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> pages = [
+      // One item is the home page
+      HomeWidget(key: Key("${getLastConversationDate()}-parent")),
+      // This container is representing the "Conversation" tab.
+      // !! DO NOT REMOVE !!
+      Container(),
+      // One item is the settings page
+      Container()
+    ];
+
     return Scaffold(
       // appBar: null,
       body: Stack(
@@ -75,9 +76,7 @@ class _MainPageState extends State<MainPage> {
                 MaterialPageRoute(
                   builder: (_) => const Conversation(),
                 ),
-              ).whenComplete(() {
-                setState(() {});
-              })
+              ).whenComplete(() => setState(() {}))
             : setState(() {
                 _pageIndex = index;
               }),

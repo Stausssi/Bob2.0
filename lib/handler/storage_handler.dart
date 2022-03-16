@@ -25,6 +25,10 @@ class StorageHandler {
     defaultValue = defaultValue ?? _defaultValues[key] as T;
 
     if (_preferences.get(key) != null) {
+      // Lists need special treatment
+      if (defaultValue is List) {
+        return _preferences.getStringList(key) as T;
+      }
       // No special treatment needed
       return _preferences.get(key) as T;
     } else {
