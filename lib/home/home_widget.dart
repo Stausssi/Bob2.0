@@ -214,16 +214,24 @@ class ConversationList extends StatelessWidget {
     if (previousConversations.length != previousDates.length) {
       StorageHandler.resetKey(SettingKeys.previousConversations);
       StorageHandler.resetKey(SettingKeys.previousConversationDates);
-      listContents = [
+      listContents.add(
         const Text(
           "Something went wrong while retrieving your last conversations.",
-        )
-      ];
+          style: TextStyle(
+            color: Colors.black38,
+          ),
+        ),
+      );
     } else {
       if (previousConversations.isEmpty) {
-        listContents = [
-          const Text("Your recent conversations will be listed here")
-        ];
+        listContents.add(
+          const Text(
+            "Your recent conversations will be listed here",
+            style: TextStyle(
+              color: Colors.black38,
+            ),
+          ),
+        );
       } else {
         int count = 0;
         for (String useCase in previousConversations) {
