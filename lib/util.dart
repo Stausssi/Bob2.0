@@ -3,6 +3,7 @@ import 'dart:ui';
 class CustomColors {
   static const Color blackBackground = Color.fromRGBO(33, 34, 38, 1);
   static const Color purpleForeground = Color.fromRGBO(93, 95, 239, 1);
+  static const Color avatarBackground = Color.fromRGBO(255, 214, 220, 1);
 }
 
 enum UseCase { welcome, entertainment, finance, travel }

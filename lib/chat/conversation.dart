@@ -1,6 +1,7 @@
 import 'package:bob/chat/microphone_circle.dart';
 import 'package:bob/chat/speech_processing.dart';
 import 'package:bob/handler/conversation_handler.dart';
+import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as chat_types;
@@ -41,6 +42,9 @@ class _ConversationState extends State<Conversation> {
 
   // The text to display on the loading screen
   String loadingText = "Please wait while we're enabling your microphone...";
+
+  bool _conversationSaved = false;
+  UseCase? _useCase;
 
   @override
   void initState() {
@@ -94,7 +98,14 @@ class _ConversationState extends State<Conversation> {
       text: text,
     );
 
+    StorageHandler.increaseMessages();
+
     if (text.isNotEmpty) {
+      // Increase conversation count once the first message is sent
+      if (_messages.isEmpty) {
+        StorageHandler.increaseConversations();
+      }
+
       setState(() {
         _messages.insert(0, userMessage);
       });
@@ -107,6 +118,21 @@ class _ConversationState extends State<Conversation> {
     if (backendAnswer != null) {
       response = backendAnswer.tts;
       hasFurtherQuestions = backendAnswer.furtherQuestions.isNotEmpty;
+
+      if (_useCase != conversationHandler.currentUseCase) {
+        _conversationSaved = false;
+        _useCase = conversationHandler.currentUseCase;
+      }
+
+      // Save the conversation if a use case was detected and is different from the one saved here
+      if (!_conversationSaved) {
+        StorageHandler.addConversation(
+          conversationHandler.currentUseCase!.name,
+        );
+        _conversationSaved = true;
+
+        print("Saved conversation with usecase $_useCase");
+      }
     }
 
     // Read the text ...
@@ -120,6 +146,8 @@ class _ConversationState extends State<Conversation> {
       repliedMessage: userMessage,
       createdAt: DateTime.now().millisecondsSinceEpoch,
     );
+
+    StorageHandler.increaseMessages();
 
     setState(() {
       _messages.insert(0, answer);

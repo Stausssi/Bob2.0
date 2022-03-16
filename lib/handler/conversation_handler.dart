@@ -28,7 +28,7 @@ class ConversationHandler {
   /// Base Object for http request
   late final Dio _connection;
 
-  UseCase? _currentUseCase;
+  UseCase? currentUseCase;
 
   void _initConnection() {
     _connection = Dio();
@@ -80,7 +80,7 @@ class ConversationHandler {
     Response<Map<String, dynamic>> response = await _connection.post(
       "/answer",
       data: {
-        "useCase": _currentUseCase,
+        "useCase": currentUseCase,
         "answer": answer,
       },
     );
@@ -93,10 +93,10 @@ class ConversationHandler {
   }
 
   BackendAnswer? _parseBackendAnswer(Map<String, dynamic> responseData) {
-    _currentUseCase = useCaseFromString(responseData["useCase"]);
+    currentUseCase = useCaseFromString(responseData["useCase"]);
 
     return BackendAnswer(
-        useCase: _currentUseCase!,
+        useCase: currentUseCase!,
         tts: responseData["tts"],
         furtherQuestions: responseData["further_questions"]);
   }
