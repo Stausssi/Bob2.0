@@ -1,4 +1,3 @@
-import 'package:bob/constants.dart';
 import 'package:bob/settings.dart';
 import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/util.dart';
