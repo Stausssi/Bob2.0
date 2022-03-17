@@ -1,4 +1,5 @@
 import 'package:bob/constants.dart';
+import 'package:bob/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'conversation.dart';
@@ -37,7 +38,7 @@ class _MainPageState extends State<MainPage> {
     // DO NOT REMOVE
     Container(),
     // One item is the settings page
-    Container()
+    Settings()
   ];
   int _pageIndex = 0;
 
