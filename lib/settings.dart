@@ -82,7 +82,6 @@ class _SettingsState extends State<Settings> {
                     ),
                     padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                   )
-
                 ],
               ),
               SettingsList(
@@ -118,7 +117,7 @@ class _SettingsState extends State<Settings> {
                             context,
                             MaterialPageRoute(
                                 builder: (_) => const SettingsSubmenu(
-                                  title: "User Settings",
+                                  title: "Customize Usecases",
                                   settings: Preferences(),
                                 )
                             ),
@@ -133,7 +132,7 @@ class _SettingsState extends State<Settings> {
                           context,
                           MaterialPageRoute(
                               builder: (_) => const SettingsSubmenu(
-                                title: "User Settings",
+                                title: "Integrations",
                                 settings: Integrations(),
                               )
                           ),
@@ -235,12 +234,12 @@ class _PreferencesState extends State<Preferences> {
       shrinkWrap: false,
       sections: [
         SettingsSection(
-          title: const Text('Basic Settings'),
+          title: const Text('Welcome Dialog'),
           tiles: <SettingsTile>[
-            SettingsTile.navigation(
-              leading: const Icon(Icons.perm_identity),
+            SettingsTile.switchTile(
+              initialValue: true,
               title: const Text('Test2'),
-              onPressed: (context) => {},
+              onPressed: (context) => {}, onToggle: (bool value) {  },
             ),
           ],
         ),
@@ -258,6 +257,9 @@ class Integrations extends StatefulWidget {
 
 class _IntegrationsState extends State<Integrations> {
   @override
+
+  bool button = false;
+
   Widget build(BuildContext context) {
     return SettingsList(
       applicationType: ApplicationType.material,
@@ -271,7 +273,8 @@ class _IntegrationsState extends State<Integrations> {
             SettingsTile.navigation(
               leading: const Icon(Icons.perm_identity),
               title: const Text('Test3'),
-              onPressed: (context) => {},
+              onPressed: (context) => {
+              },
             ),
           ],
         ),
