@@ -1,10 +1,16 @@
 import 'package:bob/constants.dart';
 import 'package:bob/settings.dart';
+import 'package:bob/handler/storage_handler.dart';
+import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import 'conversation.dart';
+import 'chat/conversation.dart';
+import 'home/home_widget.dart';
 
-void main() {
+void main() async {
+  await StorageHandler.init();
+
   runApp(const BobApp());
 }
 
@@ -15,7 +21,10 @@ class BobApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bob 2.0',
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        textTheme: GoogleFonts.assistantTextTheme(),
+      ),
+      themeMode: ThemeMode.light,
       home: const MainPage(title: 'Bob 2.0 - Your PDA'),
     );
   }
@@ -31,19 +40,21 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<Widget> pages = [
-    // One item is the home page
-    Container(),
-    // This container is representing the "Conversation" tab.
-    // DO NOT REMOVE
-    Container(),
-    // One item is the settings page
-    Settings()
-  ];
+
   int _pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> pages = [
+      // One item is the home page
+      HomeWidget(key: Key("${getLastConversationDate()}-parent")),
+      // This container is representing the "Conversation" tab.
+      // !! DO NOT REMOVE !!
+      Container(),
+      // One item is the settings page
+      Settings()
+    ];
+
     return Scaffold(
       // appBar: null,
       body: Stack(
@@ -68,7 +79,7 @@ class _MainPageState extends State<MainPage> {
                 MaterialPageRoute(
                   builder: (_) => const Conversation(),
                 ),
-              )
+              ).whenComplete(() => setState(() {}))
             : setState(() {
                 _pageIndex = index;
               }),
