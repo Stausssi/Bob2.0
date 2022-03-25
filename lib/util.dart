@@ -10,6 +10,9 @@ class CustomColors {
 
 enum UseCase { welcome, entertainment, finance, travel }
 
+/// Returns the [UseCase] with the name [value].
+///
+/// "finance" => [UseCase.finance], etc.
 UseCase useCaseFromString(String value) {
   return UseCase.values.firstWhere(
     (element) => element.name == value,

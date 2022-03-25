@@ -10,7 +10,9 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:uuid/uuid.dart';
 
 class Conversation extends StatefulWidget {
-  const Conversation({Key? key}) : super(key: key);
+  const Conversation({this.startUseCase, Key? key}) : super(key: key);
+
+  final UseCase? startUseCase;
 
   @override
   _ConversationState createState() => _ConversationState();
@@ -67,7 +69,12 @@ class _ConversationState extends State<Conversation> {
   void _onSpeechReady() {
     _setLoadingText();
 
-    _speechProcessing.read("Hallo hier ist TTS");
+    // Send a start message to init a use case started by a notification
+    if (widget.startUseCase != null) {
+      sendMessage(widget.startUseCase!.name);
+    }
+
+    // _speechProcessing.read("Hallo hier ist TTS");
   }
 
   /// Prompt STT to listen to the user
