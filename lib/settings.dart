@@ -138,8 +138,7 @@ class _SettingsState extends State<Settings> {
               tiles: [
                 SettingsTile(
                   title: const Text("Send notification"),
-                  onPressed: (_) => NotificationHandler()
-                      .displayNotification(UseCase.finance),
+                  onPressed: (_) => NotificationHandler().testNotifications(),
                 )
               ],
             )

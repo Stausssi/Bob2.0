@@ -1,5 +1,7 @@
+import 'package:bob/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageHandler {
@@ -28,6 +30,10 @@ class StorageHandler {
       // Lists need special treatment
       if (defaultValue is List) {
         return _preferences.getStringList(key) as T;
+      } else if (defaultValue is Time) {
+        return TimeStringConverter.fromStorageString(
+          _preferences.getString(key)!,
+        ) as T;
       }
       // No special treatment needed
       return _preferences.get(key) as T;
@@ -54,16 +60,23 @@ class StorageHandler {
       _preferences.setDouble(key, value);
     } else if (value is List<String>) {
       _preferences.setStringList(key, value);
+    } else if (value is Time) {
+      print("Saved time as ${value.toStorageString()}");
+      _preferences.setString(key, value.toStorageString());
     } else {
       // Unknown class T of value
       throw TypeError();
     }
   }
 
+  /// Removes the given key from local storage
   static void resetKey(String key) {
     _preferences.remove(key);
   }
 
+  /// Increase the number of conversations
+  ///
+  /// Needed for the statistics on the home page
   static void increaseConversations() {
     saveValue(
       SettingKeys.conversationCount,
@@ -71,6 +84,9 @@ class StorageHandler {
     );
   }
 
+  /// Increase the number of messages
+  ///
+  /// Needed for the statistics on the home page
   static void increaseMessages() {
     saveValue(
       SettingKeys.messageCount,
@@ -78,6 +94,7 @@ class StorageHandler {
     );
   }
 
+  /// Save the use case of a conversation for the "Recent conversations" list
   static void addConversation(String useCase) {
     // Save conversation in list
     List<String> previousConversations =
@@ -97,6 +114,19 @@ class StorageHandler {
     saveValue(SettingKeys.previousConversations, previousConversations);
     saveValue(SettingKeys.previousConversationDates, previousDates);
   }
+
+  static Time getUseCaseTime(UseCase useCase) {
+    switch (useCase) {
+      case UseCase.welcome:
+        return getValue(SettingKeys.welcomeTime);
+      case UseCase.travel:
+        return getValue(SettingKeys.travelTime);
+      case UseCase.finance:
+        return getValue(SettingKeys.financeTime);
+      case UseCase.entertainment:
+        return getValue(SettingKeys.entertainmentTime);
+    }
+  }
 }
 
 class SettingKeys {
@@ -107,6 +137,11 @@ class SettingKeys {
   static const String previousConversationDates = "prevConvDate";
   static const String messageCount = "messageCount";
   static const String conversationCount = "conversationCount";
+
+  static const String welcomeTime = "welcomeTime";
+  static const String travelTime = "travelTime";
+  static const String financeTime = "financeTime";
+  static const String entertainmentTime = "entertainmentTime";
 }
 
 Map<String, dynamic> _defaultValues = {
@@ -115,4 +150,21 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.previousConversationDates: <String>[],
   SettingKeys.messageCount: 0,
   SettingKeys.conversationCount: 0,
+  SettingKeys.welcomeTime: const Time(7),
+  SettingKeys.travelTime: const Time(8),
+  SettingKeys.financeTime: const Time(15, 30),
+  SettingKeys.entertainmentTime: const Time(20, 15),
 };
+
+extension TimeStringConverter on Time {
+  /// Converts a time to a readable format which can easily be stored in local storage
+  String toStorageString() {
+    return "$hour:$minute:$second";
+  }
+
+  /// Creates a time object from a given string
+  static Time fromStorageString(String value) {
+    List<String> parts = value.split(":");
+    return Time(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+  }
+}

@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -43,11 +46,25 @@ class NotificationHandler {
       return useCaseFromString(appLaunchDetails!.payload!);
     }
 
-    return UseCase.finance;
+    return null;
   }
 
   late final AndroidNotificationDetails _androidDetails;
   late final NotificationDetails _details;
+
+  static const Map<UseCase, int> _idMapping = {
+    UseCase.finance: 0,
+    UseCase.entertainment: 1,
+    UseCase.travel: 2,
+    UseCase.welcome: 3,
+  };
+
+  static const Map<UseCase, String> _titleMapping = {
+    UseCase.finance: "Stonks only go up",
+    UseCase.entertainment: "Netflix and chill is ready to fuck your bill",
+    UseCase.travel: "COVID19 is waiting for you",
+    UseCase.welcome: "Good Morning!",
+  };
 
   /// Inits the handler by calling the plugin. It has to be called before any
   /// notifications are scheduled.
@@ -102,14 +119,76 @@ class NotificationHandler {
     }
   }
 
-  /// Displays a test notification
-  Future<void> displayNotification(UseCase useCase) async {
-    await _plugin.show(
-      0,
-      'Test Notification',
-      'Test Notification body',
+  /// Displays a test notification in 5 seconds time and also at the schedule time for
+  /// a random UseCase
+  void testNotifications() {
+    scheduleNotification(
+      UseCase.values[Random().nextInt(4)],
+      tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+    );
+
+    scheduleNotification(
+      UseCase.values[Random().nextInt(4)],
+    );
+  }
+
+  /// Schedule a notification for the [UseCase useCase]. The date is specified
+  /// by the valued stored in local storage
+  ///
+  /// The notification will repeat daily.
+  Future<void> scheduleNotification(
+    UseCase useCase, [
+    tz.TZDateTime? date,
+  ]) async {
+    late tz.TZDateTime scheduledDate;
+
+    if (date == null) {
+      Time useCaseTime = StorageHandler.getUseCaseTime(useCase);
+      tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+      scheduledDate = tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day,
+        useCaseTime.hour,
+        useCaseTime.minute,
+        useCaseTime.second,
+      );
+
+      if (scheduledDate.isBefore(now)) {
+        scheduledDate = scheduledDate.add(const Duration(days: 1));
+      }
+    } else {
+      scheduledDate = date;
+    }
+
+    print(
+      "Scheduled notification for ${useCase.name} for ${scheduledDate.toIso8601String()}",
+    );
+
+    await _plugin.zonedSchedule(
+      _idMapping[useCase]!,
+      _titleMapping[useCase]!,
+      "Click this message to start your routine!",
+      scheduledDate,
       _details,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      // Repeat daily
+      matchDateTimeComponents: DateTimeComponents.time,
       payload: useCase.name,
     );
+  }
+
+  /// Remove a schedule notification to update the time of the daily repeat
+  ///
+  /// if [useCase] is [null], every notification will be cancelled
+  void removeNotification(UseCase? useCase) {
+    if (useCase != null) {
+      _plugin.cancel(_idMapping[useCase]!);
+    } else {
+      _plugin.cancelAll();
+    }
   }
 }
