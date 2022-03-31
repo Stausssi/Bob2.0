@@ -13,6 +13,7 @@ class SpeechProcessing {
     _init(onReady);
   }
 
+  /// Contains the current state of speech processing
   _SpeechProcessingState _state = _SpeechProcessingState.idle;
 
   /// The TTS instance (package: flutter_tts)

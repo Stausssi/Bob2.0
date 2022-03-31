@@ -7,8 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class StorageHandler {
   const StorageHandler._();
 
+  /// Handles the communication with the device storage
   static late SharedPreferences _preferences;
 
+  /// Specifies how many conversations should be shown in the list on the home page
   static const int _maxConversationCount = 3;
 
   /// Initialize the handler
@@ -115,6 +117,7 @@ class StorageHandler {
     saveValue(SettingKeys.previousConversationDates, previousDates);
   }
 
+  /// Returns the time the [useCase] should be scheduled at
   static Time getUseCaseTime(UseCase useCase) {
     switch (useCase) {
       case UseCase.welcome:
@@ -129,6 +132,8 @@ class StorageHandler {
   }
 }
 
+/// Contains a string representing a unique key for every value saved in local
+/// device storage
 class SettingKeys {
   const SettingKeys._();
 
@@ -144,6 +149,8 @@ class SettingKeys {
   static const String entertainmentTime = "entertainmentTime";
 }
 
+/// Sets the default values of the persisted values. Needed if there is no value
+/// in the local storage with the given [SettingKeys]
 Map<String, dynamic> _defaultValues = {
   SettingKeys.userName: "Max Mustermann",
   SettingKeys.previousConversations: <String>[],

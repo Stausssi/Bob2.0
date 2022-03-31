@@ -12,15 +12,19 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 UseCase? startupUseCase;
 
 void main() async {
+  // Init all singleton handlers
   await StorageHandler.init();
   NotificationHandler notificationHandler = NotificationHandler();
   await notificationHandler.init();
 
+  // Try getting the notification the app was launched with
   startupUseCase = await notificationHandler.launchUseCase;
 
+  // Start the app
   runApp(const BobApp());
 }
 
+/// The main application of Bob 2.0
 class BobApp extends StatelessWidget {
   const BobApp({Key? key}) : super(key: key);
 
@@ -32,22 +36,23 @@ class BobApp extends StatelessWidget {
         textTheme: GoogleFonts.assistantTextTheme(),
       ),
       themeMode: ThemeMode.light,
-      home: const MainPage(title: 'Bob 2.0 - Your PDA'),
+      home: const MainPage(),
       navigatorKey: navigatorKey,
     );
   }
 }
 
+/// The main frame of the application consisting of a content widget and a
+/// navigation bar in the bottom
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  /// The index of the current page (== Widget) to display
   int _pageIndex = 0;
 
   @override
@@ -56,6 +61,7 @@ class _MainPageState extends State<MainPage> {
     _openConversation();
   }
 
+  /// Opens a new window with the conversation screen
   void _openConversation() async {
     if (startupUseCase != null) {
       await Future.delayed(const Duration(milliseconds: 1000));
@@ -65,6 +71,13 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
+  /// Called every time the user clicks on an item in the bottom navigation bar
+  ///
+  /// [index] is the index of the clicked item. If the index is [1], a new window
+  /// will be opened containing the chat functionality
+  ///
+  /// If [startUseCase] is given, the app was launched by clicking a notification
+  /// and therefore directly displays the conversation widget
   void _onItemTap(int index, [UseCase? startUseCase]) {
     index == 1
         ? Navigator.push(
@@ -81,7 +94,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
-      // One item is the home page
+      // One item is the home page. A custom key is needed for the widget to always
+      // refresh if needed and not use invalid cache
       HomeWidget(key: Key("${getLastConversationDate()}-parent")),
       // This container is representing the "Conversation" tab.
       // !! DO NOT REMOVE !!

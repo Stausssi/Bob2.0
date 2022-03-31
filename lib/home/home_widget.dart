@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../chat/conversation.dart';
 
+/// Displays statistics and most recent conversations
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
 
@@ -77,6 +78,8 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 
+  /// Builds a rounded box containing a number ([count]) and a [description] what
+  /// this count represents directly below
   Widget _buildCounterWidget(int count, String description) {
     return Column(
       children: [
@@ -101,6 +104,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 
+  /// Builds a colored box allowing the user to start a conversation with bob
   Widget _buildConversationStarter(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(25, 25, 25, 10),
@@ -164,6 +168,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 }
 
+/// A Box with rounded corners and a background color
 class ColoredBubble extends StatelessWidget {
   const ColoredBubble({
     required this.child,
@@ -173,9 +178,16 @@ class ColoredBubble extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  /// The [Widget] to display inside the box
   final Widget child;
+
+  /// The background color of the box
   final Color color;
+
+  /// The padding of the [child] widget
   final double padding;
+
+  /// The margin of the box
   final double margin;
 
   @override
@@ -192,6 +204,8 @@ class ColoredBubble extends StatelessWidget {
   }
 }
 
+/// Displays a list of conversations represented by an [Icon], [UseCase] and a
+/// timestamp
 class ConversationList extends StatelessWidget {
   const ConversationList({Key? key}) : super(key: key);
 
@@ -205,6 +219,7 @@ class ConversationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the last X conversations and the corresponding dates
     List<String> previousConversations = StorageHandler.getValue(
       SettingKeys.previousConversations,
     );
@@ -212,6 +227,7 @@ class ConversationList extends StatelessWidget {
       SettingKeys.previousConversationDates,
     );
 
+    /// Every item contained in the list
     List<Widget> listContents = [
       const Text(
         "Letzte Konversationen",
@@ -219,6 +235,7 @@ class ConversationList extends StatelessWidget {
       )
     ];
 
+    // An error occurred if conversation and dates are not of the same length
     if (previousConversations.length != previousDates.length) {
       StorageHandler.resetKey(SettingKeys.previousConversations);
       StorageHandler.resetKey(SettingKeys.previousConversationDates);
@@ -231,6 +248,7 @@ class ConversationList extends StatelessWidget {
         ),
       );
     } else {
+      // There was no conversation with bob yet
       if (previousConversations.isEmpty) {
         listContents.add(
           const Text(
@@ -242,6 +260,8 @@ class ConversationList extends StatelessWidget {
         );
       } else {
         int count = 0;
+        // Go over every conversation and create a widget with the corresponding icon,
+        // UseCase name and timestamp
         for (String useCase in previousConversations) {
           ColoredBubble conversationWidget = ColoredBubble(
             padding: 10,

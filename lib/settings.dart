@@ -254,9 +254,9 @@ class Integrations extends StatefulWidget {
 }
 
 class _IntegrationsState extends State<Integrations> {
-  @override
   bool button = false;
 
+  @override
   Widget build(BuildContext context) {
     return SettingsList(
       applicationType: ApplicationType.material,

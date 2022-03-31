@@ -9,6 +9,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:uuid/uuid.dart';
 
+/// Displays the chat between the user and Bob 2.0
 class Conversation extends StatefulWidget {
   const Conversation({this.startUseCase, Key? key}) : super(key: key);
 
@@ -265,6 +266,9 @@ class _ConversationState extends State<Conversation> {
     );
   }
 
+  /// Builds a message box containing all questions contained in the [message] metadata.
+  ///
+  /// [messageWidth] is required by the chat framework
   Widget _buildQuestionChoices(message, {required int messageWidth}) {
     List<Widget> questionButtons = [];
 

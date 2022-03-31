@@ -49,9 +49,11 @@ class NotificationHandler {
     return null;
   }
 
+  /// Android has to know these details, they are not really important.
   late final AndroidNotificationDetails _androidDetails;
   late final NotificationDetails _details;
 
+  /// Maps a [UseCase] to an integer to provide unique IDs for each [UseCase]
   static const Map<UseCase, int> _idMapping = {
     UseCase.finance: 0,
     UseCase.entertainment: 1,
@@ -59,6 +61,7 @@ class NotificationHandler {
     UseCase.welcome: 3,
   };
 
+  /// Maps a string representing the title of the notification to each [UseCase]
   static const Map<UseCase, String> _titleMapping = {
     UseCase.finance: "Aktien sind mir viel zu riskant...",
     UseCase.entertainment: "Netflix and chill is ready to fuck your bill",

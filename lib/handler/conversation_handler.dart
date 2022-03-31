@@ -28,8 +28,10 @@ class ConversationHandler {
   /// Base Object for http request
   late final Dio _connection;
 
+  /// The [UseCase] returned in the answer of the backend
   UseCase? currentUseCase;
 
+  /// Connect to the backend
   void _initConnection() {
     _connection = Dio();
     _connection.options.baseUrl = "193.196.54.254";
@@ -53,14 +55,16 @@ class ConversationHandler {
     // Response<Map<String, dynamic>> response = await _connection.get(
     //   "/question",
     //   queryParameters: {
+    //     "useCase": currentUseCase,
     //     "question": question,
     //   },
     // );
 
     // For now, use static data
+    // TODO: Use real backend response
     Response<Map<String, dynamic>> response = Response(
       data: {
-        "useCase": "finance",
+        "useCase": UseCase.values[Random().nextInt(4)].name,
         "tts": "Das ist eine Demo-Antwort mit drei weiteren Fragen",
         "further_questions": [
           "Frage 1",
@@ -79,7 +83,10 @@ class ConversationHandler {
     return null;
   }
 
-  /// Send the answer of the user to the backend
+  /// Send the [answer] of the user to the backend.
+  ///
+  /// [answer] is either the message parsed by STT or a text message input
+  /// TODO: Remove this and integrate this functionality into [askQuestion]
   Future<BackendAnswer?> sendAnswer(String answer) async {
     Response<Map<String, dynamic>> response = await _connection.post(
       "/answer",
@@ -96,10 +103,10 @@ class ConversationHandler {
     return null;
   }
 
+  /// Parse the given response data and create a [BackendAnswer] object to make
+  /// the response easier to handle
   BackendAnswer? _parseBackendAnswer(Map<String, dynamic> responseData) {
-    // TODO: dont use random use case
-    // currentUseCase = useCaseFromString(responseData["useCase"]);
-    currentUseCase = UseCase.values[Random().nextInt(4)];
+    currentUseCase = useCaseFromString(responseData["useCase"]);
 
     return BackendAnswer(
         useCase: currentUseCase!,
