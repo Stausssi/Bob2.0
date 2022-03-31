@@ -60,10 +60,10 @@ class NotificationHandler {
   };
 
   static const Map<UseCase, String> _titleMapping = {
-    UseCase.finance: "Stonks only go up",
+    UseCase.finance: "Aktien sind mir viel zu riskant...",
     UseCase.entertainment: "Netflix and chill is ready to fuck your bill",
-    UseCase.travel: "COVID19 is waiting for you",
-    UseCase.welcome: "Good Morning!",
+    UseCase.travel: "Auf zur Arbeit du Faulenzer",
+    UseCase.welcome: "Guten Morgen!",
   };
 
   /// Inits the handler by calling the plugin. It has to be called before any
@@ -169,7 +169,7 @@ class NotificationHandler {
     await _plugin.zonedSchedule(
       _idMapping[useCase]!,
       _titleMapping[useCase]!,
-      "Click this message to start your routine!",
+      "Klicke auf diese Nachricht, um die Routine zu starten!",
       scheduledDate,
       _details,
       uiLocalNotificationDateInterpretation:

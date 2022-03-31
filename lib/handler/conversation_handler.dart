@@ -38,14 +38,18 @@ class ConversationHandler {
     _connection.options.responseType = ResponseType.json;
   }
 
-  /// Ask the backend a question
+  /// Ask the backend a question.
+  ///
+  /// The response is expected to have the following format:
+  ///
+  /// ```
+  /// {
+  ///   useCase: useCase,
+  ///   tts: "text_to_read",
+  ///   further_questions: ["question 1", ..., "question n"]
+  /// }
+  /// ```
   Future<BackendAnswer?> askQuestion(String question) async {
-    /// Response is expected to have the following format:
-    /// {
-    ///   useCase: useCase,
-    ///   tts: "text_to_read",
-    ///   further_questions: ["question 1", ..., "question n"]
-    /// }
     // Response<Map<String, dynamic>> response = await _connection.get(
     //   "/question",
     //   queryParameters: {
@@ -57,11 +61,11 @@ class ConversationHandler {
     Response<Map<String, dynamic>> response = Response(
       data: {
         "useCase": "finance",
-        "tts": "This is a dummy answer with 3 further questions",
+        "tts": "Das ist eine Demo-Antwort mit drei weiteren Fragen",
         "further_questions": [
-          "Question 1",
-          "Question 2",
-          "Question 3",
+          "Frage 1",
+          "Frage 2",
+          "Frage 3",
         ]
       },
       requestOptions: RequestOptions(path: 'abc'),

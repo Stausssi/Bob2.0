@@ -119,11 +119,11 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline_rounded),
-            label: "Conversation",
+            label: "Konversation",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),
-            label: "Settings",
+            label: "Einstellungen",
           ),
         ],
       ),

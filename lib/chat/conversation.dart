@@ -43,7 +43,7 @@ class _ConversationState extends State<Conversation> {
   late final SpeechProcessing _speechProcessing;
 
   // The text to display on the loading screen
-  String loadingText = "Please wait while we're enabling your microphone...";
+  String loadingText = "Dein Mikrofon wird geladen...";
 
   bool _conversationSaved = false;
   UseCase? _useCase;
@@ -79,7 +79,7 @@ class _ConversationState extends State<Conversation> {
 
   /// Prompt STT to listen to the user
   void _startListening() {
-    _setLoadingText("We're listening...");
+    _setLoadingText("Ich höre...");
 
     _speechProcessing.listen(
       (String result) {
@@ -120,7 +120,7 @@ class _ConversationState extends State<Conversation> {
 
     final backendAnswer = await conversationHandler.askQuestion(text);
 
-    String response = "Sorry, Bob couldn't find an answer to that question :(";
+    String response = "Sorry, auf diese Frage habe ich leider keine Antwort :(";
     bool hasFurtherQuestions = false;
     if (backendAnswer != null) {
       response = backendAnswer.tts;
@@ -178,7 +178,7 @@ class _ConversationState extends State<Conversation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Conversation"),
+        title: const Text("Konversation"),
         centerTitle: true,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -195,7 +195,7 @@ class _ConversationState extends State<Conversation> {
             ),
             emptyState: Center(
               child: Text(
-                "Bob is waiting for your questions...",
+                "Bob ist bereit deine Fragen zu beantworten!",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
@@ -253,7 +253,7 @@ class _ConversationState extends State<Conversation> {
                       child: ElevatedButton(
                         onPressed: _stopListening,
                         child: const Text(
-                          "Stop listening",
+                          "Zuhören stoppen",
                         ),
                       ),
                     ),
@@ -384,7 +384,7 @@ class _InputWidgetState extends State<InputWidget> {
                     borderSide: BorderSide.none,
                   ),
                   contentPadding: const EdgeInsets.all(4),
-                  hintText: "Enter your message",
+                  hintText: "Deine Nachricht hier",
                   filled: true,
                   fillColor: Colors.white,
                   suffixIcon: IconButton(
@@ -440,7 +440,7 @@ class _InputWidgetState extends State<InputWidget> {
                       onPressed: () => setState(() {
                         _showExtendedInput = true;
                       }),
-                      child: const Text("Write instead"),
+                      child: const Text("Ich möchte schreiben"),
                       style: TextButton.styleFrom(
                         primary: Colors.white54,
                       ),

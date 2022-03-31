@@ -33,7 +33,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
                 const Padding(padding: EdgeInsets.all(6)),
                 Text(
-                  "Hey ${StorageHandler.getValue(SettingKeys.userName)}",
+                  "Hallo ${StorageHandler.getValue(SettingKeys.userName)}",
                   style: GoogleFonts.aBeeZee(
                     fontSize: 20,
                     color: Colors.white,
@@ -50,7 +50,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 child: ColoredBubble(
                   child: _buildCounterWidget(
                     StorageHandler.getValue(SettingKeys.conversationCount),
-                    "Conversations",
+                    "Konversationen",
                   ),
                   color: Colors.white,
                 ),
@@ -59,7 +59,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 child: ColoredBubble(
                   child: _buildCounterWidget(
                     StorageHandler.getValue(SettingKeys.messageCount),
-                    "Messages",
+                    "Nachrichten",
                   ),
                   color: Colors.white,
                 ),
@@ -109,7 +109,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "Start Conversation",
+            "Bob 2.0 ist bereit dir zu helfen",
             style: GoogleFonts.assistant(
               color: Colors.white,
               fontSize: 16,
@@ -140,7 +140,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ).whenComplete(() => setState(() {}));
                 },
                 child: Text(
-                  "Request assistance from Bob 2.0",
+                  "Klicke hier für Unterstützung",
                   style: GoogleFonts.assistant(
                     color: CustomColors.blackBackground,
                     fontWeight: FontWeight.w600,
@@ -195,6 +195,14 @@ class ColoredBubble extends StatelessWidget {
 class ConversationList extends StatelessWidget {
   const ConversationList({Key? key}) : super(key: key);
 
+  /// Contains a german translation for each use case
+  static const Map<UseCase, String> translationMap = {
+    UseCase.finance: "Finanzen",
+    UseCase.welcome: "Guten Morgen",
+    UseCase.entertainment: "Unterhaltung",
+    UseCase.travel: "Reisen"
+  };
+
   @override
   Widget build(BuildContext context) {
     List<String> previousConversations = StorageHandler.getValue(
@@ -206,7 +214,7 @@ class ConversationList extends StatelessWidget {
 
     List<Widget> listContents = [
       const Text(
-        "Recent Conversations",
+        "Letzte Konversationen",
         style: TextStyle(fontWeight: FontWeight.bold),
       )
     ];
@@ -216,7 +224,7 @@ class ConversationList extends StatelessWidget {
       StorageHandler.resetKey(SettingKeys.previousConversationDates);
       listContents.add(
         const Text(
-          "Something went wrong while retrieving your last conversations.",
+          "Die letzten Konversationen konnten nicht geladen werden.",
           style: TextStyle(
             color: Colors.black38,
           ),
@@ -226,7 +234,7 @@ class ConversationList extends StatelessWidget {
       if (previousConversations.isEmpty) {
         listContents.add(
           const Text(
-            "Your recent conversations will be listed here",
+            "Deine Konversationen werden hier aufgelistet",
             style: TextStyle(
               color: Colors.black38,
             ),
@@ -256,7 +264,7 @@ class ConversationList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      useCase.capitalize(),
+                      translationMap[useCaseFromString(useCase)]!,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -318,34 +326,34 @@ extension DurationString on Duration {
 
     if (difference.inDays > 0) {
       if (difference.inDays > 30) {
-        return "a long time ago";
+        return "Vor langer Zeit";
       }
 
       if (difference.inDays == 1) {
-        return "1 day ago";
+        return "Gestern";
       }
 
-      return "${difference.inDays} days ago";
+      return "Vor ${difference.inDays} Tagen";
     }
 
     // Handle 1d > duration >= 1h
     if (difference.inHours > 0) {
       if (difference.inHours == 1) {
-        return "1 hour ago";
+        return "Vor 1 Stunde";
       }
 
-      return "${difference.inHours} hours ago";
+      return "Vor ${difference.inHours} Stunden";
     }
 
     // Handle small durations (1h > duration >= 1m)
     if (difference.inMinutes > 0) {
       if (difference.inMinutes == 1) {
-        return "1 minute ago";
+        return "Vor 1 Minute";
       }
 
-      return "${difference.inMinutes} minutes ago";
+      return "Vor ${difference.inMinutes} Minuten";
     }
 
-    return "just now";
+    return "Gerade eben";
   }
 }

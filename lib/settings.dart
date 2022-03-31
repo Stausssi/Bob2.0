@@ -38,7 +38,7 @@ class _SettingsState extends State<Settings> {
             padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
             child: Center(
               child: Text(
-                "Settings",
+                "Einstellungen",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class _SettingsState extends State<Settings> {
                             topLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                         color: Colors.white),
-                    child: const Text("Here you can change my settings!"),
+                    child: const Text("Hier kannst du mich personalisieren!"),
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     width: 140,
                   ),
@@ -87,47 +87,50 @@ class _SettingsState extends State<Settings> {
           shrinkWrap: true,
           sections: [
             SettingsSection(
-              title: const Text('Basic Settings'),
+              title: const Text('Allgemeine Einstellungen'),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   leading: const Icon(Icons.perm_identity),
-                  title: const Text('User Settings'),
+                  title: const Text('Benutzereinstellungen'),
                   onPressed: (context) => {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const SettingsSubmenu(
-                                title: "User Settings",
-                                settings: UserSettings(),
-                              )),
+                        builder: (_) => const SettingsSubmenu(
+                          title: "Benutzereinstellungen",
+                          settings: UserSettings(),
+                        ),
+                      ),
                     ),
                   },
                 ),
                 SettingsTile.navigation(
                   leading: const Icon(Icons.settings_outlined),
-                  title: const Text('Preferences'),
+                  title: const Text('Präferenzen'),
                   onPressed: (context) => {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const SettingsSubmenu(
-                                title: "Customize Usecases",
-                                settings: Preferences(),
-                              )),
+                        builder: (_) => const SettingsSubmenu(
+                          title: "Use-Cases personalisieren",
+                          settings: Preferences(),
+                        ),
+                      ),
                     ),
                   },
                 ),
                 SettingsTile.navigation(
                   leading: const Icon(Icons.language),
-                  title: const Text('Integrations'),
+                  title: const Text('Integrationen verwalten'),
                   onPressed: (context) => {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const SettingsSubmenu(
-                                title: "Integrations",
-                                settings: Integrations(),
-                              )),
+                        builder: (_) => const SettingsSubmenu(
+                          title: "Integrationen verwalten",
+                          settings: Integrations(),
+                        ),
+                      ),
                     ),
                   },
                 )
@@ -137,7 +140,7 @@ class _SettingsState extends State<Settings> {
               title: const Text("Debug"),
               tiles: [
                 SettingsTile(
-                  title: const Text("Send notification"),
+                  title: const Text("Benachrichtigung senden"),
                   onPressed: (_) => NotificationHandler().testNotifications(),
                 )
               ],
@@ -197,7 +200,7 @@ class _UserSettingsState extends State<UserSettings> {
       shrinkWrap: false,
       sections: [
         SettingsSection(
-          title: const Text('Basic Settings'),
+          title: const Text('Allgemeine Einstellungen'),
           tiles: <SettingsTile>[
             SettingsTile.navigation(
               leading: const Icon(Icons.perm_identity),
