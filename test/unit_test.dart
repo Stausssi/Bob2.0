@@ -25,7 +25,7 @@ void main() async {
     );
   });
 
-  group("Storage Handler", () async {
+  group("Storage Handler", () {
     test(
       "Convert Time to String",
       () => expect(const Time(1, 2, 3).toStorageString(), "1:2:3"),
