@@ -102,8 +102,6 @@ class SpeechProcessing {
 
     _speechToText.listen(
       onResult: (result) {
-        print("result is in: $result");
-
         if (result.finalResult) {
           onResult(result.recognizedWords);
 

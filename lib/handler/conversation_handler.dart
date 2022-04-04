@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 
 import '../util.dart';
@@ -34,7 +32,8 @@ class ConversationHandler {
   /// Connect to the backend
   void _initConnection() {
     _connection = Dio();
-    _connection.options.baseUrl = "193.196.54.254";
+    // TODO: Use real backend
+    _connection.options.baseUrl = "http://193.196.52.233:80";
     _connection.options.connectTimeout = 5000;
     _connection.options.receiveTimeout = 2000;
     _connection.options.responseType = ResponseType.json;
@@ -52,53 +51,35 @@ class ConversationHandler {
   /// }
   /// ```
   Future<BackendAnswer?> askQuestion(String question) async {
-    // Response<Map<String, dynamic>> response = await _connection.get(
-    //   "/question",
-    //   queryParameters: {
-    //     "useCase": currentUseCase,
-    //     "question": question,
+    try {
+      Response<Map<String, dynamic>> response = await _connection.post(
+        "/input",
+        data: {
+          "speech": question,
+          "preferences": {},
+        },
+      );
+
+      if (response.data != null) {
+        return _parseBackendAnswer(response.data!);
+      }
+    } catch (e) {
+      return null;
+    }
+
+    // // For now, use static data
+    // Response<Map<String, dynamic>> response = Response(
+    //   data: {
+    //     "useCase": UseCase.values[Random().nextInt(4)].name,
+    //     "tts": "Das ist eine Demo-Antwort mit drei weiteren Fragen",
+    //     "further_questions": [
+    //       "Frage 1",
+    //       "Frage 2",
+    //       "Frage 3",
+    //     ]
     //   },
+    //   requestOptions: RequestOptions(path: 'abc'),
     // );
-
-    // For now, use static data
-    // TODO: Use real backend response
-    Response<Map<String, dynamic>> response = Response(
-      data: {
-        "useCase": UseCase.values[Random().nextInt(4)].name,
-        "tts": "Das ist eine Demo-Antwort mit drei weiteren Fragen",
-        "further_questions": [
-          "Frage 1",
-          "Frage 2",
-          "Frage 3",
-        ]
-      },
-      requestOptions: RequestOptions(path: 'abc'),
-    );
-
-    // TODO: remove randomness
-    if (response.data != null && Random().nextBool()) {
-      return _parseBackendAnswer(response.data!);
-    }
-
-    return null;
-  }
-
-  /// Send the [answer] of the user to the backend.
-  ///
-  /// [answer] is either the message parsed by STT or a text message input
-  /// TODO: Remove this and integrate this functionality into [askQuestion]
-  Future<BackendAnswer?> sendAnswer(String answer) async {
-    Response<Map<String, dynamic>> response = await _connection.post(
-      "/answer",
-      data: {
-        "useCase": currentUseCase,
-        "answer": answer,
-      },
-    );
-
-    if (response.data != null) {
-      return _parseBackendAnswer(response.data!);
-    }
 
     return null;
   }
@@ -106,12 +87,18 @@ class ConversationHandler {
   /// Parse the given response data and create a [BackendAnswer] object to make
   /// the response easier to handle
   BackendAnswer? _parseBackendAnswer(Map<String, dynamic> responseData) {
-    currentUseCase = useCaseFromString(responseData["useCase"]);
+    try {
+      currentUseCase = useCaseFromString(responseData["use_case"]);
 
-    return BackendAnswer(
-      useCase: currentUseCase!,
-      tts: responseData["tts"],
-      furtherQuestions: responseData["further_questions"],
-    );
+      return BackendAnswer(
+        useCase: currentUseCase!,
+        tts: responseData["tts"],
+        furtherQuestions: (responseData["further_questions"] as List<dynamic>)
+            .map((e) => e.toString())
+            .toList(),
+      );
+    } catch (e) {
+      return null;
+    }
   }
 }
