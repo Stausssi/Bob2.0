@@ -74,7 +74,7 @@ class ConversationHandler {
   /// the response easier to handle
   BackendAnswer? _parseBackendAnswer(Map<String, dynamic> responseData) {
     try {
-      currentUseCase = useCaseFromString(responseData["use_case"]);
+      currentUseCase = useCaseFromString(responseData["use_case"][0]);
 
       return BackendAnswer(
         useCase: currentUseCase!,
