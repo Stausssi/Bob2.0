@@ -67,20 +67,6 @@ class ConversationHandler {
       return null;
     }
 
-    // // For now, use static data
-    // Response<Map<String, dynamic>> response = Response(
-    //   data: {
-    //     "useCase": UseCase.values[Random().nextInt(4)].name,
-    //     "tts": "Das ist eine Demo-Antwort mit drei weiteren Fragen",
-    //     "further_questions": [
-    //       "Frage 1",
-    //       "Frage 2",
-    //       "Frage 3",
-    //     ]
-    //   },
-    //   requestOptions: RequestOptions(path: 'abc'),
-    // );
-
     return null;
   }
 
