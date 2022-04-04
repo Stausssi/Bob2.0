@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 /// Displays a round button with a microphone icon in the middle
 class MicrophoneCircle extends StatelessWidget {
-  const MicrophoneCircle(
-      {Key? key, required this.clickCallback, this.size = 40})
-      : super(key: key);
+  const MicrophoneCircle({
+    Key? key,
+    required this.clickCallback,
+    this.size = 40,
+  }) : super(key: key);
 
   /// Called after the button was clicked
   final Function() clickCallback;

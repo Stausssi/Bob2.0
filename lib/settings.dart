@@ -41,9 +41,10 @@ class _SettingsState extends State<Settings> {
                 "Einstellungen",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
               ),
             )),
         Stack(
@@ -55,11 +56,12 @@ class _SettingsState extends State<Settings> {
                   padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                   child: Container(
                     decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        color: Colors.white),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                      color: Colors.white,
+                    ),
                     child: const Text("Hier kannst du mich personalisieren!"),
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     width: 140,
