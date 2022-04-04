@@ -64,10 +64,3 @@ String getLastConversationDate() {
 
   return date;
 }
-
-extension StringCapitalize on String {
-  /// Converts the first letter of the string to upper case
-  String capitalize() {
-    return "${substring(0, 1).toUpperCase()}${substring(1)}";
-  }
-}

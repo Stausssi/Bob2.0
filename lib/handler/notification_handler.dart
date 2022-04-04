@@ -63,9 +63,9 @@ class NotificationHandler {
 
   /// Maps a string representing the title of the notification to each [UseCase]
   static const Map<UseCase, String> _titleMapping = {
-    UseCase.finance: "Aktien sind mir viel zu riskant...",
-    UseCase.entertainment: "Netflix and chill is ready to fuck your bill",
-    UseCase.travel: "Auf zur Arbeit du Faulenzer",
+    UseCase.finance: "Finanzen",
+    UseCase.entertainment: "Unterhaltung",
+    UseCase.travel: "Arbeitsweg",
     UseCase.welcome: "Guten Morgen!",
   };
 

@@ -109,8 +109,9 @@ class ConversationHandler {
     currentUseCase = useCaseFromString(responseData["useCase"]);
 
     return BackendAnswer(
-        useCase: currentUseCase!,
-        tts: responseData["tts"],
-        furtherQuestions: responseData["further_questions"]);
+      useCase: currentUseCase!,
+      tts: responseData["tts"],
+      furtherQuestions: responseData["further_questions"],
+    );
   }
 }
