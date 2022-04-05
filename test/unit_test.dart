@@ -1,4 +1,4 @@
-import 'package:bob/handler/storage_handler.dart';
+import 'package:bob/handler/convers_handler.dart';
 import 'package:bob/home/home_widget.dart';
 import 'package:bob/util.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -107,5 +107,13 @@ void main() async {
       baseTime.difference(DateTime(2022, 1, 1, 0, 0, 1)).toFancyString(),
       "Gerade eben",
     );
+  });
+
+  test("Conversation Handler", () async {
+    BackendAnswer? answer =
+        await ConversationHandler().askQuestion("willkommen");
+
+    expect(answer != null, true);
+    expect(answer!.useCase, UseCase.welcome);
   });
 }
