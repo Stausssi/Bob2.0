@@ -29,4 +29,16 @@ void main() async {
 
     expect(find.byType(Conversation), findsOneWidget);
   });
+
+  // app.main();
+  //
+  // testWidgets("HomePage button checks", (WidgetTester tester) async {
+  //   await tester.pumpAndSettle();
+  //
+  //   // Check whether the conversation screen opens, if you press the help
+  //   await tester.tap(find.text("Klicke hier für Unterstützung"));
+  //   await tester.pumpAndSettle();
+  //
+  //   expect(find.byType(Conversation), findsOneWidget);
+  // });
 }
