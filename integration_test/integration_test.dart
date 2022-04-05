@@ -1,11 +1,13 @@
 import 'package:bob/chat/conversation.dart';
+import 'package:bob/handler/notification_handler.dart';
 import 'package:bob/main.dart' as app;
 import 'package:bob/main.dart';
 import 'package:bob/settings.dart';
+import 'package:bob/util.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-void main() async {
+void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   app.main();
@@ -28,6 +30,37 @@ void main() async {
     await tester.pumpAndSettle();
 
     expect(find.byType(Conversation), findsOneWidget);
+  });
+
+  test("Notification Handler", () async {
+    NotificationHandler handler = NotificationHandler();
+
+    // No launch use case
+    expect(await handler.launchUseCase, null);
+
+    // No pending notifications
+    var pending = await handler.pendingNotifications;
+    int pendingLength = pending.length;
+
+    // Schedule notification
+    handler.testNotifications();
+    pending = await handler.pendingNotifications;
+    expect(pending.length, pendingLength + 1);
+
+    // Remove again
+    handler.removeNotification();
+    pending = await handler.pendingNotifications;
+    expect(pending.length, 0);
+
+    // And schedule another one
+    handler.scheduleNotification(UseCase.welcome);
+    pending = await handler.pendingNotifications;
+    expect(pending.length, 1);
+
+    // Remove again
+    handler.removeNotification(UseCase.welcome);
+    pending = await handler.pendingNotifications;
+    expect(pending.length, 0);
   });
 
   // app.main();

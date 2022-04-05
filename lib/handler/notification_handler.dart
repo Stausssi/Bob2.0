@@ -49,6 +49,10 @@ class NotificationHandler {
     return null;
   }
 
+  /// Returns a list of pending notifications (not yet shown)
+  Future<List<PendingNotificationRequest>> get pendingNotifications =>
+      _plugin.pendingNotificationRequests();
+
   /// Android has to know these details, they are not really important.
   late final AndroidNotificationDetails _androidDetails;
   late final NotificationDetails _details;
@@ -183,7 +187,7 @@ class NotificationHandler {
   /// Remove a schedule notification to update the time of the daily repeat
   ///
   /// if [useCase] is [null], every notification will be cancelled
-  void removeNotification(UseCase? useCase) {
+  void removeNotification([UseCase? useCase]) {
     if (useCase != null) {
       print("Notifications for ${useCase.name} cancelled!");
       _plugin.cancel(_idMapping[useCase]!);
