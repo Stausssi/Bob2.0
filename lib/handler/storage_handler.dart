@@ -1,3 +1,4 @@
+import 'package:bob/handler/notification_handler.dart';
 import 'package:bob/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -130,6 +131,34 @@ class StorageHandler {
         return getValue(SettingKeys.entertainmentTime);
     }
   }
+
+  /// (Re)schedule notifications for the given [useCase]
+  ///
+  /// if [value] is true, notifications are scheduled
+  static void updateNotifications(UseCase useCase, bool value) {
+    // Persist the value
+    switch (useCase) {
+      case UseCase.welcome:
+        saveValue(SettingKeys.welcomeNotification, value);
+        break;
+      case UseCase.travel:
+        saveValue(SettingKeys.travelNotification, value);
+        break;
+      case UseCase.finance:
+        saveValue(SettingKeys.financeNotification, value);
+        break;
+      case UseCase.entertainment:
+        saveValue(SettingKeys.entertainmentNotification, value);
+        break;
+    }
+
+    // Schedule / Remove notifications depending on values
+    if (value) {
+      NotificationHandler().scheduleNotification(useCase);
+    } else {
+      NotificationHandler().removeNotification(useCase);
+    }
+  }
 }
 
 /// Contains a string representing a unique key for every value saved in local
@@ -143,9 +172,16 @@ class SettingKeys {
   static const String messageCount = "messageCount";
   static const String conversationCount = "conversationCount";
 
+  static const String welcomeNotification = "welcomeNotification";
   static const String welcomeTime = "welcomeTime";
+
+  static const String travelNotification = "travelNotification";
   static const String travelTime = "travelTime";
+
+  static const String financeNotification = "financeNotification";
   static const String financeTime = "financeTime";
+
+  static const String entertainmentNotification = "entertainmentNotification";
   static const String entertainmentTime = "entertainmentTime";
 }
 
@@ -157,9 +193,13 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.previousConversationDates: <String>[],
   SettingKeys.messageCount: 0,
   SettingKeys.conversationCount: 0,
+  SettingKeys.welcomeNotification: true,
   SettingKeys.welcomeTime: const Time(7),
+  SettingKeys.travelNotification: true,
   SettingKeys.travelTime: const Time(8),
+  SettingKeys.financeNotification: true,
   SettingKeys.financeTime: const Time(15, 30),
+  SettingKeys.entertainmentNotification: true,
   SettingKeys.entertainmentTime: const Time(20, 15),
 };
 

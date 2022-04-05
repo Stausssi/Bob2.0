@@ -122,21 +122,17 @@ class NotificationHandler {
     }
   }
 
-  /// Displays a test notification in 5 seconds time and also at the schedule time for
-  /// a random UseCase
+  /// Displays a test notification in 5 seconds time of a random [UseCase]
   void testNotifications() {
     scheduleNotification(
       UseCase.values[Random().nextInt(4)],
       tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
     );
-
-    scheduleNotification(
-      UseCase.values[Random().nextInt(4)],
-    );
   }
 
-  /// Schedule a notification for the [UseCase useCase]. The date is specified
-  /// by the valued stored in local storage
+  /// Schedule a notification for the [UseCase useCase].
+  ///
+  /// if no [date] is given, it will fall back to the value saved in local storage.
   ///
   /// The notification will repeat daily.
   Future<void> scheduleNotification(
@@ -189,6 +185,7 @@ class NotificationHandler {
   /// if [useCase] is [null], every notification will be cancelled
   void removeNotification(UseCase? useCase) {
     if (useCase != null) {
+      print("Notifications for ${useCase.name} cancelled!");
       _plugin.cancel(_idMapping[useCase]!);
     } else {
       _plugin.cancelAll();

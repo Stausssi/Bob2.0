@@ -72,10 +72,21 @@ class _ConversationState extends State<Conversation> {
 
     // Send a start message to init a use case started by a notification
     if (widget.startUseCase != null) {
-      sendMessage(widget.startUseCase!.name);
+      switch (widget.startUseCase!) {
+        case UseCase.welcome:
+          sendMessage("Guten Morgen Bob!");
+          break;
+        case UseCase.travel:
+          sendMessage("Travel dialog");
+          break;
+        case UseCase.finance:
+          sendMessage("Finanzübersicht");
+          break;
+        case UseCase.entertainment:
+          sendMessage("Netflix&Chill");
+          break;
+      }
     }
-
-    // _speechProcessing.read("Hallo hier ist TTS");
   }
 
   /// Prompt STT to listen to the user

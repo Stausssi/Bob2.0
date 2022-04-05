@@ -1,6 +1,8 @@
 import 'package:bob/handler/notification_handler.dart';
+import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 /// Themes
@@ -195,6 +197,7 @@ class UserSettings extends StatefulWidget {
 class _UserSettingsState extends State<UserSettings> {
   @override
   Widget build(BuildContext context) {
+    // TODO: Hier input für User name
     return SettingsList(
       applicationType: ApplicationType.material,
       platform: DevicePlatform.iOS,
@@ -233,18 +236,80 @@ class _PreferencesState extends State<Preferences> {
       shrinkWrap: false,
       sections: [
         SettingsSection(
-          title: const Text('Welcome Dialog'),
+          title: const Text('Willkommen'),
           tiles: <SettingsTile>[
-            SettingsTile.switchTile(
-              initialValue: true,
-              title: const Text('Test2'),
-              onPressed: (context) => {},
-              onToggle: (bool value) {},
-            ),
+            ...notificationTiles(UseCase.welcome),
+          ],
+        ),
+        SettingsSection(
+          title: const Text('Ankunft'),
+          tiles: <SettingsTile>[
+            ...notificationTiles(UseCase.travel),
+          ],
+        ),
+        SettingsSection(
+          title: const Text('Finanzen'),
+          tiles: <SettingsTile>[
+            ...notificationTiles(UseCase.finance),
+          ],
+        ),
+        SettingsSection(
+          title: const Text('Entertainment'),
+          tiles: <SettingsTile>[
+            ...notificationTiles(UseCase.entertainment),
           ],
         ),
       ],
     );
+  }
+
+  /// Returns a list of [SettingTile] containing two tiles needed for the handling
+  /// of notifications. They're the same for every use case: A boolean switch
+  /// and a time picker
+  ///
+  /// TODO: Auslagern in eines Einstellungs-Menü?
+  List<SettingsTile> notificationTiles(UseCase useCase) {
+    late String notificationKey;
+    late String timeKey;
+
+    switch (useCase) {
+      case UseCase.welcome:
+        notificationKey = SettingKeys.welcomeNotification;
+        timeKey = SettingKeys.welcomeTime;
+        break;
+      case UseCase.travel:
+        notificationKey = SettingKeys.travelNotification;
+        timeKey = SettingKeys.travelTime;
+        break;
+      case UseCase.finance:
+        notificationKey = SettingKeys.financeNotification;
+        timeKey = SettingKeys.financeTime;
+        break;
+      case UseCase.entertainment:
+        notificationKey = SettingKeys.entertainmentNotification;
+        timeKey = SettingKeys.entertainmentTime;
+        break;
+    }
+
+    bool notificationsEnabled = StorageHandler.getValue(notificationKey);
+    Time notificationTime = StorageHandler.getValue(timeKey);
+
+    return [
+      SettingsTile.switchTile(
+        initialValue: notificationsEnabled,
+        title: const Text("Benachrichtigungen"),
+        onToggle: (value) => setState(
+          () => StorageHandler.updateNotifications(useCase, value),
+        ),
+      ),
+      SettingsTile.navigation(
+        // TODO: Beautify String
+        value: Text("${notificationTime.toStorageString()} Uhr"),
+        title: const Text("Uhrzeit"),
+        // TODO: Time picker
+        onPressed: (_) => print("TODO: Implement time picker"),
+      ),
+    ];
   }
 }
 
