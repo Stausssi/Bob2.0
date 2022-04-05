@@ -64,7 +64,6 @@ class StorageHandler {
     } else if (value is List<String>) {
       _preferences.setStringList(key, value);
     } else if (value is Time) {
-      print("Saved time as ${value.toStorageString()}");
       _preferences.setString(key, value.toStorageString());
     } else {
       // Unknown class T of value

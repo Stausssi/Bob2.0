@@ -6,9 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() async {
-  setUp(() async {
-    await StorageHandler.init();
-  });
+  await StorageHandler.init();
 
   // Test util-class
   group("Utility (util.dart)", () {
@@ -44,6 +42,15 @@ void main() async {
   });
 
   group("Storage Handler", () {
+    test("Wrong class TypeError on save", () {
+      try {
+        // A map should not be supported
+        StorageHandler.saveValue("bogus", {});
+      } catch (e) {
+        expect(e is TypeError, true);
+      }
+    });
+
     test(
       "Convert Time to String",
       () => expect(const Time(1, 2, 3).toStorageString(), "1:2:3"),
@@ -69,6 +76,27 @@ void main() async {
       // Cleanup
       StorageHandler.resetKey(SettingKeys.previousConversations);
       StorageHandler.resetKey(SettingKeys.previousConversationDates);
+    });
+
+    test("Increase Message count", () {
+      int count = StorageHandler.getValue(SettingKeys.messageCount);
+      StorageHandler.increaseMessages();
+
+      expect(StorageHandler.getValue(SettingKeys.messageCount), count + 1);
+    });
+
+    test("Increase Conversation count", () {
+      int count = StorageHandler.getValue(SettingKeys.conversationCount);
+      StorageHandler.increaseConversations();
+
+      expect(StorageHandler.getValue(SettingKeys.conversationCount), count + 1);
+    });
+
+    test("Use Case Times", () {
+      expect(StorageHandler.getUseCaseTime(UseCase.welcome).hour, 7);
+      expect(StorageHandler.getUseCaseTime(UseCase.travel).hour, 8);
+      expect(StorageHandler.getUseCaseTime(UseCase.finance).hour, 15);
+      expect(StorageHandler.getUseCaseTime(UseCase.entertainment).hour, 20);
     });
   });
 
