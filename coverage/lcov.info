@@ -1,4 +1,4 @@
-SF:lib\chat\conversation.dart
+SF:lib/chat/conversation.dart
 DA:14,3
 DA:18,1
 DA:19,1
@@ -162,7 +162,7 @@ DA:476,2
 LF:160
 LH:50
 end_of_record
-SF:lib\handler\notification_handler.dart
+SF:lib/handler/notification_handler.dart
 DA:15,1
 DA:21,1
 DA:22,1
@@ -221,7 +221,7 @@ DA:195,2
 LF:55
 LH:48
 end_of_record
-SF:lib\main.dart
+SF:lib/main.dart
 DA:11,3
 DA:14,1
 DA:16,2
@@ -269,7 +269,7 @@ DA:125,2
 LF:44
 LH:42
 end_of_record
-SF:lib\settings.dart
+SF:lib/settings.dart
 DA:27,1
 DA:29,1
 DA:30,1
@@ -374,7 +374,7 @@ DA:340,0
 LF:101
 LH:30
 end_of_record
-SF:lib\util.dart
+SF:lib/util.dart
 DA:13,1
 DA:30,0
 DA:31,0
@@ -388,7 +388,7 @@ DA:62,0
 LF:10
 LH:5
 end_of_record
-SF:lib\chat\microphone_circle.dart
+SF:lib/chat/microphone_circle.dart
 DA:6,1
 DA:10,1
 DA:18,1
@@ -400,7 +400,7 @@ DA:31,1
 LF:8
 LH:8
 end_of_record
-SF:lib\chat\speech_processing.dart
+SF:lib/chat/speech_processing.dart
 DA:5,1
 DA:12,1
 DA:13,1
@@ -449,7 +449,7 @@ DA:124,0
 LF:45
 LH:17
 end_of_record
-SF:lib\handler\conversation_handler.dart
+SF:lib/handler/conversation_handler.dart
 DA:8,1
 DA:9,1
 DA:16,1
@@ -478,7 +478,7 @@ DA:85,0
 LF:25
 LH:11
 end_of_record
-SF:lib\handler\storage_handler.dart
+SF:lib/handler/storage_handler.dart
 DA:9,0
 DA:12,1
 DA:18,1
@@ -557,7 +557,7 @@ DA:214,0
 LF:75
 LH:31
 end_of_record
-SF:lib\home\home_widget.dart
+SF:lib/home/home_widget.dart
 DA:10,2
 DA:12,1
 DA:13,1
