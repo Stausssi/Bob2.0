@@ -1,4 +1,5 @@
 import 'package:bob/chat/conversation.dart';
+import 'package:bob/chat/microphone_circle.dart';
 import 'package:bob/handler/notification_handler.dart';
 import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/main.dart' as app;
@@ -85,12 +86,18 @@ void main() {
 
       await tester.tap(find.text("Ich möchte schreiben"));
       await tester.pumpAndSettle();
-      await tester.enterText(find.byType(TextField), "Bogus Nachricht");
+      await tester.enterText(find.byType(TextField), "Guten Morgen");
       await tester.pump();
       await tester.tap(find.byIcon(Icons.send));
       await tester.pump();
 
-      expect(find.text("Bogus Nachricht"), findsOneWidget);
+      expect(find.text("Guten Morgen"), findsOneWidget);
+
+      // Test voice
+      await tester.tap(find.byType(MicrophoneCircle));
+      await tester.pump();
+      await tester.tap(find.text("Zuhören stoppen"));
+      await tester.pump();
     });
   });
 

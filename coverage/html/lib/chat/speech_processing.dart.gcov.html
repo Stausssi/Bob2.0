@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntry">32</td>
             <td class="headerCovTableEntry">45</td>
-            <td class="headerCovTableEntryLo">55.6 %</td>
+            <td class="headerCovTableEntryLo">71.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-06 15:55:28</td>
+            <td class="headerValue">2022-04-06 16:07:52</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -147,22 +147,22 @@
 <a name="85"><span class="lineNum">      85 </span>            : </a>
 <a name="86"><span class="lineNum">      86 </span><span class="lineCov">          1 :     _state = _SpeechProcessingState.speaking;</span></a>
 <a name="87"><span class="lineNum">      87 </span>            : </a>
-<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          4 :     if ((await _flutterTTS.speak(text)) != 1) {</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          3 :     if ((await _flutterTTS.speak(text)) != 1) {</span></a>
 <a name="89"><span class="lineNum">      89 </span><span class="lineNoCov">          0 :       print(&quot;something went wrong while trying to speak!&quot;);</span></a>
 <a name="90"><span class="lineNum">      90 </span>            :     }</a>
 <a name="91"><span class="lineNum">      91 </span>            : </a>
-<a name="92"><span class="lineNum">      92 </span><span class="lineCov">          1 :     _state = _SpeechProcessingState.idle;</span></a>
+<a name="92"><span class="lineNum">      92 </span><span class="lineNoCov">          0 :     _state = _SpeechProcessingState.idle;</span></a>
 <a name="93"><span class="lineNum">      93 </span>            :   }</a>
 <a name="94"><span class="lineNum">      94 </span>            : </a>
 <a name="95"><span class="lineNum">      95 </span>            :   /// Start listening to the microphone of the user.</a>
 <a name="96"><span class="lineNum">      96 </span>            :   ///</a>
 <a name="97"><span class="lineNum">      97 </span>            :   /// Calls [onResult] with the understood text.</a>
-<a name="98"><span class="lineNum">      98 </span><span class="lineNoCov">          0 :   void listen(Function(String) onResult, {Function()? onTimeout}) {</span></a>
-<a name="99"><span class="lineNum">      99 </span><span class="lineNoCov">          0 :     assert(isReady);</span></a>
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">          1 :   void listen(Function(String) onResult, {Function()? onTimeout}) {</span></a>
+<a name="99"><span class="lineNum">      99 </span><span class="lineCov">          1 :     assert(isReady);</span></a>
 <a name="100"><span class="lineNum">     100 </span>            : </a>
-<a name="101"><span class="lineNum">     101 </span><span class="lineNoCov">          0 :     _state = _SpeechProcessingState.listening;</span></a>
+<a name="101"><span class="lineNum">     101 </span><span class="lineCov">          1 :     _state = _SpeechProcessingState.listening;</span></a>
 <a name="102"><span class="lineNum">     102 </span>            : </a>
-<a name="103"><span class="lineNum">     103 </span><span class="lineNoCov">          0 :     _speechToText.listen(</span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          2 :     _speechToText.listen(</span></a>
 <a name="104"><span class="lineNum">     104 </span><span class="lineNoCov">          0 :       onResult: (result) {</span></a>
 <a name="105"><span class="lineNum">     105 </span><span class="lineNoCov">          0 :         if (result.finalResult) {</span></a>
 <a name="106"><span class="lineNum">     106 </span><span class="lineNoCov">          0 :           onResult(result.recognizedWords);</span></a>
@@ -175,15 +175,15 @@
 <a name="113"><span class="lineNum">     113 </span>            :     );</a>
 <a name="114"><span class="lineNum">     114 </span>            : </a>
 <a name="115"><span class="lineNum">     115 </span>            :     if (onTimeout != null) {</a>
-<a name="116"><span class="lineNum">     116 </span><span class="lineNoCov">          0 :       _onTimeout = onTimeout;</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineCov">          1 :       _onTimeout = onTimeout;</span></a>
 <a name="117"><span class="lineNum">     117 </span>            :     }</a>
 <a name="118"><span class="lineNum">     118 </span>            :   }</a>
 <a name="119"><span class="lineNum">     119 </span>            : </a>
 <a name="120"><span class="lineNum">     120 </span>            :   /// Stop listening to the microphone of the user</a>
-<a name="121"><span class="lineNum">     121 </span><span class="lineNoCov">          0 :   void stopListening() async {</span></a>
-<a name="122"><span class="lineNum">     122 </span><span class="lineNoCov">          0 :     _state = _SpeechProcessingState.idle;</span></a>
+<a name="121"><span class="lineNum">     121 </span><span class="lineCov">          1 :   void stopListening() async {</span></a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineCov">          1 :     _state = _SpeechProcessingState.idle;</span></a>
 <a name="123"><span class="lineNum">     123 </span>            : </a>
-<a name="124"><span class="lineNum">     124 </span><span class="lineNoCov">          0 :     await _speechToText.stop();</span></a>
+<a name="124"><span class="lineNum">     124 </span><span class="lineCov">          3 :     await _speechToText.stop();</span></a>
 <a name="125"><span class="lineNum">     125 </span>            :   }</a>
 <a name="126"><span class="lineNum">     126 </span>            : }</a>
 </pre>

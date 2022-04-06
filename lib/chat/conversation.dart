@@ -61,9 +61,11 @@ class _ConversationState extends State<Conversation> {
   void _setLoadingText([String? text]) {
     text ??= "";
 
-    setState(() {
-      loadingText = text!;
-    });
+    if (mounted) {
+      setState(() {
+        loadingText = text!;
+      });
+    }
   }
 
   /// Callback for [SpeechProcessing] to call once TTS and STT are initialized
@@ -108,6 +110,14 @@ class _ConversationState extends State<Conversation> {
     _setLoadingText();
   }
 
+  void _addMessage(chat_types.Message message) {
+    if (mounted) {
+      setState(() {
+        _messages.insert(0, message);
+      });
+    }
+  }
+
   /// Parse the voice / text input of the user and request an answer from the backend
   void sendMessage(String text) async {
     // Add the message of the user to the chat history
@@ -125,9 +135,7 @@ class _ConversationState extends State<Conversation> {
         StorageHandler.increaseConversations();
       }
 
-      setState(() {
-        _messages.insert(0, userMessage);
-      });
+      _addMessage(userMessage);
     }
 
     final backendAnswer = await conversationHandler.askQuestion(text);
@@ -168,9 +176,7 @@ class _ConversationState extends State<Conversation> {
 
     StorageHandler.increaseMessages();
 
-    setState(() {
-      _messages.insert(0, answer);
-    });
+    _addMessage(answer);
 
     if (hasFurtherQuestions) {
       answer = chat_types.CustomMessage(
@@ -180,9 +186,7 @@ class _ConversationState extends State<Conversation> {
         createdAt: DateTime.now().millisecondsSinceEpoch,
       );
 
-      setState(() {
-        _messages.insert(0, answer);
-      });
+      _addMessage(answer);
     }
   }
 
