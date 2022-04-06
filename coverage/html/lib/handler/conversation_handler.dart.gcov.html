@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-06 13:38:26</td>
+            <td class="headerValue">2022-04-06 15:55:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -112,18 +112,18 @@
 <a name="50"><span class="lineNum">      50 </span>            :   ///   further_questions: [&quot;question 1&quot;, ..., &quot;question n&quot;]</a>
 <a name="51"><span class="lineNum">      51 </span>            :   /// }</a>
 <a name="52"><span class="lineNum">      52 </span>            :   /// ```</a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          1 :   Future&lt;BackendAnswer?&gt; askQuestion(String question) async {</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          2 :   Future&lt;BackendAnswer?&gt; askQuestion(String question) async {</span></a>
 <a name="54"><span class="lineNum">      54 </span>            :     try {</a>
-<a name="55"><span class="lineNum">      55 </span><span class="lineCov">          3 :       Response&lt;Map&lt;String, dynamic&gt;&gt; response = await _connection.post(</span></a>
+<a name="55"><span class="lineNum">      55 </span><span class="lineCov">          6 :       Response&lt;Map&lt;String, dynamic&gt;&gt; response = await _connection.post(</span></a>
 <a name="56"><span class="lineNum">      56 </span>            :         &quot;/input&quot;,</a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          1 :         data: {</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          2 :         data: {</span></a>
 <a name="58"><span class="lineNum">      58 </span>            :           &quot;speech&quot;: question,</a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          1 :           &quot;preferences&quot;: {},</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          2 :           &quot;preferences&quot;: {},</span></a>
 <a name="60"><span class="lineNum">      60 </span>            :         },</a>
 <a name="61"><span class="lineNum">      61 </span>            :       );</a>
 <a name="62"><span class="lineNum">      62 </span>            : </a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          1 :       if (response.data != null) {</span></a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          2 :         return _parseBackendAnswer(response.data!);</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          2 :       if (response.data != null) {</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          4 :         return _parseBackendAnswer(response.data!);</span></a>
 <a name="65"><span class="lineNum">      65 </span>            :       }</a>
 <a name="66"><span class="lineNum">      66 </span>            :     } catch (e) {</a>
 <a name="67"><span class="lineNum">      67 </span>            :       return null;</a>
@@ -134,10 +134,10 @@
 <a name="72"><span class="lineNum">      72 </span>            : </a>
 <a name="73"><span class="lineNum">      73 </span>            :   /// Parse the given response data and create a [BackendAnswer] object to make</a>
 <a name="74"><span class="lineNum">      74 </span>            :   /// the response easier to handle</a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          1 :   BackendAnswer? _parseBackendAnswer(Map&lt;String, dynamic&gt; responseData) {</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          2 :   BackendAnswer? _parseBackendAnswer(Map&lt;String, dynamic&gt; responseData) {</span></a>
 <a name="76"><span class="lineNum">      76 </span>            :     try {</a>
 <a name="77"><span class="lineNum">      77 </span>            :       // TODO: Undo temporary fix</a>
-<a name="78"><span class="lineNum">      78 </span><span class="lineCov">          4 :       currentUseCase = useCaseFromString(responseData[&quot;use_case&quot;][0]);</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">          7 :       currentUseCase = useCaseFromString(responseData[&quot;use_case&quot;][0]);</span></a>
 <a name="79"><span class="lineNum">      79 </span>            : </a>
 <a name="80"><span class="lineNum">      80 </span><span class="lineCov">          1 :       return BackendAnswer(</span></a>
 <a name="81"><span class="lineNum">      81 </span><span class="lineCov">          1 :         useCase: currentUseCase!,</span></a>

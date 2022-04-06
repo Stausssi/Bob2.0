@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">60</td>
+            <td class="headerCovTableEntry">72</td>
             <td class="headerCovTableEntry">75</td>
-            <td class="headerCovTableEntryMed">80.0 %</td>
+            <td class="headerCovTableEntryHi">96.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-06 13:38:26</td>
+            <td class="headerValue">2022-04-06 15:55:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -96,8 +96,8 @@
 <a name="34"><span class="lineNum">      34 </span><span class="lineCov">          3 :       if (defaultValue is List) {</span></a>
 <a name="35"><span class="lineNum">      35 </span><span class="lineCov">          6 :         return _preferences.getStringList(key) as T;</span></a>
 <a name="36"><span class="lineNum">      36 </span><span class="lineCov">          3 :       } else if (defaultValue is Time) {</span></a>
-<a name="37"><span class="lineNum">      37 </span><span class="lineCov">          1 :         return TimeStringConverter.fromStorageString(</span></a>
-<a name="38"><span class="lineNum">      38 </span><span class="lineCov">          2 :           _preferences.getString(key)!,</span></a>
+<a name="37"><span class="lineNum">      37 </span><span class="lineCov">          2 :         return TimeStringConverter.fromStorageString(</span></a>
+<a name="38"><span class="lineNum">      38 </span><span class="lineCov">          4 :           _preferences.getString(key)!,</span></a>
 <a name="39"><span class="lineNum">      39 </span>            :         ) as T;</a>
 <a name="40"><span class="lineNum">      40 </span>            :       }</a>
 <a name="41"><span class="lineNum">      41 </span>            :       // No special treatment needed</a>
@@ -120,7 +120,7 @@
 <a name="58"><span class="lineNum">      58 </span><span class="lineCov">          3 :     } else if (value is int) {</span></a>
 <a name="59"><span class="lineNum">      59 </span><span class="lineCov">          6 :       _preferences.setInt(key, value);</span></a>
 <a name="60"><span class="lineNum">      60 </span><span class="lineCov">          3 :     } else if (value is bool) {</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineNoCov">          0 :       _preferences.setBool(key, value);</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          2 :       _preferences.setBool(key, value);</span></a>
 <a name="62"><span class="lineNum">      62 </span><span class="lineCov">          3 :     } else if (value is double) {</span></a>
 <a name="63"><span class="lineNum">      63 </span><span class="lineNoCov">          0 :       _preferences.setDouble(key, value);</span></a>
 <a name="64"><span class="lineNum">      64 </span><span class="lineCov">          3 :     } else if (value is List&lt;String&gt;) {</span></a>
@@ -134,49 +134,49 @@
 <a name="72"><span class="lineNum">      72 </span>            :   }</a>
 <a name="73"><span class="lineNum">      73 </span>            : </a>
 <a name="74"><span class="lineNum">      74 </span>            :   /// Removes the given key from local storage</a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          2 :   static void resetKey(String key) {</span></a>
-<a name="76"><span class="lineNum">      76 </span><span class="lineCov">          4 :     _preferences.remove(key);</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          3 :   static void resetKey(String key) {</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">          6 :     _preferences.remove(key);</span></a>
 <a name="77"><span class="lineNum">      77 </span>            :   }</a>
 <a name="78"><span class="lineNum">      78 </span>            : </a>
 <a name="79"><span class="lineNum">      79 </span>            :   /// Increase the number of conversations</a>
 <a name="80"><span class="lineNum">      80 </span>            :   ///</a>
 <a name="81"><span class="lineNum">      81 </span>            :   /// Needed for the statistics on the home page</a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          1 :   static void increaseConversations() {</span></a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          1 :     saveValue(</span></a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          2 :   static void increaseConversations() {</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          2 :     saveValue(</span></a>
 <a name="84"><span class="lineNum">      84 </span>            :       SettingKeys.conversationCount,</a>
-<a name="85"><span class="lineNum">      85 </span><span class="lineCov">          2 :       getValue(SettingKeys.conversationCount) + 1,</span></a>
+<a name="85"><span class="lineNum">      85 </span><span class="lineCov">          4 :       getValue(SettingKeys.conversationCount) + 1,</span></a>
 <a name="86"><span class="lineNum">      86 </span>            :     );</a>
 <a name="87"><span class="lineNum">      87 </span>            :   }</a>
 <a name="88"><span class="lineNum">      88 </span>            : </a>
 <a name="89"><span class="lineNum">      89 </span>            :   /// Increase the number of messages</a>
 <a name="90"><span class="lineNum">      90 </span>            :   ///</a>
 <a name="91"><span class="lineNum">      91 </span>            :   /// Needed for the statistics on the home page</a>
-<a name="92"><span class="lineNum">      92 </span><span class="lineCov">          1 :   static void increaseMessages() {</span></a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineCov">          1 :     saveValue(</span></a>
+<a name="92"><span class="lineNum">      92 </span><span class="lineCov">          2 :   static void increaseMessages() {</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">          2 :     saveValue(</span></a>
 <a name="94"><span class="lineNum">      94 </span>            :       SettingKeys.messageCount,</a>
-<a name="95"><span class="lineNum">      95 </span><span class="lineCov">          2 :       getValue(SettingKeys.messageCount) + 1,</span></a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineCov">          4 :       getValue(SettingKeys.messageCount) + 1,</span></a>
 <a name="96"><span class="lineNum">      96 </span>            :     );</a>
 <a name="97"><span class="lineNum">      97 </span>            :   }</a>
 <a name="98"><span class="lineNum">      98 </span>            : </a>
 <a name="99"><span class="lineNum">      99 </span>            :   /// Save the use case of a conversation for the &quot;Recent conversations&quot; list</a>
-<a name="100"><span class="lineNum">     100 </span><span class="lineCov">          1 :   static void addConversation(String useCase) {</span></a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">          2 :   static void addConversation(String useCase) {</span></a>
 <a name="101"><span class="lineNum">     101 </span>            :     // Save conversation in list</a>
 <a name="102"><span class="lineNum">     102 </span>            :     List&lt;String&gt; previousConversations =</a>
-<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          1 :         getValue(SettingKeys.previousConversations);</span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          2 :         getValue(SettingKeys.previousConversations);</span></a>
 <a name="104"><span class="lineNum">     104 </span>            :     List&lt;String&gt; previousDates =</a>
-<a name="105"><span class="lineNum">     105 </span><span class="lineCov">          1 :         getValue(SettingKeys.previousConversationDates);</span></a>
+<a name="105"><span class="lineNum">     105 </span><span class="lineCov">          2 :         getValue(SettingKeys.previousConversationDates);</span></a>
 <a name="106"><span class="lineNum">     106 </span>            : </a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          1 :     previousConversations.insert(0, useCase);</span></a>
-<a name="108"><span class="lineNum">     108 </span><span class="lineCov">          3 :     previousDates.insert(0, DateTime.now().toIso8601String());</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          2 :     previousConversations.insert(0, useCase);</span></a>
+<a name="108"><span class="lineNum">     108 </span><span class="lineCov">          6 :     previousDates.insert(0, DateTime.now().toIso8601String());</span></a>
 <a name="109"><span class="lineNum">     109 </span>            : </a>
 <a name="110"><span class="lineNum">     110 </span>            :     // Trim the list to only contain as much elements as needed</a>
 <a name="111"><span class="lineNum">     111 </span>            :     previousConversations =</a>
-<a name="112"><span class="lineNum">     112 </span><span class="lineCov">          2 :         previousConversations.take(_maxConversationCount).toList();</span></a>
-<a name="113"><span class="lineNum">     113 </span><span class="lineCov">          2 :     previousDates = previousDates.take(_maxConversationCount).toList();</span></a>
+<a name="112"><span class="lineNum">     112 </span><span class="lineCov">          4 :         previousConversations.take(_maxConversationCount).toList();</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineCov">          4 :     previousDates = previousDates.take(_maxConversationCount).toList();</span></a>
 <a name="114"><span class="lineNum">     114 </span>            : </a>
 <a name="115"><span class="lineNum">     115 </span>            :     // Save them</a>
-<a name="116"><span class="lineNum">     116 </span><span class="lineCov">          1 :     saveValue(SettingKeys.previousConversations, previousConversations);</span></a>
-<a name="117"><span class="lineNum">     117 </span><span class="lineCov">          1 :     saveValue(SettingKeys.previousConversationDates, previousDates);</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineCov">          2 :     saveValue(SettingKeys.previousConversations, previousConversations);</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineCov">          2 :     saveValue(SettingKeys.previousConversationDates, previousDates);</span></a>
 <a name="118"><span class="lineNum">     118 </span>            :   }</a>
 <a name="119"><span class="lineNum">     119 </span>            : </a>
 <a name="120"><span class="lineNum">     120 </span>            :   /// Returns the time the [useCase] should be scheduled at</a>
@@ -184,40 +184,40 @@
 <a name="122"><span class="lineNum">     122 </span>            :     switch (useCase) {</a>
 <a name="123"><span class="lineNum">     123 </span><span class="lineCov">          2 :       case UseCase.welcome:</span></a>
 <a name="124"><span class="lineNum">     124 </span><span class="lineCov">          2 :         return getValue(SettingKeys.welcomeTime);</span></a>
-<a name="125"><span class="lineNum">     125 </span><span class="lineCov">          1 :       case UseCase.travel:</span></a>
-<a name="126"><span class="lineNum">     126 </span><span class="lineCov">          1 :         return getValue(SettingKeys.travelTime);</span></a>
-<a name="127"><span class="lineNum">     127 </span><span class="lineCov">          1 :       case UseCase.finance:</span></a>
-<a name="128"><span class="lineNum">     128 </span><span class="lineCov">          1 :         return getValue(SettingKeys.financeTime);</span></a>
-<a name="129"><span class="lineNum">     129 </span><span class="lineCov">          1 :       case UseCase.entertainment:</span></a>
-<a name="130"><span class="lineNum">     130 </span><span class="lineCov">          1 :         return getValue(SettingKeys.entertainmentTime);</span></a>
+<a name="125"><span class="lineNum">     125 </span><span class="lineCov">          2 :       case UseCase.travel:</span></a>
+<a name="126"><span class="lineNum">     126 </span><span class="lineCov">          2 :         return getValue(SettingKeys.travelTime);</span></a>
+<a name="127"><span class="lineNum">     127 </span><span class="lineCov">          2 :       case UseCase.finance:</span></a>
+<a name="128"><span class="lineNum">     128 </span><span class="lineCov">          2 :         return getValue(SettingKeys.financeTime);</span></a>
+<a name="129"><span class="lineNum">     129 </span><span class="lineCov">          2 :       case UseCase.entertainment:</span></a>
+<a name="130"><span class="lineNum">     130 </span><span class="lineCov">          2 :         return getValue(SettingKeys.entertainmentTime);</span></a>
 <a name="131"><span class="lineNum">     131 </span>            :     }</a>
 <a name="132"><span class="lineNum">     132 </span>            :   }</a>
 <a name="133"><span class="lineNum">     133 </span>            : </a>
 <a name="134"><span class="lineNum">     134 </span>            :   /// (Re)schedule notifications for the given [useCase]</a>
 <a name="135"><span class="lineNum">     135 </span>            :   ///</a>
 <a name="136"><span class="lineNum">     136 </span>            :   /// if [value] is true, notifications are scheduled</a>
-<a name="137"><span class="lineNum">     137 </span><span class="lineNoCov">          0 :   static void updateNotifications(UseCase useCase, bool value) {</span></a>
+<a name="137"><span class="lineNum">     137 </span><span class="lineCov">          1 :   static void updateNotifications(UseCase useCase, bool value) {</span></a>
 <a name="138"><span class="lineNum">     138 </span>            :     // Persist the value</a>
 <a name="139"><span class="lineNum">     139 </span>            :     switch (useCase) {</a>
-<a name="140"><span class="lineNum">     140 </span><span class="lineNoCov">          0 :       case UseCase.welcome:</span></a>
-<a name="141"><span class="lineNum">     141 </span><span class="lineNoCov">          0 :         saveValue(SettingKeys.welcomeNotification, value);</span></a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineCov">          1 :       case UseCase.welcome:</span></a>
+<a name="141"><span class="lineNum">     141 </span><span class="lineCov">          1 :         saveValue(SettingKeys.welcomeNotification, value);</span></a>
 <a name="142"><span class="lineNum">     142 </span>            :         break;</a>
-<a name="143"><span class="lineNum">     143 </span><span class="lineNoCov">          0 :       case UseCase.travel:</span></a>
-<a name="144"><span class="lineNum">     144 </span><span class="lineNoCov">          0 :         saveValue(SettingKeys.travelNotification, value);</span></a>
+<a name="143"><span class="lineNum">     143 </span><span class="lineCov">          1 :       case UseCase.travel:</span></a>
+<a name="144"><span class="lineNum">     144 </span><span class="lineCov">          1 :         saveValue(SettingKeys.travelNotification, value);</span></a>
 <a name="145"><span class="lineNum">     145 </span>            :         break;</a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineNoCov">          0 :       case UseCase.finance:</span></a>
-<a name="147"><span class="lineNum">     147 </span><span class="lineNoCov">          0 :         saveValue(SettingKeys.financeNotification, value);</span></a>
+<a name="146"><span class="lineNum">     146 </span><span class="lineCov">          1 :       case UseCase.finance:</span></a>
+<a name="147"><span class="lineNum">     147 </span><span class="lineCov">          1 :         saveValue(SettingKeys.financeNotification, value);</span></a>
 <a name="148"><span class="lineNum">     148 </span>            :         break;</a>
-<a name="149"><span class="lineNum">     149 </span><span class="lineNoCov">          0 :       case UseCase.entertainment:</span></a>
-<a name="150"><span class="lineNum">     150 </span><span class="lineNoCov">          0 :         saveValue(SettingKeys.entertainmentNotification, value);</span></a>
+<a name="149"><span class="lineNum">     149 </span><span class="lineCov">          1 :       case UseCase.entertainment:</span></a>
+<a name="150"><span class="lineNum">     150 </span><span class="lineCov">          1 :         saveValue(SettingKeys.entertainmentNotification, value);</span></a>
 <a name="151"><span class="lineNum">     151 </span>            :         break;</a>
 <a name="152"><span class="lineNum">     152 </span>            :     }</a>
 <a name="153"><span class="lineNum">     153 </span>            : </a>
 <a name="154"><span class="lineNum">     154 </span>            :     // Schedule / Remove notifications depending on values</a>
 <a name="155"><span class="lineNum">     155 </span>            :     if (value) {</a>
-<a name="156"><span class="lineNum">     156 </span><span class="lineNoCov">          0 :       NotificationHandler().scheduleNotification(useCase);</span></a>
+<a name="156"><span class="lineNum">     156 </span><span class="lineCov">          2 :       NotificationHandler().scheduleNotification(useCase);</span></a>
 <a name="157"><span class="lineNum">     157 </span>            :     } else {</a>
-<a name="158"><span class="lineNum">     158 </span><span class="lineNoCov">          0 :       NotificationHandler().removeNotification(useCase);</span></a>
+<a name="158"><span class="lineNum">     158 </span><span class="lineCov">          2 :       NotificationHandler().removeNotification(useCase);</span></a>
 <a name="159"><span class="lineNum">     159 </span>            :     }</a>
 <a name="160"><span class="lineNum">     160 </span>            :   }</a>
 <a name="161"><span class="lineNum">     161 </span>            : }</a>
@@ -271,9 +271,9 @@
 <a name="209"><span class="lineNum">     209 </span>            :   }</a>
 <a name="210"><span class="lineNum">     210 </span>            : </a>
 <a name="211"><span class="lineNum">     211 </span>            :   /// Creates a time object from a given string</a>
-<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          1 :   static Time fromStorageString(String value) {</span></a>
-<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          1 :     List&lt;String&gt; parts = value.split(&quot;:&quot;);</span></a>
-<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          7 :     return Time(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));</span></a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          2 :   static Time fromStorageString(String value) {</span></a>
+<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          2 :     List&lt;String&gt; parts = value.split(&quot;:&quot;);</span></a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">         14 :     return Time(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));</span></a>
 <a name="215"><span class="lineNum">     215 </span>            :   }</a>
 <a name="216"><span class="lineNum">     216 </span>            : }</a>
 </pre>

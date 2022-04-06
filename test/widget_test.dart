@@ -73,9 +73,6 @@ void main() async {
       find.text("Nachrichten"),
       findsOneWidget,
     );
-
-    // TODO: Check what happens if the previous conversation lists have an unequal length
-    // TODO: Test conversation history building
   });
 
   testWidgets("Main counter test", (WidgetTester tester) async {
