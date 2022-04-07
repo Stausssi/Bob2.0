@@ -129,7 +129,7 @@ class _SettingsState extends State<Settings> {
                       context,
                       MaterialPageRoute(
                         builder: (_) => const SettingsSubmenu(
-                          title: "Integrationen verwalten",
+                          title: "Benachrichtigungen verwalten",
                           settings: Notifications(),
                         ),
                       ),
@@ -154,11 +154,17 @@ class _SettingsState extends State<Settings> {
   }
 }
 
+/// The [SettingsSubmenu] is opened, when a setting of the main settings page
+/// is clicked.
+///
 class SettingsSubmenu extends StatefulWidget {
   const SettingsSubmenu({required this.title, required this.settings, Key? key})
       : super(key: key);
 
+  /// The title of the widget
   final String title;
+
+  /// child settings widget
   final Widget settings;
 
   @override
