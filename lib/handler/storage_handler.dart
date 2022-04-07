@@ -250,6 +250,7 @@ class SettingKeys {
   static const String movieGenres = "movieGenres";
   static const String footballClub = "footballClub";
 
+  /// All keys associated with a use case preference
   static List<String> get preferenceKeys => [
         // Welcome
         raplaLink, newsCategories, weatherLocation,
@@ -351,8 +352,8 @@ List<DropdownMenuItem<String>> get gasolineTypes => const [
       )
     ];
 
-// Choices for preferedVehicle
-List<DropdownMenuItem<String>> get preferedVehicles => const [
+/// Choices for preferredVehicle
+List<DropdownMenuItem<String>> get preferredVehicles => const [
       DropdownMenuItem(
         child: Text("Auto"),
         value: "Auto",
@@ -376,6 +377,8 @@ List<String> get newsCategories => [
       "Cannabis-Legalisierung",
     ];
 
+/// Each item in this list represents a movie genre the user likes and wants to
+/// be notified of
 List<String> get movieGenres => [
       "Action",
       "Fiction",
