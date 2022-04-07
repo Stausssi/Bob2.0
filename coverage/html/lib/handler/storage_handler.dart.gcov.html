@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">63</td>
-            <td class="headerCovTableEntry">69</td>
-            <td class="headerCovTableEntryHi">91.3 %</td>
+            <td class="headerCovTableEntry">65</td>
+            <td class="headerCovTableEntry">70</td>
+            <td class="headerCovTableEntryHi">92.9 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-07 09:21:39</td>
+            <td class="headerValue">2022-04-07 10:07:15</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -116,7 +116,7 @@
 <a name="54"><span class="lineNum">      54 </span>            :     // Use a special method depending on the class of the value</a>
 <a name="55"><span class="lineNum">      55 </span>            :     // Color and MirrorLayout have to be converted back to a string</a>
 <a name="56"><span class="lineNum">      56 </span><span class="lineCov">          3 :     if (value is String) {</span></a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineNoCov">          0 :       _preferences.setString(key, value);</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          2 :       _preferences.setString(key, value);</span></a>
 <a name="58"><span class="lineNum">      58 </span><span class="lineCov">          3 :     } else if (value is int) {</span></a>
 <a name="59"><span class="lineNum">      59 </span><span class="lineCov">          6 :       _preferences.setInt(key, value);</span></a>
 <a name="60"><span class="lineNum">      60 </span><span class="lineCov">          3 :     } else if (value is bool) {</span></a>
@@ -125,8 +125,8 @@
 <a name="63"><span class="lineNum">      63 </span><span class="lineNoCov">          0 :       _preferences.setDouble(key, value);</span></a>
 <a name="64"><span class="lineNum">      64 </span><span class="lineCov">          3 :     } else if (value is List&lt;String&gt;) {</span></a>
 <a name="65"><span class="lineNum">      65 </span><span class="lineCov">          6 :       _preferences.setStringList(key, value);</span></a>
-<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          1 :     } else if (value is Time) {</span></a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineNoCov">          0 :       _preferences.setString(key, value.toStorageString());</span></a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          2 :     } else if (value is Time) {</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          3 :       _preferences.setString(key, value.toStorageString());</span></a>
 <a name="68"><span class="lineNum">      68 </span>            :     } else {</a>
 <a name="69"><span class="lineNum">      69 </span>            :       // Unknown class T of value</a>
 <a name="70"><span class="lineNum">      70 </span><span class="lineCov">          1 :       throw TypeError();</span></a>
@@ -181,7 +181,7 @@
 <a name="119"><span class="lineNum">     119 </span>            : </a>
 <a name="120"><span class="lineNum">     120 </span>            :   /// Returns the time the [useCase] should be scheduled at</a>
 <a name="121"><span class="lineNum">     121 </span><span class="lineCov">          2 :   static Time getUseCaseTime(UseCase useCase) {</span></a>
-<a name="122"><span class="lineNum">     122 </span>            :     switch (useCase) {</a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineNoCov">          0 :     switch (useCase) {</span></a>
 <a name="123"><span class="lineNum">     123 </span><span class="lineCov">          2 :       case UseCase.welcome:</span></a>
 <a name="124"><span class="lineNum">     124 </span><span class="lineCov">          2 :         return getValue(SettingKeys.welcomeTime);</span></a>
 <a name="125"><span class="lineNum">     125 </span><span class="lineCov">          2 :       case UseCase.travel:</span></a>
@@ -270,10 +270,10 @@
 <a name="208"><span class="lineNum">     208 </span>            : </a>
 <a name="209"><span class="lineNum">     209 </span>            : extension TimeStringConverter on Time {</a>
 <a name="210"><span class="lineNum">     210 </span>            :   /// Converts a time to a readable format which can easily be stored in local storage</a>
-<a name="211"><span class="lineNum">     211 </span><span class="lineCov">          1 :   String toStorageString() {</span></a>
-<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          4 :     String timeString = hour &lt; 10 ? &quot;0$hour&quot; : &quot;$hour&quot;;</span></a>
-<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          1 :     timeString += &quot;:&quot;;</span></a>
-<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          5 :     timeString += minute &lt; 10 ? &quot;0$minute&quot; : &quot;$minute&quot;;</span></a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineCov">          2 :   String toStorageString() {</span></a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineCov">         10 :     String timeString = hour &lt; 10 ? &quot;0$hour&quot; : &quot;$hour&quot;;</span></a>
+<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          2 :     timeString += &quot;:&quot;;</span></a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">         12 :     timeString += minute &lt; 10 ? &quot;0$minute&quot; : &quot;$minute&quot;;</span></a>
 <a name="215"><span class="lineNum">     215 </span>            :     return timeString;</a>
 <a name="216"><span class="lineNum">     216 </span>            :   }</a>
 <a name="217"><span class="lineNum">     217 </span>            : </a>
