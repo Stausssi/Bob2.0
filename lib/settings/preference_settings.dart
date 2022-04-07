@@ -1,8 +1,8 @@
+import 'package:bob/handler/storage_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../api_keys.dart';
 import '../util.dart';
 
 class PreferenceSettings extends StatefulWidget {
@@ -55,7 +55,7 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
                       ),
                       body: MapBoxPlaceSearchWidget(
                         popOnSelect: true,
-                        apiKey: ApiKeys.mapBox,
+                        apiKey: StorageHandler.getAPIKey("mapBox"),
                         searchHint: 'Your Hint here',
                         onSelected: (place) {
                           // data
