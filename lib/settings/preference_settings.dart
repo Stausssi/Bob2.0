@@ -1,8 +1,8 @@
-import 'package:bob/api_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../api_keys.dart';
 import '../util.dart';
 
 class PreferenceSettings extends StatefulWidget {
