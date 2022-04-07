@@ -212,6 +212,21 @@ class SettingKeys {
   static const String footballClub = "footballClub"; // Text
 }
 
+MapBoxPlace get standardLocation => MapBoxPlace(
+      id: "",
+      type: FeatureType.FEATURE,
+      placeType: [],
+      addressNumber: "",
+      placeName: "",
+      matchingText: "",
+      matchingPlaceName: "",
+      bbox: [],
+      properties: Properties(shortCode: "", wikidata: "", address: ""),
+      context: [],
+      center: [48.78232, 9.17702],
+      geometry: Geometry(type: GeometryType.POINT, coordinates: []),
+    );
+
 /// Sets the default values of the persisted values. Needed if there is no value
 /// in the local storage with the given [SettingKeys]
 Map<String, dynamic> _defaultValues = {
@@ -228,20 +243,25 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.financeTime: const Time(15, 30),
   SettingKeys.entertainmentNotification: true,
   SettingKeys.entertainmentTime: const Time(20, 15),
-  SettingKeys.weatherLocation: MapBoxPlace(
-    id: "",
-    type: FeatureType.FEATURE,
-    placeType: [],
-    addressNumber: "",
-    placeName: "",
-    matchingText: "",
-    matchingPlaceName: "",
-    bbox: [],
-    properties: Properties(shortCode: "", wikidata: "", address: ""),
-    context: [],
-    center: [48.78232, 9.17702],
-    geometry: Geometry(type: GeometryType.POINT, coordinates: []),
-  )
+
+  /// welcome settings
+  SettingKeys.raplaLink: "",
+  SettingKeys.newsCategories: <String>[],
+  SettingKeys.weatherLocation: standardLocation,
+
+  /// Travel settings
+  SettingKeys.homeLocation: standardLocation,
+  SettingKeys.workingLocation: standardLocation,
+  SettingKeys.gasolineType: <String>[],
+
+  /// Finance settings
+  SettingKeys.binanceApiKey: "",
+  SettingKeys.stockIndex: "",
+  SettingKeys.stockList: <String>[],
+
+  /// Entertainment settings
+  SettingKeys.movieGenres: <String>[],
+  SettingKeys.footballClub: "",
 };
 
 extension TimeStringConverter on Time {
