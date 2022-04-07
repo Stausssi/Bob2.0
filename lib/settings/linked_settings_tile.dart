@@ -1,9 +1,9 @@
 import 'package:bob/handler/storage_handler.dart';
+import 'package:color/color.dart' as c;
 import 'package:flutter/material.dart';
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../api_keys.dart';
 import '../util.dart';
 
 enum LinkedTileType {
@@ -223,6 +223,9 @@ class LocationPicker extends StatefulWidget {
 class _LocationPickerState extends State<LocationPicker> {
   @override
   Widget build(BuildContext context) {
+    Location location =
+        Location(lat: widget.place.center[1], lng: widget.place.center[0]);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -236,14 +239,26 @@ class _LocationPickerState extends State<LocationPicker> {
         shadowColor: Colors.transparent,
         toolbarHeight: 100,
       ),
-      body: Column(
+      body: Stack(
         children: [
+          Image.network(StaticImage(
+            apiKey: StorageHandler.getAPIKey("mapBox"),
+          ).getStaticUrlWithMarker(
+            center: location,
+            width: MediaQuery.of(context).size.width.toInt(),
+            marker: MapBoxMarker(
+                markerColor: const c.RgbColor(255, 0, 0),
+                markerLetter: 'circle',
+                markerSize: MarkerSize.LARGE),
+            zoomLevel: 14,
+            style: MapBoxStyle.Streets,
+            render2x: true,
+          )),
           MapBoxPlaceSearchWidget(
             popOnSelect: true,
-            apiKey: ApiKeys.mapBox,
+            apiKey: StorageHandler.getAPIKey("mapBox"),
             searchHint: 'Ort',
-            location: Location(
-                lat: widget.place.center[0], lng: widget.place.center[1]),
+            location: location,
             onSelected: (place) {
               widget.onSelected(place);
             },
