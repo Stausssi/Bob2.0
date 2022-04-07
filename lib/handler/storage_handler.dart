@@ -182,6 +182,26 @@ class SettingKeys {
 
   static const String entertainmentNotification = "entertainmentNotification";
   static const String entertainmentTime = "entertainmentTime";
+
+  /// Welcome settings
+  static const String raplaLink = "raplaLink"; // Text field
+  static const String newsCategories = "newsCategories"; // Multiple Switches
+  static const String weatherLocation = "weatherLocation"; //Location Picker
+
+  /// Travel settings
+  static const String homeLocation = "homeLocation"; //Location Picker
+  static const String workingLocation = "workingLocation"; //Location Picker
+  static const String gasolineType = "gasolineType"; // Dropdown select
+
+  /// Finance settings
+  static const String binanceApiKey = "binanceApiKey"; // Text field
+  static const String stockIndex = "stockIndex"; // Text field
+  static const String stockList = "stockList"; // Multiline Text field
+
+  /// Entertainment settings
+  static const String movieGenres =
+      "movieGenres"; // Multiple Switches --> can API search for one or multiple ?
+  static const String footballClub = "footballClub"; // Text
 }
 
 /// Sets the default values of the persisted values. Needed if there is no value
@@ -205,12 +225,15 @@ Map<String, dynamic> _defaultValues = {
 extension TimeStringConverter on Time {
   /// Converts a time to a readable format which can easily be stored in local storage
   String toStorageString() {
-    return "$hour:$minute:$second";
+    String timeString = hour < 10 ? "0$hour" : "$hour";
+    timeString += ":";
+    timeString += minute < 10 ? "0$minute" : "$minute";
+    return timeString;
   }
 
   /// Creates a time object from a given string
   static Time fromStorageString(String value) {
     List<String> parts = value.split(":");
-    return Time(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+    return Time(int.parse(parts[0]), int.parse(parts[1]));
   }
 }

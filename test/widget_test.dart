@@ -1,8 +1,8 @@
+import 'package:bob/Settings/settings.dart';
 import 'package:bob/chat/microphone_circle.dart';
 import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/home/home_widget.dart';
 import 'package:bob/main.dart';
-import 'package:bob/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -89,7 +89,7 @@ void main() async {
     );
   });
 
-  testWidgets("Settings Test", (WidgetTester tester) async {
+  testWidgets("settings Test", (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const BobApp());
     await binding.setSurfaceSize(const Size(1080, 2340));

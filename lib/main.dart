@@ -1,10 +1,10 @@
 import 'package:bob/handler/notification_handler.dart';
 import 'package:bob/handler/storage_handler.dart';
-import 'package:bob/settings.dart';
 import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Settings/settings.dart';
 import 'chat/conversation.dart';
 import 'home/home_widget.dart';
 
