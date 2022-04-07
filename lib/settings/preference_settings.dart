@@ -1,8 +1,9 @@
 import 'package:bob/settings/linked_settings_tile.dart';
+import 'package:bob/handler/storage_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
-
 import '../handler/storage_handler.dart';
+import '../util.dart';
 
 class PreferenceSettings extends StatefulWidget {
   const PreferenceSettings({Key? key}) : super(key: key);

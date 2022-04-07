@@ -29,4 +29,4 @@ doc/api/
 .idea/
 bob.iml
 
-lib/api_keys.dart
+assets/api_keys.json

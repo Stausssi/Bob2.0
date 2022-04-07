@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-07 09:21:39</td>
+            <td class="headerValue">2022-04-07 11:11:32</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -122,8 +122,8 @@
 <a name="60"><span class="lineNum">      60 </span>            :         },</a>
 <a name="61"><span class="lineNum">      61 </span>            :       );</a>
 <a name="62"><span class="lineNum">      62 </span>            : </a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          2 :       if (response.data != null) {</span></a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          4 :         return _parseBackendAnswer(response.data!);</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          1 :       if (response.data != null) {</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          2 :         return _parseBackendAnswer(response.data!);</span></a>
 <a name="65"><span class="lineNum">      65 </span>            :       }</a>
 <a name="66"><span class="lineNum">      66 </span>            :     } catch (e) {</a>
 <a name="67"><span class="lineNum">      67 </span>            :       return null;</a>
@@ -134,17 +134,17 @@
 <a name="72"><span class="lineNum">      72 </span>            : </a>
 <a name="73"><span class="lineNum">      73 </span>            :   /// Parse the given response data and create a [BackendAnswer] object to make</a>
 <a name="74"><span class="lineNum">      74 </span>            :   /// the response easier to handle</a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          2 :   BackendAnswer? _parseBackendAnswer(Map&lt;String, dynamic&gt; responseData) {</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          1 :   BackendAnswer? _parseBackendAnswer(Map&lt;String, dynamic&gt; responseData) {</span></a>
 <a name="76"><span class="lineNum">      76 </span>            :     try {</a>
 <a name="77"><span class="lineNum">      77 </span>            :       // TODO: Undo temporary fix</a>
-<a name="78"><span class="lineNum">      78 </span><span class="lineCov">          8 :       currentUseCase = useCaseFromString(responseData[&quot;use_case&quot;][0]);</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">          4 :       currentUseCase = useCaseFromString(responseData[&quot;use_case&quot;][0]);</span></a>
 <a name="79"><span class="lineNum">      79 </span>            : </a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineCov">          2 :       return BackendAnswer(</span></a>
-<a name="81"><span class="lineNum">      81 </span><span class="lineCov">          2 :         useCase: currentUseCase!,</span></a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          2 :         tts: responseData[&quot;tts&quot;],</span></a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          2 :         furtherQuestions: (responseData[&quot;further_questions&quot;] as List&lt;dynamic&gt;)</span></a>
-<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          6 :             .map((e) =&gt; e.toString())</span></a>
-<a name="85"><span class="lineNum">      85 </span><span class="lineCov">          2 :             .toList(),</span></a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineCov">          1 :       return BackendAnswer(</span></a>
+<a name="81"><span class="lineNum">      81 </span><span class="lineCov">          1 :         useCase: currentUseCase!,</span></a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          1 :         tts: responseData[&quot;tts&quot;],</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          1 :         furtherQuestions: (responseData[&quot;further_questions&quot;] as List&lt;dynamic&gt;)</span></a>
+<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          3 :             .map((e) =&gt; e.toString())</span></a>
+<a name="85"><span class="lineNum">      85 </span><span class="lineCov">          1 :             .toList(),</span></a>
 <a name="86"><span class="lineNum">      86 </span>            :       );</a>
 <a name="87"><span class="lineNum">      87 </span>            :     } catch (e) {</a>
 <a name="88"><span class="lineNum">      88 </span>            :       return null;</a>

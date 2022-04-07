@@ -4,9 +4,9 @@ import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'Settings/settings.dart';
 import 'chat/conversation.dart';
 import 'home/home_widget.dart';
+import 'settings/settings.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 UseCase? startupUseCase;

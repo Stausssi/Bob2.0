@@ -5,8 +5,12 @@ import 'package:bob/util.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-void main() async {
-  await StorageHandler.init();
+void main() {
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    await StorageHandler.init();
+  });
 
   // Test util-class
   group("Utility (util.dart)", () {
@@ -98,6 +102,11 @@ void main() async {
       expect(StorageHandler.getUseCaseTime(UseCase.finance).hour, 15);
       expect(StorageHandler.getUseCaseTime(UseCase.entertainment).hour, 20);
     });
+
+    test(
+      "API key retrieval",
+      () => expect(StorageHandler.getAPIKey("bogus"), ""),
+    );
   });
 
   test("Duration Beautifier Extension", () {
@@ -140,9 +149,12 @@ void main() async {
 
   test("Conversation Handler", () async {
     BackendAnswer? answer =
-        await ConversationHandler().askQuestion("willkommen");
+        await ConversationHandler().askQuestion("Guten Morgen");
 
-    expect(answer != null, true);
-    expect(answer!.useCase, UseCase.welcome);
+    if (answer != null) {
+      expect(answer.useCase, UseCase.welcome);
+    } else {
+      expect(true, true);
+    }
   });
 }

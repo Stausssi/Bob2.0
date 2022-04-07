@@ -1,21 +1,21 @@
-import 'package:bob/Settings/settings.dart';
 import 'package:bob/chat/microphone_circle.dart';
 import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/home/home_widget.dart';
 import 'package:bob/main.dart';
+import 'package:bob/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
-  setUp(() => GoogleFonts.config.allowRuntimeFetching = false);
+  late final TestWidgetsFlutterBinding binding;
 
-  final TestWidgetsFlutterBinding binding =
-      TestWidgetsFlutterBinding.ensureInitialized()
-          as TestWidgetsFlutterBinding;
-
-  await StorageHandler.init();
-  // await NotificationHandler().init();
+  setUpAll(() async {
+    GoogleFonts.config.allowRuntimeFetching = false;
+    binding = TestWidgetsFlutterBinding.ensureInitialized()
+        as TestWidgetsFlutterBinding;
+    await StorageHandler.init();
+  });
 
   testWidgets("Microphone circle icon test", (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(

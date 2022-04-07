@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:bob/handler/notification_handler.dart';
 import 'package:bob/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,10 +18,18 @@ class StorageHandler {
   /// Specifies how many conversations should be shown in the list on the home page
   static const int _maxConversationCount = 3;
 
+  /// Contains all api keys
+  static late Map<String, dynamic> _apiKeys;
+
   /// Initialize the handler
   static Future<void> init() async {
     WidgetsFlutterBinding.ensureInitialized();
     _preferences = await SharedPreferences.getInstance();
+
+    // Load keys from JSON
+    _apiKeys = jsonDecode(
+      await rootBundle.loadString("assets/api_keys.json"),
+    );
   }
 
   /// Tries retrieving the value of the class [T] with the given [key].
@@ -146,6 +157,14 @@ class StorageHandler {
     } else {
       NotificationHandler().removeNotification(useCase);
     }
+  }
+
+  /// Returns the api key with the given [key] located in "assets/api_keys.json"
+  ///
+  /// An empty String ("") is returned, if there is no api key present with the
+  /// given identifier
+  static String getAPIKey(String key) {
+    return _apiKeys[key] ?? "";
   }
 }
 

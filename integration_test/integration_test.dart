@@ -1,10 +1,10 @@
-import 'package:bob/Settings/settings.dart';
 import 'package:bob/chat/conversation.dart';
 import 'package:bob/chat/microphone_circle.dart';
 import 'package:bob/handler/notification_handler.dart';
 import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/main.dart' as app;
 import 'package:bob/main.dart';
+import 'package:bob/settings/settings.dart';
 import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -117,7 +117,7 @@ void main() {
       pending = await handler.pendingNotifications;
       expect(pending.length, pendingLength + 1);
 
-      // Remove again
+      // Remove all notifications
       handler.removeNotification();
       pending = await handler.pendingNotifications;
       expect(pending.length, 0);
