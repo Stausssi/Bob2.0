@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">108</td>
+            <td class="headerCovTableEntry">131</td>
             <td class="headerCovTableEntry">162</td>
-            <td class="headerCovTableEntryLo">66.7 %</td>
+            <td class="headerCovTableEntryMed">80.9 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-07 10:07:15</td>
+            <td class="headerValue">2022-04-07 11:11:32</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -205,50 +205,50 @@
 <a name="143"><span class="lineNum">     143 </span>            :     String response = &quot;Sorry, auf diese Frage habe ich leider keine Antwort :(&quot;;</a>
 <a name="144"><span class="lineNum">     144 </span>            :     bool hasFurtherQuestions = false;</a>
 <a name="145"><span class="lineNum">     145 </span>            :     if (backendAnswer != null) {</a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineNoCov">          0 :       response = backendAnswer.tts;</span></a>
-<a name="147"><span class="lineNum">     147 </span><span class="lineNoCov">          0 :       hasFurtherQuestions = backendAnswer.furtherQuestions.isNotEmpty;</span></a>
+<a name="146"><span class="lineNum">     146 </span><span class="lineCov">          1 :       response = backendAnswer.tts;</span></a>
+<a name="147"><span class="lineNum">     147 </span><span class="lineCov">          2 :       hasFurtherQuestions = backendAnswer.furtherQuestions.isNotEmpty;</span></a>
 <a name="148"><span class="lineNum">     148 </span>            : </a>
-<a name="149"><span class="lineNum">     149 </span><span class="lineNoCov">          0 :       if (_useCase != conversationHandler.currentUseCase) {</span></a>
-<a name="150"><span class="lineNum">     150 </span><span class="lineNoCov">          0 :         _conversationSaved = false;</span></a>
-<a name="151"><span class="lineNum">     151 </span><span class="lineNoCov">          0 :         _useCase = conversationHandler.currentUseCase;</span></a>
+<a name="149"><span class="lineNum">     149 </span><span class="lineCov">          4 :       if (_useCase != conversationHandler.currentUseCase) {</span></a>
+<a name="150"><span class="lineNum">     150 </span><span class="lineCov">          1 :         _conversationSaved = false;</span></a>
+<a name="151"><span class="lineNum">     151 </span><span class="lineCov">          3 :         _useCase = conversationHandler.currentUseCase;</span></a>
 <a name="152"><span class="lineNum">     152 </span>            :       }</a>
 <a name="153"><span class="lineNum">     153 </span>            : </a>
 <a name="154"><span class="lineNum">     154 </span>            :       // Save the conversation if a use case was detected and is different from the one saved here</a>
-<a name="155"><span class="lineNum">     155 </span><span class="lineNoCov">          0 :       if (!_conversationSaved) {</span></a>
-<a name="156"><span class="lineNum">     156 </span><span class="lineNoCov">          0 :         StorageHandler.addConversation(</span></a>
-<a name="157"><span class="lineNum">     157 </span><span class="lineNoCov">          0 :           conversationHandler.currentUseCase!.name,</span></a>
+<a name="155"><span class="lineNum">     155 </span><span class="lineCov">          1 :       if (!_conversationSaved) {</span></a>
+<a name="156"><span class="lineNum">     156 </span><span class="lineCov">          1 :         StorageHandler.addConversation(</span></a>
+<a name="157"><span class="lineNum">     157 </span><span class="lineCov">          3 :           conversationHandler.currentUseCase!.name,</span></a>
 <a name="158"><span class="lineNum">     158 </span>            :         );</a>
-<a name="159"><span class="lineNum">     159 </span><span class="lineNoCov">          0 :         _conversationSaved = true;</span></a>
+<a name="159"><span class="lineNum">     159 </span><span class="lineCov">          1 :         _conversationSaved = true;</span></a>
 <a name="160"><span class="lineNum">     160 </span>            : </a>
-<a name="161"><span class="lineNum">     161 </span><span class="lineNoCov">          0 :         print(&quot;Saved conversation with usecase $_useCase&quot;);</span></a>
+<a name="161"><span class="lineNum">     161 </span><span class="lineCov">          3 :         print(&quot;Saved conversation with usecase $_useCase&quot;);</span></a>
 <a name="162"><span class="lineNum">     162 </span>            :       }</a>
 <a name="163"><span class="lineNum">     163 </span>            :     }</a>
 <a name="164"><span class="lineNum">     164 </span>            : </a>
 <a name="165"><span class="lineNum">     165 </span>            :     // Read the text ...</a>
-<a name="166"><span class="lineNum">     166 </span><span class="lineNoCov">          0 :     _speechProcessing.read(response);</span></a>
+<a name="166"><span class="lineNum">     166 </span><span class="lineCov">          2 :     _speechProcessing.read(response);</span></a>
 <a name="167"><span class="lineNum">     167 </span>            : </a>
 <a name="168"><span class="lineNum">     168 </span>            :     // ... and display it</a>
-<a name="169"><span class="lineNum">     169 </span><span class="lineNoCov">          0 :     chat_types.Message answer = chat_types.TextMessage(</span></a>
-<a name="170"><span class="lineNum">     170 </span><span class="lineNoCov">          0 :       author: _bobUser,</span></a>
-<a name="171"><span class="lineNum">     171 </span><span class="lineNoCov">          0 :       id: _uuidGen.v1(),</span></a>
+<a name="169"><span class="lineNum">     169 </span><span class="lineCov">          1 :     chat_types.Message answer = chat_types.TextMessage(</span></a>
+<a name="170"><span class="lineNum">     170 </span><span class="lineCov">          1 :       author: _bobUser,</span></a>
+<a name="171"><span class="lineNum">     171 </span><span class="lineCov">          2 :       id: _uuidGen.v1(),</span></a>
 <a name="172"><span class="lineNum">     172 </span>            :       text: response,</a>
 <a name="173"><span class="lineNum">     173 </span>            :       repliedMessage: userMessage,</a>
-<a name="174"><span class="lineNum">     174 </span><span class="lineNoCov">          0 :       createdAt: DateTime.now().millisecondsSinceEpoch,</span></a>
+<a name="174"><span class="lineNum">     174 </span><span class="lineCov">          2 :       createdAt: DateTime.now().millisecondsSinceEpoch,</span></a>
 <a name="175"><span class="lineNum">     175 </span>            :     );</a>
 <a name="176"><span class="lineNum">     176 </span>            : </a>
-<a name="177"><span class="lineNum">     177 </span><span class="lineNoCov">          0 :     StorageHandler.increaseMessages();</span></a>
+<a name="177"><span class="lineNum">     177 </span><span class="lineCov">          1 :     StorageHandler.increaseMessages();</span></a>
 <a name="178"><span class="lineNum">     178 </span>            : </a>
-<a name="179"><span class="lineNum">     179 </span><span class="lineNoCov">          0 :     _addMessage(answer);</span></a>
+<a name="179"><span class="lineNum">     179 </span><span class="lineCov">          1 :     _addMessage(answer);</span></a>
 <a name="180"><span class="lineNum">     180 </span>            : </a>
 <a name="181"><span class="lineNum">     181 </span>            :     if (hasFurtherQuestions) {</a>
-<a name="182"><span class="lineNum">     182 </span><span class="lineNoCov">          0 :       answer = chat_types.CustomMessage(</span></a>
-<a name="183"><span class="lineNum">     183 </span><span class="lineNoCov">          0 :         author: _bobUser,</span></a>
-<a name="184"><span class="lineNum">     184 </span><span class="lineNoCov">          0 :         id: _uuidGen.v1(),</span></a>
-<a name="185"><span class="lineNum">     185 </span><span class="lineNoCov">          0 :         metadata: {&quot;questions&quot;: backendAnswer?.furtherQuestions},</span></a>
-<a name="186"><span class="lineNum">     186 </span><span class="lineNoCov">          0 :         createdAt: DateTime.now().millisecondsSinceEpoch,</span></a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">          1 :       answer = chat_types.CustomMessage(</span></a>
+<a name="183"><span class="lineNum">     183 </span><span class="lineCov">          1 :         author: _bobUser,</span></a>
+<a name="184"><span class="lineNum">     184 </span><span class="lineCov">          2 :         id: _uuidGen.v1(),</span></a>
+<a name="185"><span class="lineNum">     185 </span><span class="lineCov">          2 :         metadata: {&quot;questions&quot;: backendAnswer?.furtherQuestions},</span></a>
+<a name="186"><span class="lineNum">     186 </span><span class="lineCov">          2 :         createdAt: DateTime.now().millisecondsSinceEpoch,</span></a>
 <a name="187"><span class="lineNum">     187 </span>            :       );</a>
 <a name="188"><span class="lineNum">     188 </span>            : </a>
-<a name="189"><span class="lineNum">     189 </span><span class="lineNoCov">          0 :       _addMessage(answer);</span></a>
+<a name="189"><span class="lineNum">     189 </span><span class="lineCov">          1 :       _addMessage(answer);</span></a>
 <a name="190"><span class="lineNum">     190 </span>            :     }</a>
 <a name="191"><span class="lineNum">     191 </span>            :   }</a>
 <a name="192"><span class="lineNum">     192 </span>            : </a>

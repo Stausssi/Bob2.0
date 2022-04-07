@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntry">32</td>
             <td class="headerCovTableEntry">45</td>
-            <td class="headerCovTableEntryLo">62.2 %</td>
+            <td class="headerCovTableEntryLo">71.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-07 10:07:15</td>
+            <td class="headerValue">2022-04-07 11:11:32</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -142,12 +142,12 @@
 <a name="80"><span class="lineNum">      80 </span>            :   }</a>
 <a name="81"><span class="lineNum">      81 </span>            : </a>
 <a name="82"><span class="lineNum">      82 </span>            :   /// Read the given out loud with TTS</a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineNoCov">          0 :   void read(String text) async {</span></a>
-<a name="84"><span class="lineNum">      84 </span><span class="lineNoCov">          0 :     assert(isReady);</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          1 :   void read(String text) async {</span></a>
+<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          1 :     assert(isReady);</span></a>
 <a name="85"><span class="lineNum">      85 </span>            : </a>
-<a name="86"><span class="lineNum">      86 </span><span class="lineNoCov">          0 :     _state = _SpeechProcessingState.speaking;</span></a>
+<a name="86"><span class="lineNum">      86 </span><span class="lineCov">          1 :     _state = _SpeechProcessingState.speaking;</span></a>
 <a name="87"><span class="lineNum">      87 </span>            : </a>
-<a name="88"><span class="lineNum">      88 </span><span class="lineNoCov">          0 :     if ((await _flutterTTS.speak(text)) != 1) {</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          3 :     if ((await _flutterTTS.speak(text)) != 1) {</span></a>
 <a name="89"><span class="lineNum">      89 </span><span class="lineNoCov">          0 :       print(&quot;something went wrong while trying to speak!&quot;);</span></a>
 <a name="90"><span class="lineNum">      90 </span>            :     }</a>
 <a name="91"><span class="lineNum">      91 </span>            : </a>

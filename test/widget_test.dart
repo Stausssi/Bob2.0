@@ -8,14 +8,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
-  setUp(() => GoogleFonts.config.allowRuntimeFetching = false);
+  late final TestWidgetsFlutterBinding binding;
 
-  final TestWidgetsFlutterBinding binding =
-      TestWidgetsFlutterBinding.ensureInitialized()
-          as TestWidgetsFlutterBinding;
-
-  await StorageHandler.init();
-  // await NotificationHandler().init();
+  setUpAll(() async {
+    GoogleFonts.config.allowRuntimeFetching = false;
+    binding = TestWidgetsFlutterBinding.ensureInitialized()
+        as TestWidgetsFlutterBinding;
+    await StorageHandler.init();
+  });
 
   testWidgets("Microphone circle icon test", (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(

@@ -155,6 +155,9 @@ class StorageHandler {
   }
 
   /// Returns the api key with the given [key] located in "assets/api_keys.json"
+  ///
+  /// An empty String ("") is returned, if there is no api key present with the
+  /// given identifier
   static String getAPIKey(String key) {
     return _apiKeys[key] ?? "";
   }

@@ -5,8 +5,12 @@ import 'package:bob/util.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-void main() async {
-  await StorageHandler.init();
+void main() {
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    await StorageHandler.init();
+  });
 
   // Test util-class
   group("Utility (util.dart)", () {
@@ -98,6 +102,11 @@ void main() async {
       expect(StorageHandler.getUseCaseTime(UseCase.finance).hour, 15);
       expect(StorageHandler.getUseCaseTime(UseCase.entertainment).hour, 20);
     });
+
+    test(
+      "API key retrieval",
+      () => expect(StorageHandler.getAPIKey("bogus"), ""),
+    );
   });
 
   test("Duration Beautifier Extension", () {
