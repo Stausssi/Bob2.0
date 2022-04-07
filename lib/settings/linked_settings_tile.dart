@@ -247,7 +247,7 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
         break;
 
       case SettingKeys.preferedVehicle:
-        items = preferedVehicles;
+        items = preferredVehicles;
         break;
     }
 
