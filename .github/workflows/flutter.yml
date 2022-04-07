@@ -29,7 +29,7 @@ jobs:
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
-        run: flutter analyze --no-pub
+        run: flutter analyze --no-pub --no-sound-null-safety
 
       - name: Run tests
-        run: flutter test --no-pub
+        run: flutter test --no-pub --no-sound-null-safety
