@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bob/handler/notification_handler.dart';
 import 'package:bob/util.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -302,7 +301,7 @@ Map<String, dynamic> _defaultValues = {
   /// welcome settings
   SettingKeys.raplaLink:
       "https://rapla.dhbw-stuttgart.de/rapla?key=txB1FOi5xd1wUJBWuX8lJhGDUgtMSFmnKLgAG_NVMhBUYcX7OIFJ2of49CgyjVbV&today=Heute",
-  SettingKeys.newsCategories: <String>[],
+  SettingKeys.newsCategories: <String>[""],
   SettingKeys.weatherLocation: standardLocation,
 
   /// Travel settings
@@ -314,11 +313,11 @@ Map<String, dynamic> _defaultValues = {
   /// Finance settings
   SettingKeys.binanceApiKey: "",
   SettingKeys.stockIndex: "DAX",
-  SettingKeys.stockList: <String>[""],
+  SettingKeys.stockList: <String>["AAPL", "TSLA", "GME", "AMZN"],
 
   /// Entertainment settings
-  SettingKeys.movieGenres: <String>[],
-  SettingKeys.footballClub: "",
+  SettingKeys.movieGenres: <String>["Fuck around and find out"],
+  SettingKeys.footballClub: "VfB Stuttgart",
 };
 
 extension TimeStringConverter on Time {
@@ -336,7 +335,6 @@ extension TimeStringConverter on Time {
     return Time(int.parse(parts[0]), int.parse(parts[1]));
   }
 }
-
 
 /// Choices for gasolineType
 List<DropdownMenuItem<String>> get gasolineTypes => const [
@@ -368,7 +366,7 @@ List<DropdownMenuItem<String>> get preferedVehicles => const [
         child: Text("Fahrrad"),
         value: "Fahrrad",
       ),
-	];
+    ];
 
 /// Each item in this list represents a news category the user can follow and be
 /// notified for
@@ -377,4 +375,13 @@ List<String> get newsCategories => [
       "Coronavirus",
       "Headlines",
       "Cannabis-Legalisierung",
+    ];
+
+List<String> get movieGenres => [
+      "Action",
+      "Fiction",
+      "Sci-Fi",
+      "Romance",
+      "Fuck around and find out",
+      "Comedy"
     ];
