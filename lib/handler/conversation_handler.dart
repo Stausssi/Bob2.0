@@ -33,7 +33,6 @@ class ConversationHandler {
   /// Connect to the backend
   void _initConnection() {
     _connection = Dio();
-    // TODO: Use real backend
     _connection.options.baseUrl = "http://193.196.52.233:80";
     _connection.options.connectTimeout = 5000;
     _connection.options.receiveTimeout = 2000;
