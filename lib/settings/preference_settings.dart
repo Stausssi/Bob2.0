@@ -21,7 +21,6 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
     return SettingsList(
       applicationType: ApplicationType.material,
       platform: DevicePlatform.iOS,
-      darkTheme: lightCupertinoSettingsTheme,
       shrinkWrap: false,
       sections: [
         /// Welcome

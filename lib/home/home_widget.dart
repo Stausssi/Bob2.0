@@ -33,12 +33,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                   backgroundColor: CustomColors.avatarBackground,
                 ),
                 const Padding(padding: EdgeInsets.all(6)),
-                Text(
-                  "Hallo ${StorageHandler.getValue(SettingKeys.userName)}",
-                  style: GoogleFonts.aBeeZee(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
+                Flexible(
+                  child: Text(
+                    "Hallo ${StorageHandler.getValue(SettingKeys.userName)}",
+                    style: GoogleFonts.aBeeZee(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
               ],
