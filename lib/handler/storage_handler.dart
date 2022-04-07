@@ -231,25 +231,24 @@ class SettingKeys {
   static const String entertainmentTime = "entertainmentTime";
 
   /// Welcome settings
-  static const String raplaLink = "raplaLink"; // Text field
-  static const String newsCategories = "newsCategories"; // Multiple Switches
-  static const String weatherLocation = "weatherLocation"; //Location Picker
+  static const String raplaLink = "raplaLink";
+  static const String newsCategories = "newsCategories";
+  static const String weatherLocation = "weatherLocation";
 
   /// Travel settings
-  static const String homeLocation = "homeLocation"; //Location Picker
-  static const String workingLocation = "workingLocation"; //Location Picker
-  static const String preferedVehicle = "preferedVehicle"; // Dropdown select
-  static const String gasolineType = "gasolineType"; // Dropdown select
+  static const String homeLocation = "homeLocation";
+  static const String workingLocation = "workingLocation";
+  static const String preferedVehicle = "preferedVehicle";
+  static const String gasolineType = "gasolineType";
 
   /// Finance settings
-  static const String binanceApiKey = "binanceApiKey"; // Text field
-  static const String stockIndex = "stockIndex"; // Text field
-  static const String stockList = "stockList"; // Multiline Text field
+  static const String binanceApiKey = "binanceApiKey";
+  static const String stockIndex = "stockIndex";
+  static const String stockList = "stockList";
 
   /// Entertainment settings
-  static const String movieGenres =
-      "movieGenres"; // Multiple Switches --> can API search for one or multiple ?
-  static const String footballClub = "footballClub"; // Text
+  static const String movieGenres = "movieGenres";
+  static const String footballClub = "footballClub";
 
   static List<String> get preferenceKeys => [
         // Welcome
