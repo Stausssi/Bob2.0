@@ -254,6 +254,7 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
     return SettingsTile(
         title: titleWidget,
         description: descriptionWidget,
+        leading: widget.leading,
         trailing: DropdownButton(
           value: value,
           items: items,
