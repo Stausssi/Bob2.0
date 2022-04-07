@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">72</td>
-            <td class="headerCovTableEntry">75</td>
-            <td class="headerCovTableEntryHi">96.0 %</td>
+            <td class="headerCovTableEntry">63</td>
+            <td class="headerCovTableEntry">69</td>
+            <td class="headerCovTableEntryHi">91.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-06 16:07:52</td>
+            <td class="headerValue">2022-04-07 09:21:39</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -116,17 +116,17 @@
 <a name="54"><span class="lineNum">      54 </span>            :     // Use a special method depending on the class of the value</a>
 <a name="55"><span class="lineNum">      55 </span>            :     // Color and MirrorLayout have to be converted back to a string</a>
 <a name="56"><span class="lineNum">      56 </span><span class="lineCov">          3 :     if (value is String) {</span></a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          2 :       _preferences.setString(key, value);</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineNoCov">          0 :       _preferences.setString(key, value);</span></a>
 <a name="58"><span class="lineNum">      58 </span><span class="lineCov">          3 :     } else if (value is int) {</span></a>
 <a name="59"><span class="lineNum">      59 </span><span class="lineCov">          6 :       _preferences.setInt(key, value);</span></a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          2 :     } else if (value is bool) {</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          2 :       _preferences.setBool(key, value);</span></a>
-<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          2 :     } else if (value is double) {</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          3 :     } else if (value is bool) {</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineNoCov">          0 :       _preferences.setBool(key, value);</span></a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          3 :     } else if (value is double) {</span></a>
 <a name="63"><span class="lineNum">      63 </span><span class="lineNoCov">          0 :       _preferences.setDouble(key, value);</span></a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          2 :     } else if (value is List&lt;String&gt;) {</span></a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          4 :       _preferences.setStringList(key, value);</span></a>
-<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          2 :     } else if (value is Time) {</span></a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          3 :       _preferences.setString(key, value.toStorageString());</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          3 :     } else if (value is List&lt;String&gt;) {</span></a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          6 :       _preferences.setStringList(key, value);</span></a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          1 :     } else if (value is Time) {</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineNoCov">          0 :       _preferences.setString(key, value.toStorageString());</span></a>
 <a name="68"><span class="lineNum">      68 </span>            :     } else {</a>
 <a name="69"><span class="lineNum">      69 </span>            :       // Unknown class T of value</a>
 <a name="70"><span class="lineNum">      70 </span><span class="lineCov">          1 :       throw TypeError();</span></a>
@@ -197,85 +197,92 @@
 <a name="135"><span class="lineNum">     135 </span>            :   ///</a>
 <a name="136"><span class="lineNum">     136 </span>            :   /// if [value] is true, notifications are scheduled</a>
 <a name="137"><span class="lineNum">     137 </span><span class="lineCov">          1 :   static void updateNotifications(UseCase useCase, bool value) {</span></a>
-<a name="138"><span class="lineNum">     138 </span>            :     // Persist the value</a>
-<a name="139"><span class="lineNum">     139 </span>            :     switch (useCase) {</a>
-<a name="140"><span class="lineNum">     140 </span><span class="lineCov">          1 :       case UseCase.welcome:</span></a>
-<a name="141"><span class="lineNum">     141 </span><span class="lineCov">          1 :         saveValue(SettingKeys.welcomeNotification, value);</span></a>
-<a name="142"><span class="lineNum">     142 </span>            :         break;</a>
-<a name="143"><span class="lineNum">     143 </span><span class="lineCov">          1 :       case UseCase.travel:</span></a>
-<a name="144"><span class="lineNum">     144 </span><span class="lineCov">          1 :         saveValue(SettingKeys.travelNotification, value);</span></a>
-<a name="145"><span class="lineNum">     145 </span>            :         break;</a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineCov">          1 :       case UseCase.finance:</span></a>
-<a name="147"><span class="lineNum">     147 </span><span class="lineCov">          1 :         saveValue(SettingKeys.financeNotification, value);</span></a>
-<a name="148"><span class="lineNum">     148 </span>            :         break;</a>
-<a name="149"><span class="lineNum">     149 </span><span class="lineCov">          1 :       case UseCase.entertainment:</span></a>
-<a name="150"><span class="lineNum">     150 </span><span class="lineCov">          1 :         saveValue(SettingKeys.entertainmentNotification, value);</span></a>
-<a name="151"><span class="lineNum">     151 </span>            :         break;</a>
-<a name="152"><span class="lineNum">     152 </span>            :     }</a>
-<a name="153"><span class="lineNum">     153 </span>            : </a>
-<a name="154"><span class="lineNum">     154 </span>            :     // Schedule / Remove notifications depending on values</a>
-<a name="155"><span class="lineNum">     155 </span>            :     if (value) {</a>
-<a name="156"><span class="lineNum">     156 </span><span class="lineCov">          2 :       NotificationHandler().scheduleNotification(useCase);</span></a>
-<a name="157"><span class="lineNum">     157 </span>            :     } else {</a>
-<a name="158"><span class="lineNum">     158 </span><span class="lineCov">          2 :       NotificationHandler().removeNotification(useCase);</span></a>
-<a name="159"><span class="lineNum">     159 </span>            :     }</a>
-<a name="160"><span class="lineNum">     160 </span>            :   }</a>
-<a name="161"><span class="lineNum">     161 </span>            : }</a>
-<a name="162"><span class="lineNum">     162 </span>            : </a>
-<a name="163"><span class="lineNum">     163 </span>            : /// Contains a string representing a unique key for every value saved in local</a>
-<a name="164"><span class="lineNum">     164 </span>            : /// device storage</a>
-<a name="165"><span class="lineNum">     165 </span>            : class SettingKeys {</a>
-<a name="166"><span class="lineNum">     166 </span><span class="lineNoCov">          0 :   const SettingKeys._();</span></a>
-<a name="167"><span class="lineNum">     167 </span>            : </a>
-<a name="168"><span class="lineNum">     168 </span>            :   static const String userName = &quot;userName&quot;;</a>
-<a name="169"><span class="lineNum">     169 </span>            :   static const String previousConversations = &quot;prevConversations&quot;;</a>
-<a name="170"><span class="lineNum">     170 </span>            :   static const String previousConversationDates = &quot;prevConvDate&quot;;</a>
-<a name="171"><span class="lineNum">     171 </span>            :   static const String messageCount = &quot;messageCount&quot;;</a>
-<a name="172"><span class="lineNum">     172 </span>            :   static const String conversationCount = &quot;conversationCount&quot;;</a>
-<a name="173"><span class="lineNum">     173 </span>            : </a>
-<a name="174"><span class="lineNum">     174 </span>            :   static const String welcomeNotification = &quot;welcomeNotification&quot;;</a>
-<a name="175"><span class="lineNum">     175 </span>            :   static const String welcomeTime = &quot;welcomeTime&quot;;</a>
-<a name="176"><span class="lineNum">     176 </span>            : </a>
-<a name="177"><span class="lineNum">     177 </span>            :   static const String travelNotification = &quot;travelNotification&quot;;</a>
-<a name="178"><span class="lineNum">     178 </span>            :   static const String travelTime = &quot;travelTime&quot;;</a>
+<a name="138"><span class="lineNum">     138 </span>            :     // Schedule / Remove notifications depending on values</a>
+<a name="139"><span class="lineNum">     139 </span>            :     if (value) {</a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineCov">          2 :       NotificationHandler().scheduleNotification(useCase);</span></a>
+<a name="141"><span class="lineNum">     141 </span>            :     } else {</a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          2 :       NotificationHandler().removeNotification(useCase);</span></a>
+<a name="143"><span class="lineNum">     143 </span>            :     }</a>
+<a name="144"><span class="lineNum">     144 </span>            :   }</a>
+<a name="145"><span class="lineNum">     145 </span>            : }</a>
+<a name="146"><span class="lineNum">     146 </span>            : </a>
+<a name="147"><span class="lineNum">     147 </span>            : /// Contains a string representing a unique key for every value saved in local</a>
+<a name="148"><span class="lineNum">     148 </span>            : /// device storage</a>
+<a name="149"><span class="lineNum">     149 </span>            : class SettingKeys {</a>
+<a name="150"><span class="lineNum">     150 </span><span class="lineNoCov">          0 :   const SettingKeys._();</span></a>
+<a name="151"><span class="lineNum">     151 </span>            : </a>
+<a name="152"><span class="lineNum">     152 </span>            :   static const String userName = &quot;userName&quot;;</a>
+<a name="153"><span class="lineNum">     153 </span>            :   static const String previousConversations = &quot;prevConversations&quot;;</a>
+<a name="154"><span class="lineNum">     154 </span>            :   static const String previousConversationDates = &quot;prevConvDate&quot;;</a>
+<a name="155"><span class="lineNum">     155 </span>            :   static const String messageCount = &quot;messageCount&quot;;</a>
+<a name="156"><span class="lineNum">     156 </span>            :   static const String conversationCount = &quot;conversationCount&quot;;</a>
+<a name="157"><span class="lineNum">     157 </span>            : </a>
+<a name="158"><span class="lineNum">     158 </span>            :   static const String welcomeNotification = &quot;welcomeNotification&quot;;</a>
+<a name="159"><span class="lineNum">     159 </span>            :   static const String welcomeTime = &quot;welcomeTime&quot;;</a>
+<a name="160"><span class="lineNum">     160 </span>            : </a>
+<a name="161"><span class="lineNum">     161 </span>            :   static const String travelNotification = &quot;travelNotification&quot;;</a>
+<a name="162"><span class="lineNum">     162 </span>            :   static const String travelTime = &quot;travelTime&quot;;</a>
+<a name="163"><span class="lineNum">     163 </span>            : </a>
+<a name="164"><span class="lineNum">     164 </span>            :   static const String financeNotification = &quot;financeNotification&quot;;</a>
+<a name="165"><span class="lineNum">     165 </span>            :   static const String financeTime = &quot;financeTime&quot;;</a>
+<a name="166"><span class="lineNum">     166 </span>            : </a>
+<a name="167"><span class="lineNum">     167 </span>            :   static const String entertainmentNotification = &quot;entertainmentNotification&quot;;</a>
+<a name="168"><span class="lineNum">     168 </span>            :   static const String entertainmentTime = &quot;entertainmentTime&quot;;</a>
+<a name="169"><span class="lineNum">     169 </span>            : </a>
+<a name="170"><span class="lineNum">     170 </span>            :   /// Welcome settings</a>
+<a name="171"><span class="lineNum">     171 </span>            :   static const String raplaLink = &quot;raplaLink&quot;; // Text field</a>
+<a name="172"><span class="lineNum">     172 </span>            :   static const String newsCategories = &quot;newsCategories&quot;; // Multiple Switches</a>
+<a name="173"><span class="lineNum">     173 </span>            :   static const String weatherLocation = &quot;weatherLocation&quot;; //Location Picker</a>
+<a name="174"><span class="lineNum">     174 </span>            : </a>
+<a name="175"><span class="lineNum">     175 </span>            :   /// Travel settings</a>
+<a name="176"><span class="lineNum">     176 </span>            :   static const String homeLocation = &quot;homeLocation&quot;; //Location Picker</a>
+<a name="177"><span class="lineNum">     177 </span>            :   static const String workingLocation = &quot;workingLocation&quot;; //Location Picker</a>
+<a name="178"><span class="lineNum">     178 </span>            :   static const String gasolineType = &quot;gasolineType&quot;; // Dropdown select</a>
 <a name="179"><span class="lineNum">     179 </span>            : </a>
-<a name="180"><span class="lineNum">     180 </span>            :   static const String financeNotification = &quot;financeNotification&quot;;</a>
-<a name="181"><span class="lineNum">     181 </span>            :   static const String financeTime = &quot;financeTime&quot;;</a>
-<a name="182"><span class="lineNum">     182 </span>            : </a>
-<a name="183"><span class="lineNum">     183 </span>            :   static const String entertainmentNotification = &quot;entertainmentNotification&quot;;</a>
-<a name="184"><span class="lineNum">     184 </span>            :   static const String entertainmentTime = &quot;entertainmentTime&quot;;</a>
-<a name="185"><span class="lineNum">     185 </span>            : }</a>
-<a name="186"><span class="lineNum">     186 </span>            : </a>
-<a name="187"><span class="lineNum">     187 </span>            : /// Sets the default values of the persisted values. Needed if there is no value</a>
-<a name="188"><span class="lineNum">     188 </span>            : /// in the local storage with the given [SettingKeys]</a>
-<a name="189"><span class="lineNum">     189 </span><span class="lineCov">          9 : Map&lt;String, dynamic&gt; _defaultValues = {</span></a>
-<a name="190"><span class="lineNum">     190 </span>            :   SettingKeys.userName: &quot;Max Mustermann&quot;,</a>
-<a name="191"><span class="lineNum">     191 </span><span class="lineCov">          3 :   SettingKeys.previousConversations: &lt;String&gt;[],</span></a>
-<a name="192"><span class="lineNum">     192 </span><span class="lineCov">          3 :   SettingKeys.previousConversationDates: &lt;String&gt;[],</span></a>
-<a name="193"><span class="lineNum">     193 </span>            :   SettingKeys.messageCount: 0,</a>
-<a name="194"><span class="lineNum">     194 </span>            :   SettingKeys.conversationCount: 0,</a>
-<a name="195"><span class="lineNum">     195 </span>            :   SettingKeys.welcomeNotification: true,</a>
-<a name="196"><span class="lineNum">     196 </span>            :   SettingKeys.welcomeTime: const Time(7),</a>
-<a name="197"><span class="lineNum">     197 </span>            :   SettingKeys.travelNotification: true,</a>
-<a name="198"><span class="lineNum">     198 </span>            :   SettingKeys.travelTime: const Time(8),</a>
-<a name="199"><span class="lineNum">     199 </span>            :   SettingKeys.financeNotification: true,</a>
-<a name="200"><span class="lineNum">     200 </span>            :   SettingKeys.financeTime: const Time(15, 30),</a>
-<a name="201"><span class="lineNum">     201 </span>            :   SettingKeys.entertainmentNotification: true,</a>
-<a name="202"><span class="lineNum">     202 </span>            :   SettingKeys.entertainmentTime: const Time(20, 15),</a>
-<a name="203"><span class="lineNum">     203 </span>            : };</a>
-<a name="204"><span class="lineNum">     204 </span>            : </a>
-<a name="205"><span class="lineNum">     205 </span>            : extension TimeStringConverter on Time {</a>
-<a name="206"><span class="lineNum">     206 </span>            :   /// Converts a time to a readable format which can easily be stored in local storage</a>
-<a name="207"><span class="lineNum">     207 </span><span class="lineCov">          2 :   String toStorageString() {</span></a>
-<a name="208"><span class="lineNum">     208 </span><span class="lineCov">          8 :     return &quot;$hour:$minute:$second&quot;;</span></a>
-<a name="209"><span class="lineNum">     209 </span>            :   }</a>
-<a name="210"><span class="lineNum">     210 </span>            : </a>
-<a name="211"><span class="lineNum">     211 </span>            :   /// Creates a time object from a given string</a>
-<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          2 :   static Time fromStorageString(String value) {</span></a>
-<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          2 :     List&lt;String&gt; parts = value.split(&quot;:&quot;);</span></a>
-<a name="214"><span class="lineNum">     214 </span><span class="lineCov">         14 :     return Time(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));</span></a>
-<a name="215"><span class="lineNum">     215 </span>            :   }</a>
-<a name="216"><span class="lineNum">     216 </span>            : }</a>
+<a name="180"><span class="lineNum">     180 </span>            :   /// Finance settings</a>
+<a name="181"><span class="lineNum">     181 </span>            :   static const String binanceApiKey = &quot;binanceApiKey&quot;; // Text field</a>
+<a name="182"><span class="lineNum">     182 </span>            :   static const String stockIndex = &quot;stockIndex&quot;; // Text field</a>
+<a name="183"><span class="lineNum">     183 </span>            :   static const String stockList = &quot;stockList&quot;; // Multiline Text field</a>
+<a name="184"><span class="lineNum">     184 </span>            : </a>
+<a name="185"><span class="lineNum">     185 </span>            :   /// Entertainment settings</a>
+<a name="186"><span class="lineNum">     186 </span>            :   static const String movieGenres =</a>
+<a name="187"><span class="lineNum">     187 </span>            :       &quot;movieGenres&quot;; // Multiple Switches --&gt; can API search for one or multiple ?</a>
+<a name="188"><span class="lineNum">     188 </span>            :   static const String footballClub = &quot;footballClub&quot;; // Text</a>
+<a name="189"><span class="lineNum">     189 </span>            : }</a>
+<a name="190"><span class="lineNum">     190 </span>            : </a>
+<a name="191"><span class="lineNum">     191 </span>            : /// Sets the default values of the persisted values. Needed if there is no value</a>
+<a name="192"><span class="lineNum">     192 </span>            : /// in the local storage with the given [SettingKeys]</a>
+<a name="193"><span class="lineNum">     193 </span><span class="lineCov">          9 : Map&lt;String, dynamic&gt; _defaultValues = {</span></a>
+<a name="194"><span class="lineNum">     194 </span>            :   SettingKeys.userName: &quot;Max Mustermann&quot;,</a>
+<a name="195"><span class="lineNum">     195 </span><span class="lineCov">          3 :   SettingKeys.previousConversations: &lt;String&gt;[],</span></a>
+<a name="196"><span class="lineNum">     196 </span><span class="lineCov">          3 :   SettingKeys.previousConversationDates: &lt;String&gt;[],</span></a>
+<a name="197"><span class="lineNum">     197 </span>            :   SettingKeys.messageCount: 0,</a>
+<a name="198"><span class="lineNum">     198 </span>            :   SettingKeys.conversationCount: 0,</a>
+<a name="199"><span class="lineNum">     199 </span>            :   SettingKeys.welcomeNotification: true,</a>
+<a name="200"><span class="lineNum">     200 </span>            :   SettingKeys.welcomeTime: const Time(7),</a>
+<a name="201"><span class="lineNum">     201 </span>            :   SettingKeys.travelNotification: true,</a>
+<a name="202"><span class="lineNum">     202 </span>            :   SettingKeys.travelTime: const Time(8),</a>
+<a name="203"><span class="lineNum">     203 </span>            :   SettingKeys.financeNotification: true,</a>
+<a name="204"><span class="lineNum">     204 </span>            :   SettingKeys.financeTime: const Time(15, 30),</a>
+<a name="205"><span class="lineNum">     205 </span>            :   SettingKeys.entertainmentNotification: true,</a>
+<a name="206"><span class="lineNum">     206 </span>            :   SettingKeys.entertainmentTime: const Time(20, 15),</a>
+<a name="207"><span class="lineNum">     207 </span>            : };</a>
+<a name="208"><span class="lineNum">     208 </span>            : </a>
+<a name="209"><span class="lineNum">     209 </span>            : extension TimeStringConverter on Time {</a>
+<a name="210"><span class="lineNum">     210 </span>            :   /// Converts a time to a readable format which can easily be stored in local storage</a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineCov">          1 :   String toStorageString() {</span></a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          4 :     String timeString = hour &lt; 10 ? &quot;0$hour&quot; : &quot;$hour&quot;;</span></a>
+<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          1 :     timeString += &quot;:&quot;;</span></a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          5 :     timeString += minute &lt; 10 ? &quot;0$minute&quot; : &quot;$minute&quot;;</span></a>
+<a name="215"><span class="lineNum">     215 </span>            :     return timeString;</a>
+<a name="216"><span class="lineNum">     216 </span>            :   }</a>
+<a name="217"><span class="lineNum">     217 </span>            : </a>
+<a name="218"><span class="lineNum">     218 </span>            :   /// Creates a time object from a given string</a>
+<a name="219"><span class="lineNum">     219 </span><span class="lineCov">          2 :   static Time fromStorageString(String value) {</span></a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">          2 :     List&lt;String&gt; parts = value.split(&quot;:&quot;);</span></a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineCov">         10 :     return Time(int.parse(parts[0]), int.parse(parts[1]));</span></a>
+<a name="222"><span class="lineNum">     222 </span>            :   }</a>
+<a name="223"><span class="lineNum">     223 </span>            : }</a>
 </pre>
       </td>
     </tr>

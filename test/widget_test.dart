@@ -89,7 +89,7 @@ void main() async {
     );
   });
 
-  testWidgets("settings Test", (WidgetTester tester) async {
+  testWidgets("Settings Test", (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const BobApp());
     await binding.setSurfaceSize(const Size(1080, 2340));
@@ -111,6 +111,6 @@ void main() async {
     expect(find.text("Allgemeine Einstellungen"), findsOneWidget);
     expect(find.text("Benutzereinstellungen"), findsOneWidget);
     expect(find.text("Präferenzen"), findsOneWidget);
-    expect(find.text("Integrationen verwalten"), findsOneWidget);
+    expect(find.text("Benachrichtigungen"), findsOneWidget);
   });
 }

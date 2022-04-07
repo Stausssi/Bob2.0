@@ -1,5 +1,4 @@
 import 'package:bob/Settings/settings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -7,15 +6,16 @@ import 'package:settings_ui/settings_ui.dart';
 import '../handler/notification_handler.dart';
 import '../handler/storage_handler.dart';
 import '../util.dart';
+import 'linked_settings_tile.dart';
 
-class Notifications extends StatefulWidget {
-  const Notifications({Key? key}) : super(key: key);
+class NotificationSettings extends StatefulWidget {
+  const NotificationSettings({Key? key}) : super(key: key);
 
   @override
-  _NotificationsState createState() => _NotificationsState();
+  _NotificationSettingsState createState() => _NotificationSettingsState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _NotificationSettingsState extends State<NotificationSettings> {
   @override
   Widget build(BuildContext context) {
     return SettingsList(
@@ -26,28 +26,37 @@ class _NotificationsState extends State<Notifications> {
       sections: [
         SettingsSection(
           title: const Text('Willkommen'),
-          tiles: <SettingsTile>[
+          tiles: [
             ...notificationTiles(UseCase.welcome),
           ],
         ),
         SettingsSection(
           title: const Text('Ankunft'),
-          tiles: <SettingsTile>[
+          tiles: [
             ...notificationTiles(UseCase.travel),
           ],
         ),
         SettingsSection(
           title: const Text('Finanzen'),
-          tiles: <SettingsTile>[
+          tiles: [
             ...notificationTiles(UseCase.finance),
           ],
         ),
         SettingsSection(
           title: const Text('Entertainment'),
-          tiles: <SettingsTile>[
+          tiles: [
             ...notificationTiles(UseCase.entertainment),
           ],
         ),
+        SettingsSection(
+          title: const Text("Debug"),
+          tiles: [
+            SettingsTile(
+              title: const Text("Benachrichtigung senden"),
+              onPressed: (_) => NotificationHandler().testNotifications(),
+            )
+          ],
+        )
       ],
     );
   }
@@ -55,7 +64,7 @@ class _NotificationsState extends State<Notifications> {
   /// Returns a list of [SettingTile] containing two tiles needed for the handling
   /// of notifications. They're the same for every use case: A boolean switch
   /// and a time picker
-  List<SettingsTile> notificationTiles(UseCase useCase) {
+  List<AbstractSettingsTile> notificationTiles(UseCase useCase) {
     late String notificationKey;
     late String timeKey;
 
@@ -78,16 +87,14 @@ class _NotificationsState extends State<Notifications> {
         break;
     }
 
-    bool notificationsEnabled = StorageHandler.getValue(notificationKey);
     Time notificationTime = StorageHandler.getValue(timeKey);
 
     return [
-      SettingsTile.switchTile(
-        initialValue: notificationsEnabled,
-        title: const Text("Benachrichtigungen"),
-        onToggle: (value) => setState(
-          () => StorageHandler.updateNotifications(useCase, value),
-        ),
+      LinkedSettingsTile(
+        title: "Benachrichtigungen",
+        settingKey: notificationKey,
+        type: LinkedTileType.toggle,
+        onChange: (value) => StorageHandler.updateNotifications(useCase, value),
       ),
       SettingsTile.navigation(
         value: Text("${notificationTime.toStorageString()} Uhr"),

@@ -135,22 +135,6 @@ class StorageHandler {
   ///
   /// if [value] is true, notifications are scheduled
   static void updateNotifications(UseCase useCase, bool value) {
-    // Persist the value
-    switch (useCase) {
-      case UseCase.welcome:
-        saveValue(SettingKeys.welcomeNotification, value);
-        break;
-      case UseCase.travel:
-        saveValue(SettingKeys.travelNotification, value);
-        break;
-      case UseCase.finance:
-        saveValue(SettingKeys.financeNotification, value);
-        break;
-      case UseCase.entertainment:
-        saveValue(SettingKeys.entertainmentNotification, value);
-        break;
-    }
-
     // Schedule / Remove notifications depending on values
     if (value) {
       NotificationHandler().scheduleNotification(useCase);
