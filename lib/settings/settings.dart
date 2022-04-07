@@ -4,6 +4,7 @@ import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../handler/storage_handler.dart';
 import 'notification_settings.dart';
 
 /// The main settings page of Bob 2.0
@@ -121,6 +122,15 @@ class _SettingsState extends State<Settings> {
                   )
                 ],
               ),
+              SettingsSection(
+                title: const Text("App zurücksetzen"),
+                tiles: [
+                  SettingsTile(
+                    title: const Text("Zurücksetzen"),
+                    onPressed: (_) => StorageHandler.reset(),
+                  )
+                ],
+              )
             ],
           ),
         ],

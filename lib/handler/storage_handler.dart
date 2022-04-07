@@ -166,6 +166,28 @@ class StorageHandler {
   static String getAPIKey(String key) {
     return _apiKeys[key] ?? "";
   }
+
+  /// Updates the [List<String>] with the given [settingsKey] by either adding or
+  /// removing the given [String value] from the list. If [selected] is true, the
+  /// element will be added to the list, removed otherwise
+  static void updateList(String settingsKey, String value, bool selected) {
+    List<String> currentValues = getValue(settingsKey);
+
+    if (selected) {
+      currentValues.add(value);
+    } else {
+      currentValues.remove(value);
+    }
+
+    saveValue(settingsKey, currentValues);
+  }
+
+  /// Resets all keys with a default value in [_defaultValues]
+  static void reset() {
+    for (String key in _defaultValues.keys) {
+      resetKey(key);
+    }
+  }
 }
 
 /// Contains a string representing a unique key for every value saved in local
@@ -245,7 +267,8 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.entertainmentTime: const Time(20, 15),
 
   /// welcome settings
-  SettingKeys.raplaLink: "",
+  SettingKeys.raplaLink:
+      "https://rapla.dhbw-stuttgart.de/rapla?key=txB1FOi5xd1wUJBWuX8lJhGDUgtMSFmnKLgAG_NVMhBUYcX7OIFJ2of49CgyjVbV&today=Heute",
   SettingKeys.newsCategories: <String>[],
   SettingKeys.weatherLocation: standardLocation,
 
@@ -279,3 +302,10 @@ extension TimeStringConverter on Time {
     return Time(int.parse(parts[0]), int.parse(parts[1]));
   }
 }
+
+List<String> get newsCategories => [
+      "Fake-News",
+      "Coronavirus",
+      "Headlines",
+      "Cannabis-Legalisierung",
+    ];

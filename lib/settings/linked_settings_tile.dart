@@ -171,10 +171,14 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
       title: titleWidget,
       description: descriptionWidget,
       leading: widget.leading,
-      trailing: TextField(
-        controller: _textController,
-        maxLines: 1,
-        onChanged: _saveValue,
+      trailing: SizedBox(
+        // Make this input field the size of a third of the screen
+        width: MediaQuery.of(context).size.width / 3,
+        child: TextField(
+          controller: _textController,
+          maxLines: 1,
+          onChanged: _saveValue,
+        ),
       ),
     );
   }
