@@ -199,6 +199,7 @@ class SettingKeys {
   /// Travel settings
   static const String homeLocation = "homeLocation"; //Location Picker
   static const String workingLocation = "workingLocation"; //Location Picker
+  static const String preferedVehicle = "preferedVehicle"; // Dropdown select
   static const String gasolineType = "gasolineType"; // Dropdown select
 
   /// Finance settings
@@ -252,12 +253,13 @@ Map<String, dynamic> _defaultValues = {
   /// Travel settings
   SettingKeys.homeLocation: standardLocation,
   SettingKeys.workingLocation: standardLocation,
-  SettingKeys.gasolineType: <String>[],
+  SettingKeys.preferedVehicle: "Auto",
+  SettingKeys.gasolineType: "Benzin",
 
   /// Finance settings
   SettingKeys.binanceApiKey: "",
-  SettingKeys.stockIndex: "",
-  SettingKeys.stockList: <String>[],
+  SettingKeys.stockIndex: "DAX",
+  SettingKeys.stockList: <String>[""],
 
   /// Entertainment settings
   SettingKeys.movieGenres: <String>[],
@@ -279,3 +281,35 @@ extension TimeStringConverter on Time {
     return Time(int.parse(parts[0]), int.parse(parts[1]));
   }
 }
+
+/// Choices for gasolineType
+List<DropdownMenuItem<String>> get gasolineTypes => const [
+      DropdownMenuItem(
+        child: Text("Diesel"),
+        value: "Diesel",
+      ),
+      DropdownMenuItem(
+        child: Text("Benzin"),
+        value: "Benzin",
+      ),
+      DropdownMenuItem(
+        child: Text("Salatöl"),
+        value: "Salatöl",
+      )
+    ];
+
+// Choices for preferedVehicle
+List<DropdownMenuItem<String>> get preferedVehicles => const [
+      DropdownMenuItem(
+        child: Text("Auto"),
+        value: "Auto",
+      ),
+      DropdownMenuItem(
+        child: Text("Bahn"),
+        value: "Bahn",
+      ),
+      DropdownMenuItem(
+        child: Text("Fahrrad"),
+        value: "Fahrrad",
+      ),
+    ];

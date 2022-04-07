@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../handler/storage_handler.dart';
 import '../util.dart';
 
 enum LinkedTileType {
@@ -17,7 +18,10 @@ enum LinkedTileType {
   multilineText,
 
   /// Creates a [SettingsTile] with a location picker
-  location
+  location,
+
+  /// Creates a [SettingsTile] with a dropdown menu
+  dropdown
 }
 
 /// Wrapper to extend [AbstractSettingsTile]
@@ -118,7 +122,14 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
 
     if (widget.type == LinkedTileType.text ||
         widget.type == LinkedTileType.multilineText) {
-      _textController.text = StorageHandler.getValue(widget.settingKey);
+      if (widget.type == LinkedTileType.multilineText) {
+        _textController.text =
+            StorageHandler.getValue<List<String>>(widget.settingKey)
+                .join("\n")
+                .trim();
+      } else {
+        _textController.text = StorageHandler.getValue(widget.settingKey);
+      }
       _textController.selection = TextSelection.fromPosition(
         TextPosition(offset: _textController.text.length),
       );
@@ -149,6 +160,8 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
         return _buildMultilineTextTile();
       case LinkedTileType.location:
         return _buildLocationTile();
+      case LinkedTileType.dropdown:
+        return _buildDropdownTile();
     }
   }
 
@@ -171,17 +184,33 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
       title: titleWidget,
       description: descriptionWidget,
       leading: widget.leading,
-      trailing: TextField(
-        controller: _textController,
-        maxLines: 1,
-        onChanged: _saveValue,
+      trailing: Expanded(
+        child: TextField(
+          controller: _textController,
+          maxLines: 1,
+          onChanged: _saveValue,
+        ),
       ),
     );
   }
 
   /// Creates (one or two???) [SettingsTile] to allow a multiline text input
   Widget _buildMultilineTextTile() {
-    return Container();
+    return SettingsTile(
+      title: titleWidget,
+      description: descriptionWidget,
+      leading: widget.leading,
+      trailing: Expanded(
+        child: TextField(
+          controller: _textController,
+          keyboardType: TextInputType.multiline,
+          maxLines: null,
+          onChanged: (String value) {
+            _saveValue(value.split('\n'));
+          },
+        ),
+      ),
+    );
   }
 
   Widget _buildLocationTile() {
@@ -203,6 +232,31 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
         );
       },
     );
+  }
+
+  Widget _buildDropdownTile() {
+    String value = StorageHandler.getValue(widget.settingKey);
+
+    List<DropdownMenuItem<String>> items = [];
+
+    switch (widget.settingKey) {
+      case SettingKeys.gasolineType:
+        items = gasolineTypes;
+        break;
+
+      case SettingKeys.preferedVehicle:
+        items = preferedVehicles;
+        break;
+    }
+
+    return SettingsTile(
+        title: titleWidget,
+        description: descriptionWidget,
+        trailing: DropdownButton(
+          value: value,
+          items: items,
+          onChanged: _saveValue,
+        ));
   }
 }
 
