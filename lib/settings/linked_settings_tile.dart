@@ -1,0 +1,176 @@
+import 'package:bob/handler/storage_handler.dart';
+import 'package:flutter/material.dart';
+import 'package:settings_ui/settings_ui.dart';
+
+enum LinkedTileType {
+  /// Creates a switchable settings tile
+  toggle,
+
+  /// Creates a [SettingsTile] with a single line text input
+  text,
+
+  /// Creates a [SettingsTile] with a multiline text input
+  multilineText
+}
+
+/// Wrapper to extend [AbstractSettingsTile]
+class LinkedSettingsTile extends AbstractSettingsTile {
+  const LinkedSettingsTile({
+    required this.title,
+    this.description,
+    required this.settingKey,
+    required this.type,
+    this.leading,
+    this.onChange,
+    Key? key,
+  }) : super(key: key);
+
+  /// The title of the [SettingsTile]
+  final String title;
+
+  /// The optional description of the [SettingsTile]
+  final String? description;
+
+  /// The unique identifier of the value in the [StorageHandler]
+  final String settingKey;
+
+  /// The type of the [SettingsTile]
+  final LinkedTileType type;
+
+  /// The optional leading widget of the [SettingsTile]
+  final Widget? leading;
+
+  /// An optional function being called every time the value of the [SettingsTile]
+  /// is changed
+  final Function(dynamic value)? onChange;
+
+  @override
+  Widget build(BuildContext context) {
+    return _LinkedStatefulTile(
+      title: title,
+      description: description,
+      settingKey: settingKey,
+      type: type,
+      leading: leading,
+      onChange: onChange,
+    );
+  }
+}
+
+/// Links a [SettingsTile] to a key/value pairing in the [StorageHandler]
+class _LinkedStatefulTile extends StatefulWidget {
+  const _LinkedStatefulTile({
+    required this.title,
+    this.description,
+    required this.settingKey,
+    required this.type,
+    this.leading,
+    this.onChange,
+    Key? key,
+  }) : super(key: key);
+
+  /// The title of the [SettingsTile]
+  final String title;
+
+  /// The optional description of the [SettingsTile]
+  final String? description;
+
+  /// The unique identifier of the value in the [StorageHandler]
+  final String settingKey;
+
+  /// The type of the [SettingsTile]
+  final LinkedTileType type;
+
+  /// The optional leading widget of the [SettingsTile]
+  final Widget? leading;
+
+  /// An optional function being called every time the value of the [SettingsTile]
+  /// is changed
+  final Function(dynamic value)? onChange;
+
+  @override
+  _LinkedStatefulTileState createState() => _LinkedStatefulTileState();
+}
+
+class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
+  /// Contains the widget for the description of the [SettingsTile]
+  late Widget? descriptionWidget;
+
+  /// [Text] widget representing the title of the [SettingsTile]
+  late Widget titleWidget;
+
+  /// Needed for changing the value of the [TextField]s programmatically
+  final TextEditingController _textController = TextEditingController();
+
+  @override
+  void initState() {
+    // Load both description and title
+    descriptionWidget =
+        widget.description != null ? Text(widget.description!) : null;
+    titleWidget = Text(widget.title);
+
+    if (widget.type != LinkedTileType.toggle) {
+      _textController.text = StorageHandler.getValue(widget.settingKey);
+      _textController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _textController.text.length),
+      );
+    }
+    super.initState();
+  }
+
+  /// Persists the given [value] to storage and (optionally) calls the [widget.onChange]
+  /// callback
+  _saveValue(dynamic value) {
+    StorageHandler.saveValue(widget.settingKey, value);
+
+    if (widget.onChange != null) {
+      widget.onChange!(value);
+    }
+
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    switch (widget.type) {
+      case LinkedTileType.toggle:
+        return _buildToggleTile();
+      case LinkedTileType.text:
+        return _buildTextTile();
+      case LinkedTileType.multilineText:
+        return _buildMultilineTextTile();
+    }
+  }
+
+  /// Creates a toggleable [SettingsTile]
+  Widget _buildToggleTile() {
+    bool value = StorageHandler.getValue(widget.settingKey);
+
+    return SettingsTile.switchTile(
+      title: titleWidget,
+      description: descriptionWidget,
+      leading: widget.leading,
+      initialValue: value,
+      onToggle: _saveValue,
+    );
+  }
+
+  /// Creates a [SettingsTile] with a single line text input as a trailing widget
+  Widget _buildTextTile() {
+    return SettingsTile(
+      title: titleWidget,
+      description: descriptionWidget,
+      leading: widget.leading,
+      trailing: TextField(
+        controller: _textController,
+        maxLines: 1,
+        onChanged: _saveValue,
+      ),
+    );
+  }
+
+  /// Creates (one or two???) [SettingsTile] to allow a multiline text input
+  Widget _buildMultilineTextTile() {
+    return Container();
+  }
+}

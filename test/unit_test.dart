@@ -53,20 +53,20 @@ void main() async {
 
     test(
       "Convert Time to String",
-      () => expect(const Time(1, 2, 3).toStorageString(), "1:2:3"),
+      () => expect(const Time(1, 2, 3).toStorageString(), "01:02"),
     );
 
     test(
       "Convert String to Time - Hour",
-      () => expect(TimeStringConverter.fromStorageString("1:2:3").hour, 1),
+      () => expect(TimeStringConverter.fromStorageString("01:02").hour, 1),
     );
     test(
       "Convert String to Time - Minute",
-      () => expect(TimeStringConverter.fromStorageString("1:2:3").minute, 2),
+      () => expect(TimeStringConverter.fromStorageString("01:02").minute, 2),
     );
     test(
       "Convert String to Time - Second",
-      () => expect(TimeStringConverter.fromStorageString("1:2:3").second, 3),
+      () => expect(TimeStringConverter.fromStorageString("01:02").second, 0),
     );
 
     test("Last Conversation date", () {

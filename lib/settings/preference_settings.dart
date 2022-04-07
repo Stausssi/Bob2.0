@@ -1,16 +1,15 @@
 import 'package:bob/Settings/settings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-class Preferences extends StatefulWidget {
-  const Preferences({Key? key}) : super(key: key);
+class PreferenceSettings extends StatefulWidget {
+  const PreferenceSettings({Key? key}) : super(key: key);
 
   @override
-  _PreferencesState createState() => _PreferencesState();
+  _PreferenceSettingsState createState() => _PreferenceSettingsState();
 }
 
-class _PreferencesState extends State<Preferences> {
+class _PreferenceSettingsState extends State<PreferenceSettings> {
   bool button = false;
 
   @override

@@ -1,11 +1,10 @@
-import 'package:bob/handler/notification_handler.dart';
-import 'package:bob/settings/preferences.dart';
+import 'package:bob/settings/preference_settings.dart';
 import 'package:bob/settings/user_settings.dart';
 import 'package:bob/util.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import 'notifications.dart';
+import 'notification_settings.dart';
 
 /// Themes
 const lightCupertinoSettingsTheme = SettingsThemeData(
@@ -115,22 +114,22 @@ class _SettingsState extends State<Settings> {
                       MaterialPageRoute(
                         builder: (_) => const SettingsSubmenu(
                           title: "Use-Cases personalisieren",
-                          settings: Preferences(),
+                          settings: PreferenceSettings(),
                         ),
                       ),
                     ),
                   },
                 ),
                 SettingsTile.navigation(
-                  leading: const Icon(Icons.language),
+                  leading: const Icon(Icons.notifications_none_outlined),
                   title: const Text('Benachrichtigungen'),
                   onPressed: (context) => {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) => const SettingsSubmenu(
-                          title: "Integrationen verwalten",
-                          settings: Notifications(),
+                          title: "Benachrichtigungen",
+                          settings: NotificationSettings(),
                         ),
                       ),
                     ),
@@ -138,15 +137,6 @@ class _SettingsState extends State<Settings> {
                 )
               ],
             ),
-            SettingsSection(
-              title: const Text("Debug"),
-              tiles: [
-                SettingsTile(
-                  title: const Text("Benachrichtigung senden"),
-                  onPressed: (_) => NotificationHandler().testNotifications(),
-                )
-              ],
-            )
           ],
         ),
       ],
