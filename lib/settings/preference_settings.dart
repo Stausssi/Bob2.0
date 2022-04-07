@@ -51,25 +51,29 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
           title: Text('Travel'),
           tiles: [
             LinkedSettingsTile(
-                leading: Icon(Icons.home),
-                title: "Standort Zuhause",
-                settingKey: SettingKeys.homeLocation,
-                type: LinkedTileType.location),
+              leading: Icon(Icons.home),
+              title: "Standort Zuhause",
+              settingKey: SettingKeys.homeLocation,
+              type: LinkedTileType.location,
+            ),
             LinkedSettingsTile(
-                leading: Icon(Icons.work),
-                title: "Standort Arbeit",
-                settingKey: SettingKeys.workingLocation,
-                type: LinkedTileType.location),
+              leading: Icon(Icons.work),
+              title: "Standort Arbeit",
+              settingKey: SettingKeys.workingLocation,
+              type: LinkedTileType.location,
+            ),
             LinkedSettingsTile(
-                leading: Icon(Icons.drive_eta),
-                title: "Anfahrtstyp",
-                settingKey: SettingKeys.preferedVehicle,
-                type: LinkedTileType.dropdown),
+              leading: Icon(Icons.drive_eta),
+              title: "Anfahrtstyp",
+              settingKey: SettingKeys.preferedVehicle,
+              type: LinkedTileType.dropdown,
+            ),
             LinkedSettingsTile(
-                leading: Icon(Icons.local_gas_station),
-                title: "Kraftstofftyp",
-                settingKey: SettingKeys.gasolineType,
-                type: LinkedTileType.dropdown)
+              leading: Icon(Icons.local_gas_station),
+              title: "Kraftstofftyp",
+              settingKey: SettingKeys.gasolineType,
+              type: LinkedTileType.dropdown,
+            )
           ],
         ),
 
@@ -78,20 +82,23 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
           title: Text('Finances'),
           tiles: [
             LinkedSettingsTile(
-                leading: Icon(Icons.currency_bitcoin),
-                title: "Binance API Key",
-                settingKey: SettingKeys.binanceApiKey,
-                type: LinkedTileType.text),
+              leading: Icon(Icons.currency_bitcoin),
+              title: "Binance API Key",
+              settingKey: SettingKeys.binanceApiKey,
+              type: LinkedTileType.text,
+            ),
             LinkedSettingsTile(
-                leading: Icon(Icons.insert_chart_outlined),
-                title: "Stock Index",
-                settingKey: SettingKeys.stockIndex,
-                type: LinkedTileType.text),
+              leading: Icon(Icons.insert_chart_outlined),
+              title: "Stock Index",
+              settingKey: SettingKeys.stockIndex,
+              type: LinkedTileType.text,
+            ),
             LinkedSettingsTile(
-                leading: Icon(Icons.attach_money),
-                title: "Aktienliste",
-                settingKey: SettingKeys.stockList,
-                type: LinkedTileType.multilineText)
+              leading: Icon(Icons.attach_money),
+              title: "Aktienliste",
+              settingKey: SettingKeys.stockList,
+              type: LinkedTileType.multilineText,
+            )
           ],
         ),
 
