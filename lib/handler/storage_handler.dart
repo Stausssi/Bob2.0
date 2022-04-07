@@ -3,6 +3,7 @@ import 'package:bob/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageHandler {
@@ -37,6 +38,8 @@ class StorageHandler {
         return TimeStringConverter.fromStorageString(
           _preferences.getString(key)!,
         ) as T;
+      } else if (defaultValue is MapBoxPlace) {
+        return MapBoxPlace.fromRawJson(_preferences.getString(key)!) as T;
       }
       // No special treatment needed
       return _preferences.get(key) as T;
@@ -65,6 +68,8 @@ class StorageHandler {
       _preferences.setStringList(key, value);
     } else if (value is Time) {
       _preferences.setString(key, value.toStorageString());
+    } else if (value is MapBoxPlace) {
+      _preferences.setString(key, value.toRawJson());
     } else {
       // Unknown class T of value
       throw TypeError();
@@ -204,6 +209,20 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.financeTime: const Time(15, 30),
   SettingKeys.entertainmentNotification: true,
   SettingKeys.entertainmentTime: const Time(20, 15),
+  SettingKeys.weatherLocation: MapBoxPlace(
+    id: "",
+    type: FeatureType.FEATURE,
+    placeType: [],
+    addressNumber: "",
+    placeName: "",
+    matchingText: "",
+    matchingPlaceName: "",
+    bbox: [],
+    properties: Properties(shortCode: "", wikidata: "", address: ""),
+    context: [],
+    center: [48.78232, 9.17702],
+    geometry: Geometry(type: GeometryType.POINT, coordinates: []),
+  )
 };
 
 extension TimeStringConverter on Time {

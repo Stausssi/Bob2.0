@@ -1,6 +1,10 @@
 import 'package:bob/handler/storage_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
+
+import '../api_keys.dart';
+import '../util.dart';
 
 enum LinkedTileType {
   /// Creates a switchable settings tile
@@ -10,7 +14,10 @@ enum LinkedTileType {
   text,
 
   /// Creates a [SettingsTile] with a multiline text input
-  multilineText
+  multilineText,
+
+  /// Creates a [SettingsTile] with a location picker
+  location
 }
 
 /// Wrapper to extend [AbstractSettingsTile]
@@ -109,7 +116,8 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
         widget.description != null ? Text(widget.description!) : null;
     titleWidget = Text(widget.title);
 
-    if (widget.type != LinkedTileType.toggle) {
+    if (widget.type == LinkedTileType.text ||
+        widget.type == LinkedTileType.multilineText) {
       _textController.text = StorageHandler.getValue(widget.settingKey);
       _textController.selection = TextSelection.fromPosition(
         TextPosition(offset: _textController.text.length),
@@ -139,6 +147,8 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
         return _buildTextTile();
       case LinkedTileType.multilineText:
         return _buildMultilineTextTile();
+      case LinkedTileType.location:
+        return _buildLocationTile();
     }
   }
 
@@ -172,5 +182,75 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
   /// Creates (one or two???) [SettingsTile] to allow a multiline text input
   Widget _buildMultilineTextTile() {
     return Container();
+  }
+
+  Widget _buildLocationTile() {
+    MapBoxPlace place = StorageHandler.getValue(widget.settingKey);
+
+    return SettingsTile.navigation(
+      title: titleWidget,
+      description: descriptionWidget,
+      leading: widget.leading,
+      onPressed: (context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => LocationPicker(
+              place: place,
+              onSelected: _saveValue,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// This class implements a Location picker, which uses MapBox to autocomplete
+/// address search requests
+class LocationPicker extends StatefulWidget {
+  const LocationPicker(
+      {required this.place, required this.onSelected, Key? key})
+      : super(key: key);
+
+  final MapBoxPlace place;
+  final Function onSelected;
+
+  @override
+  _LocationPickerState createState() => _LocationPickerState();
+}
+
+class _LocationPickerState extends State<LocationPicker> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Select your Location",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: CustomColors.blackBackground,
+        shadowColor: Colors.transparent,
+        toolbarHeight: 100,
+      ),
+      body: Column(
+        children: [
+          MapBoxPlaceSearchWidget(
+            popOnSelect: true,
+            apiKey: ApiKeys.mapBox,
+            searchHint: 'Ort',
+            location: Location(
+                lat: widget.place.center[0], lng: widget.place.center[1]),
+            onSelected: (place) {
+              widget.onSelected(place);
+            },
+            context: context,
+          ),
+        ],
+      ),
+    );
   }
 }
