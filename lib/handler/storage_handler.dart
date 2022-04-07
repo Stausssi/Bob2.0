@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
+import 'package:mapbox_search/mapbox_search.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageHandler {
@@ -166,6 +166,46 @@ class StorageHandler {
   static String getAPIKey(String key) {
     return _apiKeys[key] ?? "";
   }
+
+  /// Updates the [List<String>] with the given [settingsKey] by either adding or
+  /// removing the given [String value] from the list. If [selected] is true, the
+  /// element will be added to the list, removed otherwise
+  static void updateList(String settingsKey, String value, bool selected) {
+    List<String> currentValues = getValue(settingsKey);
+
+    if (selected) {
+      currentValues.add(value);
+    } else {
+      currentValues.remove(value);
+    }
+
+    saveValue(settingsKey, currentValues);
+  }
+
+  /// Resets all keys with a default value in [_defaultValues]
+  static void reset() {
+    for (String key in _defaultValues.keys) {
+      resetKey(key);
+    }
+  }
+
+  /// Creates the preference-map for the backend request
+  static Map<String, dynamic> getPreferences() {
+    return Map.fromEntries(
+      SettingKeys.preferenceKeys.map(
+        (key) {
+          dynamic value = getValue(key);
+
+          // MapBoxPlace will pass their latitude and longitude
+          if (value is MapBoxPlace) {
+            value = value.center;
+          }
+
+          return MapEntry(key, value);
+        },
+      ),
+    );
+  }
 }
 
 /// Contains a string representing a unique key for every value saved in local
@@ -211,6 +251,20 @@ class SettingKeys {
   static const String movieGenres =
       "movieGenres"; // Multiple Switches --> can API search for one or multiple ?
   static const String footballClub = "footballClub"; // Text
+
+  static List<String> get preferenceKeys => [
+        // Welcome
+        raplaLink, newsCategories, weatherLocation,
+
+        // Travel
+        homeLocation, workingLocation, gasolineType,
+
+        // Finance
+        binanceApiKey, stockIndex, stockList,
+
+        // Entertainment
+        movieGenres, footballClub
+      ];
 }
 
 MapBoxPlace get standardLocation => MapBoxPlace(
@@ -246,7 +300,8 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.entertainmentTime: const Time(20, 15),
 
   /// welcome settings
-  SettingKeys.raplaLink: "",
+  SettingKeys.raplaLink:
+      "https://rapla.dhbw-stuttgart.de/rapla?key=txB1FOi5xd1wUJBWuX8lJhGDUgtMSFmnKLgAG_NVMhBUYcX7OIFJ2of49CgyjVbV&today=Heute",
   SettingKeys.newsCategories: <String>[],
   SettingKeys.weatherLocation: standardLocation,
 
@@ -282,6 +337,7 @@ extension TimeStringConverter on Time {
   }
 }
 
+
 /// Choices for gasolineType
 List<DropdownMenuItem<String>> get gasolineTypes => const [
       DropdownMenuItem(
@@ -312,4 +368,13 @@ List<DropdownMenuItem<String>> get preferedVehicles => const [
         child: Text("Fahrrad"),
         value: "Fahrrad",
       ),
+	];
+
+/// Each item in this list represents a news category the user can follow and be
+/// notified for
+List<String> get newsCategories => [
+      "Fake-News",
+      "Coronavirus",
+      "Headlines",
+      "Cannabis-Legalisierung",
     ];

@@ -54,7 +54,6 @@ class SpeechProcessing {
     await _flutterTTS.setVolume(1.0);
     await _flutterTTS.setPitch(1.0);
 
-    // TODO: Are platform handlers necessary? <https://pub.dev/packages/flutter_tts/example>
     _ttsReady = true;
   }
 

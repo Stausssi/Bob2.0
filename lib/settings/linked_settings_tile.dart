@@ -1,11 +1,12 @@
 import 'package:bob/handler/storage_handler.dart';
-import 'package:color/color.dart' as c;
 import 'package:flutter/material.dart';
-import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
+import 'package:mapbox_search/colors/color.dart';
+import 'package:mapbox_search/mapbox_search.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../handler/storage_handler.dart';
 import '../util.dart';
+import 'location_search_widget.dart';
 
 enum LinkedTileType {
   /// Creates a switchable settings tile
@@ -213,6 +214,7 @@ class _LinkedStatefulTileState extends State<_LinkedStatefulTile> {
     );
   }
 
+  /// Creates a tile opening a [LocationPicker] in a new window
   Widget _buildLocationTile() {
     MapBoxPlace place = StorageHandler.getValue(widget.settingKey);
 
@@ -268,7 +270,7 @@ class LocationPicker extends StatefulWidget {
       : super(key: key);
 
   final MapBoxPlace place;
-  final Function onSelected;
+  final Function(MapBoxPlace) onSelected;
 
   @override
   _LocationPickerState createState() => _LocationPickerState();
@@ -278,7 +280,7 @@ class _LocationPickerState extends State<LocationPicker> {
   @override
   Widget build(BuildContext context) {
     Location location =
-        Location(lat: widget.place.center[1], lng: widget.place.center[0]);
+        Location(lat: widget.place.center![1], lng: widget.place.center![0]);
 
     return Scaffold(
       appBar: AppBar(
@@ -295,27 +297,28 @@ class _LocationPickerState extends State<LocationPicker> {
       ),
       body: Stack(
         children: [
-          Image.network(StaticImage(
-            apiKey: StorageHandler.getAPIKey("mapBox"),
-          ).getStaticUrlWithMarker(
-            center: location,
-            width: MediaQuery.of(context).size.width.toInt(),
-            marker: MapBoxMarker(
-                markerColor: const c.RgbColor(255, 0, 0),
+          Image.network(
+            StaticImage(
+              apiKey: StorageHandler.getAPIKey("mapBox"),
+            ).getStaticUrlWithMarker(
+              center: location,
+              width: MediaQuery.of(context).size.width.toInt(),
+              marker: MapBoxMarker(
+                markerColor: const RgbColor(255, 0, 0),
                 markerLetter: 'circle',
-                markerSize: MarkerSize.LARGE),
-            zoomLevel: 14,
-            style: MapBoxStyle.Streets,
-            render2x: true,
-          )),
-          MapBoxPlaceSearchWidget(
+                markerSize: MarkerSize.LARGE,
+              ),
+              zoomLevel: 14,
+              style: MapBoxStyle.Streets,
+              render2x: true,
+            ),
+          ),
+          LocationSearchWidget(
             popOnSelect: true,
             apiKey: StorageHandler.getAPIKey("mapBox"),
             searchHint: 'Ort',
             location: location,
-            onSelected: (place) {
-              widget.onSelected(place);
-            },
+            onSelected: widget.onSelected,
             context: context,
           ),
         ],

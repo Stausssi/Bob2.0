@@ -1,3 +1,4 @@
+import 'package:bob/handler/storage_handler.dart';
 import 'package:dio/dio.dart';
 
 import '../util.dart';
@@ -32,7 +33,6 @@ class ConversationHandler {
   /// Connect to the backend
   void _initConnection() {
     _connection = Dio();
-    // TODO: Use real backend
     _connection.options.baseUrl = "http://193.196.52.233:80";
     _connection.options.connectTimeout = 5000;
     _connection.options.receiveTimeout = 2000;
@@ -56,7 +56,7 @@ class ConversationHandler {
         "/input",
         data: {
           "speech": question,
-          "preferences": {},
+          "preferences": StorageHandler.getPreferences(),
         },
       );
 
