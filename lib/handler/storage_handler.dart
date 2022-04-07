@@ -188,6 +188,24 @@ class StorageHandler {
       resetKey(key);
     }
   }
+
+  /// Creates the preference-map for the backend request
+  static Map<String, dynamic> getPreferences() {
+    return Map.fromEntries(
+      SettingKeys.preferenceKeys.map(
+        (key) {
+          dynamic value = getValue(key);
+
+          // MapBoxPlace will pass their latitude and longitude
+          if (value is MapBoxPlace) {
+            value = value.center;
+          }
+
+          return MapEntry(key, value);
+        },
+      ),
+    );
+  }
 }
 
 /// Contains a string representing a unique key for every value saved in local
@@ -232,6 +250,20 @@ class SettingKeys {
   static const String movieGenres =
       "movieGenres"; // Multiple Switches --> can API search for one or multiple ?
   static const String footballClub = "footballClub"; // Text
+
+  static List<String> get preferenceKeys => [
+        // Welcome
+        raplaLink, newsCategories, weatherLocation,
+
+        // Travel
+        homeLocation, workingLocation, gasolineType,
+
+        // Finance
+        binanceApiKey, stockIndex, stockList,
+
+        // Entertainment
+        movieGenres, footballClub
+      ];
 }
 
 MapBoxPlace get standardLocation => MapBoxPlace(
@@ -303,6 +335,8 @@ extension TimeStringConverter on Time {
   }
 }
 
+/// Each item in this list represents a news category the user can follow and be
+/// notified for
 List<String> get newsCategories => [
       "Fake-News",
       "Coronavirus",

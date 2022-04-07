@@ -1,3 +1,4 @@
+import 'package:bob/handler/storage_handler.dart';
 import 'package:dio/dio.dart';
 
 import '../util.dart';
@@ -56,7 +57,7 @@ class ConversationHandler {
         "/input",
         data: {
           "speech": question,
-          "preferences": {},
+          "preferences": StorageHandler.getPreferences(),
         },
       );
 

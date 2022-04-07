@@ -128,6 +128,10 @@ class _SettingsState extends State<Settings> {
                   SettingsTile(
                     title: const Text("Zurücksetzen"),
                     onPressed: (_) => StorageHandler.reset(),
+                  ),
+                  SettingsTile(
+                    title: const Text("Präferenzen"),
+                    onPressed: (_) => print(StorageHandler.getPreferences()),
                   )
                 ],
               )
