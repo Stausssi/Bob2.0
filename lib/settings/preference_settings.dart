@@ -26,7 +26,11 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
         SettingsSection(
           title: const Text('Willkommen'),
           tiles: [
-            ..._generateChoiceTiles(SettingKeys.newsCategories, newsCategories),
+            ..._generateChoiceTiles(
+              SettingKeys.newsCategories,
+              newsCategories,
+              Icons.newspaper,
+            ),
             const LinkedSettingsTile(
               leading: Icon(Icons.sunny),
               title: "Wetter Standort",
@@ -92,14 +96,20 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
         ),
 
         /// Entertainment
-        const SettingsSection(
-          title: Text('Entertainment'),
+        SettingsSection(
+          title: const Text('Entertainment'),
           tiles: [
-            LinkedSettingsTile(
-                leading: Icon(Icons.local_gas_station),
-                title: "Binance API Key",
-                settingKey: SettingKeys.binanceApiKey,
-                type: LinkedTileType.text),
+            ..._generateChoiceTiles(
+              SettingKeys.movieGenres,
+              movieGenres,
+              Icons.movie_outlined,
+            ),
+            const LinkedSettingsTile(
+              leading: Icon(Icons.sports_soccer_outlined),
+              title: "Fußball Verein",
+              settingKey: SettingKeys.footballClub,
+              type: LinkedTileType.text,
+            ),
           ],
         ),
       ],
@@ -112,12 +122,13 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
   List<AbstractSettingsTile> _generateChoiceTiles(
     String settingsKey,
     List<String> choices,
+    IconData icon,
   ) {
     return choices
         .map(
           (choice) => SettingsTile.switchTile(
             title: Text(choice),
-            leading: const Icon(Icons.newspaper),
+            leading: Icon(icon),
             initialValue: StorageHandler.getValue<List<String>>(settingsKey)
                 .contains(choice),
             onToggle: (selected) {
