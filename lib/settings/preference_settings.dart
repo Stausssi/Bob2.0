@@ -1,4 +1,3 @@
-import 'package:bob/Settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -17,7 +16,6 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
     return SettingsList(
       applicationType: ApplicationType.material,
       platform: DevicePlatform.iOS,
-      darkTheme: lightCupertinoSettingsTheme,
       shrinkWrap: false,
       sections: [
         SettingsSection(

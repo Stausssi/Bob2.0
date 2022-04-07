@@ -1,4 +1,3 @@
-import 'package:bob/Settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -21,7 +20,6 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     return SettingsList(
       applicationType: ApplicationType.material,
       platform: DevicePlatform.iOS,
-      darkTheme: lightCupertinoSettingsTheme,
       shrinkWrap: false,
       sections: [
         SettingsSection(
