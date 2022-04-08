@@ -4,8 +4,10 @@ import 'package:bob/handler/notification_handler.dart';
 import 'package:bob/handler/storage_handler.dart';
 import 'package:bob/main.dart' as app;
 import 'package:bob/main.dart';
+import 'package:bob/settings/linked_settings_tile.dart';
 import 'package:bob/settings/settings.dart';
 import 'package:bob/util.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -98,6 +100,90 @@ void main() {
       await tester.pump();
       await tester.tap(find.text("Zuhören stoppen"));
       await tester.pump();
+    });
+
+    testWidgets("Change username", (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Default name is "Max Mustermann"
+      expect(find.text("Hallo Max Mustermann"), findsOneWidget);
+
+      // Navigate to settings
+      await tester.tap(find.text("Einstellungen"));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text("Benutzereinstellungen"));
+      await tester.pumpAndSettle();
+
+      // Change the name
+      await tester.enterText(find.byType(TextField), "Integration");
+      // await tester.pump();
+
+      // Navigate back home
+      await tester.pageBack();
+      // await tester.pageBack();
+      await tester.pump();
+      await tester.tap(find.text("Home"));
+      await tester.pumpAndSettle();
+
+      // await binding.delayed(const Duration(seconds: 1));
+      // Username should be changed now
+      expect(find.text("Hallo Integration"), findsOneWidget);
+    });
+
+    testWidgets("Preferences", (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Navigate to settings
+      await tester.tap(find.text("Einstellungen"));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text("Präferenzen"));
+      await tester.pumpAndSettle();
+
+      // TODO: Tests
+      expect(true, true);
+    });
+
+    testWidgets("Notification Settings", (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Navigate to settings
+      await tester.tap(find.text("Einstellungen"));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text("Benachrichtigungen"));
+      await tester.pumpAndSettle();
+
+      // There should be for switches (represented by LinkedSettingsTile)
+      expect(find.byType(LinkedSettingsTile), findsNWidgets(4));
+
+      // Turn notifications on/off for every use case
+      List<String> keys = [
+        SettingKeys.welcomeNotification,
+        SettingKeys.travelNotification,
+        SettingKeys.financeNotification,
+        SettingKeys.entertainmentNotification
+      ];
+
+      for (int i = 0; i < 4; i++) {
+        bool prevValue = StorageHandler.getValue(keys[i]);
+        // Tap the switch, not the tile
+        await tester.tap(find.byType(CupertinoSwitch).at(i));
+        await tester.pumpAndSettle();
+        await binding.delayed(const Duration(milliseconds: 200));
+        expect(StorageHandler.getValue(keys[i]), !prevValue);
+      }
+
+      // And 4 clocks
+      expect(find.text("Uhrzeit"), findsNWidgets(4));
+
+      // An date picker dialog should open when pressing an "Uhrzeit" tile
+      await tester.tap(find.text("Uhrzeit").first);
+      await tester.pumpAndSettle();
+      expect(find.byType(TimePickerDialog), findsOneWidget);
+
+      // TODO: Change time and check if it works
     });
   });
 
