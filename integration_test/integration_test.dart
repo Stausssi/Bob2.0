@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:mapbox_search/mapbox_search.dart';
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
@@ -141,8 +142,41 @@ void main() {
       await tester.tap(find.text("Präferenzen"));
       await tester.pumpAndSettle();
 
-      // TODO: Tests
-      expect(true, true);
+      // Switch any news category
+      int currentLength =
+          StorageHandler.getValue<List<String>>(SettingKeys.newsCategories)
+              .length;
+
+      await tester.tap(find.byType(CupertinoSwitch).first);
+      await tester.pumpAndSettle();
+
+      // Length should change by 1
+      expect(
+        (StorageHandler.getValue<List<String>>(SettingKeys.newsCategories)
+                    .length -
+                currentLength)
+            .abs(),
+        1,
+      );
+
+      // Open the location picker
+      await tester.tap(find.text("Wetter Standort"));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LocationPicker), findsOneWidget);
+
+      await tester.enterText(find.byType(TextField), "Stuttgart");
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+      // await binding.delayed();
+
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(MaterialButton).first);
+      await tester.pumpAndSettle();
+
+      expect(
+        StorageHandler.getValue<MapBoxPlace>(SettingKeys.weatherLocation).text,
+        "Stuttgart",
+      );
     });
 
     testWidgets("Notification Settings", (WidgetTester tester) async {
