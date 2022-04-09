@@ -325,7 +325,7 @@ Map<String, dynamic> _defaultValues = {
 
   /// welcome settings
   SettingKeys.raplaLink:
-      "https://rapla.dhbw-stuttgart.de/rapla?key=txB1FOi5xd1wUJBWuX8lJhGDUgtMSFmnKLgAG_NVMhBUYcX7OIFJ2of49CgyjVbV&today=Heute",
+      "https://rapla.dhbw-stuttgart.de/rapla?key=txB1FOi5xd1wUJBWuX8lJhGDUgtMSFmnKLgAG_NVMhBUYcX7OIFJ2of49CgyjVbV",
   SettingKeys.newsCategories: <String>[""],
   SettingKeys.weatherLocation: standardLocation,
 
