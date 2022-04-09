@@ -197,7 +197,7 @@ class StorageHandler {
 
           // MapBoxPlace will pass their latitude and longitude
           if (value is MapBoxPlace) {
-            value = value.center;
+            value = value.text;
           }
 
           return MapEntry(key, value);
@@ -252,6 +252,8 @@ class SettingKeys {
 
   /// All keys associated with a use case preference
   static List<String> get preferenceKeys => [
+        userName,
+
         // Welcome
         raplaLink, newsCategories, weatherLocation,
 
@@ -266,19 +268,42 @@ class SettingKeys {
       ];
 }
 
+// Copied from searching "Stuttgart" in the search widget
 MapBoxPlace get standardLocation => MapBoxPlace(
-      id: "",
+      id: "place.5443458428087800",
       type: FeatureType.FEATURE,
-      placeType: [],
-      addressNumber: "",
-      placeName: "",
+      placeType: [PlaceType.place],
+      addressNumber: "-1",
+      properties: Properties(shortCode: null, wikidata: "Q1022", address: null),
+      text: "Stuttgart",
+      placeName: "Stuttgart, Baden-Württemberg, Germany",
+      bbox: [
+        9.038606,
+        48.692024,
+        9.315827,
+        48.866405,
+      ],
+      center: [9.1775, 48.77611],
+      geometry: Geometry(
+        type: GeometryType.POINT,
+        coordinates: [9.1775, 48.77611],
+      ),
+      context: [
+        Context(
+          id: "region.8189097311210430",
+          shortCode: "DE-BW",
+          wikidata: "Q985",
+          text: "Baden-Württemberg",
+        ),
+        Context(
+          id: "country.10814856728480410",
+          shortCode: "de",
+          wikidata: "Q183",
+          text: "Germany",
+        ),
+      ],
       matchingText: "",
       matchingPlaceName: "",
-      bbox: [],
-      properties: Properties(shortCode: "", wikidata: "", address: ""),
-      context: [],
-      center: [48.78232, 9.17702],
-      geometry: Geometry(type: GeometryType.POINT, coordinates: []),
     );
 
 /// Sets the default values of the persisted values. Needed if there is no value
