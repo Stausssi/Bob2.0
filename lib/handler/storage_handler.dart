@@ -197,7 +197,7 @@ class StorageHandler {
 
           // MapBoxPlace will pass their latitude and longitude
           if (value is MapBoxPlace) {
-            value = value.text;
+            value = value.placeName;
           }
 
           return MapEntry(key, value);
