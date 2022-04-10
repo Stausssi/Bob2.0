@@ -46,6 +46,8 @@ void main() {
 
     testWidgets("Conversation list", (WidgetTester tester) async {
       await StorageHandler.init();
+      StorageHandler.reset();
+
       // Add a full conversation
       StorageHandler.addConversation(UseCase.welcome.name);
 
