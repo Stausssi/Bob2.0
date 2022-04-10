@@ -108,8 +108,8 @@ class NotificationHandler {
         tz.initializeTimeZones();
         tz.setLocalLocation(tz.getLocation("Europe/Berlin"));
 
-        print("Notifications ready: $_initialized");
-        print("current time: ${tz.TZDateTime.now(tz.local)}");
+        // print("Notifications ready: $_initialized");
+        // print("current time: ${tz.TZDateTime.now(tz.local)}");
       }
     }
   }
@@ -165,9 +165,9 @@ class NotificationHandler {
       scheduledDate = date;
     }
 
-    print(
-      "Scheduled notification for ${useCase.name} for ${scheduledDate.toIso8601String()}",
-    );
+    // print(
+    //   "Scheduled notification for ${useCase.name} for ${scheduledDate.toIso8601String()}",
+    // );
 
     await _plugin.zonedSchedule(
       _idMapping[useCase]!,
@@ -189,7 +189,7 @@ class NotificationHandler {
   /// if [useCase] is [null], every notification will be cancelled
   void removeNotification([UseCase? useCase]) {
     if (useCase != null) {
-      print("Notifications for ${useCase.name} cancelled!");
+      // print("Notifications for ${useCase.name} cancelled!");
       _plugin.cancel(_idMapping[useCase]!);
     } else {
       _plugin.cancelAll();

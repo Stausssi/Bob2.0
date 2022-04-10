@@ -63,14 +63,8 @@ class SpeechProcessing {
 
     await _speechToText.initialize(
       onError: (e) {
-        if (e.errorMsg != "error_speech_timeout") {
-          print("Holy we're fucked: $e");
-        } else {
-          if (_onTimeout != null) {
-            _onTimeout!();
-          } else {
-            print("No timeout handler provided");
-          }
+        if (e.errorMsg == "error_speech_timeout" && _onTimeout != null) {
+          _onTimeout!();
         }
       },
     );

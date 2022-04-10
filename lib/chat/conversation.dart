@@ -158,7 +158,7 @@ class _ConversationState extends State<Conversation> {
         );
         _conversationSaved = true;
 
-        print("Saved conversation with usecase $_useCase");
+        // print("Saved conversation with usecase $_useCase");
       }
     }
 
@@ -218,7 +218,7 @@ class _ConversationState extends State<Conversation> {
             groupMessagesThreshold: 5000,
             messages: _messages,
             user: _thisUser,
-            onSendPressed: (_) => print("send pressed and ignored"),
+            onSendPressed: (_) {},
             theme: const DefaultChatTheme(
               messageInsetsVertical: 12,
               primaryColor: CustomColors.purpleForeground,
