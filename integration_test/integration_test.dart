@@ -67,6 +67,10 @@ void main() {
 
     testWidgets("Invalid conversation length", (WidgetTester tester) async {
       await StorageHandler.init();
+
+      // Add a full conversation
+      StorageHandler.addConversation(UseCase.welcome.name);
+
       // Remove one value from the storage -> should result in an error
       StorageHandler.resetKey(SettingKeys.previousConversationDates);
 
@@ -103,6 +107,9 @@ void main() {
       await tester.pump();
       await tester.tap(find.text("Zuhören stoppen"));
       await tester.pump();
+
+      // Wait for the response of the backend
+      await binding.delayed(const Duration(seconds: 5));
     });
 
     testWidgets("Change username", (WidgetTester tester) async {
