@@ -238,11 +238,12 @@ class SettingKeys {
   /// Travel settings
   static const String homeLocation = "homeLocation";
   static const String workingLocation = "workingLocation";
-  static const String preferedVehicle = "preferedVehicle";
+  static const String preferredVehicle = "preferredVehicle";
   static const String gasolineType = "gasolineType";
 
   /// Finance settings
-  static const String binanceApiKey = "binanceApiKey";
+  static const String publicBinanceApiKey = "publicBinanceApiKey";
+  static const String privateBinanceApiKey = "privateBinanceApiKey";
   static const String stockIndex = "stockIndex";
   static const String stockList = "stockList";
 
@@ -261,7 +262,7 @@ class SettingKeys {
         homeLocation, workingLocation, gasolineType,
 
         // Finance
-        binanceApiKey, stockIndex, stockList,
+        publicBinanceApiKey, stockIndex, stockList,
 
         // Entertainment
         movieGenres, footballClub
@@ -332,12 +333,13 @@ Map<String, dynamic> _defaultValues = {
   /// Travel settings
   SettingKeys.homeLocation: standardLocation,
   SettingKeys.workingLocation: standardLocation,
-  SettingKeys.preferedVehicle: "Auto",
+  SettingKeys.preferredVehicle: "Auto",
   SettingKeys.gasolineType: "Benzin",
 
   /// Finance settings
-  SettingKeys.binanceApiKey: "",
-  SettingKeys.stockIndex: "DAX",
+  SettingKeys.publicBinanceApiKey: "",
+  SettingKeys.privateBinanceApiKey: "",
+  SettingKeys.stockIndex: "^gdaxi",
   SettingKeys.stockList: <String>["AAPL", "TSLA", "GME", "AMZN"],
 
   /// Entertainment settings

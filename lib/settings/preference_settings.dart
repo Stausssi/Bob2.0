@@ -66,7 +66,7 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
             LinkedSettingsTile(
               leading: Icon(Icons.drive_eta),
               title: "Anfahrtstyp",
-              settingKey: SettingKeys.preferedVehicle,
+              settingKey: SettingKeys.preferredVehicle,
               type: LinkedTileType.dropdown,
             ),
             LinkedSettingsTile(
@@ -84,8 +84,14 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
           tiles: const [
             LinkedSettingsTile(
               leading: Icon(Icons.currency_bitcoin),
-              title: "Binance API Key",
-              settingKey: SettingKeys.binanceApiKey,
+              title: "Public Binance Key",
+              settingKey: SettingKeys.publicBinanceApiKey,
+              type: LinkedTileType.text,
+            ),
+            LinkedSettingsTile(
+              leading: Icon(Icons.currency_bitcoin),
+              title: "Private Binance Key",
+              settingKey: SettingKeys.privateBinanceApiKey,
               type: LinkedTileType.text,
             ),
             LinkedSettingsTile(
@@ -96,7 +102,7 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
             ),
             LinkedSettingsTile(
               leading: Icon(Icons.attach_money),
-              title: "Aktienliste",
+              title: "Ticker",
               settingKey: SettingKeys.stockList,
               type: LinkedTileType.multilineText,
             )
