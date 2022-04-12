@@ -126,6 +126,17 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
             ),
           ],
         ),
+
+        /// Reset
+        SettingsSection(
+          title: const Text("App zurücksetzen"),
+          tiles: [
+            SettingsTile(
+              title: const Text("Zurücksetzen"),
+              onPressed: (_) => StorageHandler.reset(),
+            ),
+          ],
+        ),
       ],
     );
   }
