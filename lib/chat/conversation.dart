@@ -272,7 +272,7 @@ class _ConversationState extends State<Conversation> {
                   ),
                   if (_speechProcessing.isListening)
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 125),
+                      padding: const EdgeInsets.symmetric(horizontal: 100),
                       child: ElevatedButton(
                         onPressed: _stopListening,
                         child: const Text(
