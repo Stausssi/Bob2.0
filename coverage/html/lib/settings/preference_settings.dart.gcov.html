@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">34</td>
-            <td class="headerCovTableEntry">34</td>
-            <td class="headerCovTableEntryHi">100.0 %</td>
+            <td class="headerCovTableEntry">37</td>
+            <td class="headerCovTableEntry">38</td>
+            <td class="headerCovTableEntryHi">97.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-12 11:21:42</td>
+            <td class="headerValue">2022-04-12 12:24:50</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -188,38 +188,49 @@
 <a name="126"><span class="lineNum">     126 </span>            :             ),</a>
 <a name="127"><span class="lineNum">     127 </span>            :           ],</a>
 <a name="128"><span class="lineNum">     128 </span>            :         ),</a>
-<a name="129"><span class="lineNum">     129 </span>            :       ],</a>
-<a name="130"><span class="lineNum">     130 </span>            :     );</a>
-<a name="131"><span class="lineNum">     131 </span>            :   }</a>
-<a name="132"><span class="lineNum">     132 </span>            : </a>
-<a name="133"><span class="lineNum">     133 </span>            :   /// Generates multiple setting tiles representing a multiselect of all given [choices].</a>
-<a name="134"><span class="lineNum">     134 </span>            :   /// It will be saved as a [List&lt;String&gt;] in the local storage with the key</a>
-<a name="135"><span class="lineNum">     135 </span>            :   /// [settingsKey]</a>
-<a name="136"><span class="lineNum">     136 </span><span class="lineCov">          1 :   List&lt;AbstractSettingsTile&gt; _generateChoiceTiles(</span></a>
-<a name="137"><span class="lineNum">     137 </span>            :     String settingsKey,</a>
-<a name="138"><span class="lineNum">     138 </span>            :     List&lt;String&gt; choices,</a>
-<a name="139"><span class="lineNum">     139 </span>            :     IconData icon,</a>
-<a name="140"><span class="lineNum">     140 </span>            :   ) {</a>
-<a name="141"><span class="lineNum">     141 </span>            :     return choices</a>
-<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          1 :         .map(</span></a>
-<a name="143"><span class="lineNum">     143 </span><span class="lineCov">          2 :           (choice) =&gt; SettingsTile.switchTile(</span></a>
-<a name="144"><span class="lineNum">     144 </span><span class="lineCov">          1 :             title: Text(choice),</span></a>
-<a name="145"><span class="lineNum">     145 </span><span class="lineCov">          1 :             leading: Icon(icon),</span></a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineCov">          1 :             initialValue: StorageHandler.getValue&lt;List&lt;String&gt;&gt;(settingsKey)</span></a>
-<a name="147"><span class="lineNum">     147 </span><span class="lineCov">          1 :                 .contains(choice),</span></a>
-<a name="148"><span class="lineNum">     148 </span><span class="lineCov">          1 :             onToggle: (selected) {</span></a>
-<a name="149"><span class="lineNum">     149 </span><span class="lineCov">          1 :               StorageHandler.updateList(</span></a>
-<a name="150"><span class="lineNum">     150 </span>            :                 settingsKey,</a>
-<a name="151"><span class="lineNum">     151 </span>            :                 choice,</a>
-<a name="152"><span class="lineNum">     152 </span>            :                 selected,</a>
-<a name="153"><span class="lineNum">     153 </span>            :               );</a>
-<a name="154"><span class="lineNum">     154 </span><span class="lineCov">          2 :               setState(() {});</span></a>
-<a name="155"><span class="lineNum">     155 </span>            :             },</a>
-<a name="156"><span class="lineNum">     156 </span>            :           ),</a>
-<a name="157"><span class="lineNum">     157 </span>            :         )</a>
-<a name="158"><span class="lineNum">     158 </span><span class="lineCov">          1 :         .toList();</span></a>
-<a name="159"><span class="lineNum">     159 </span>            :   }</a>
-<a name="160"><span class="lineNum">     160 </span>            : }</a>
+<a name="129"><span class="lineNum">     129 </span>            : </a>
+<a name="130"><span class="lineNum">     130 </span>            :         /// Reset</a>
+<a name="131"><span class="lineNum">     131 </span><span class="lineCov">          1 :         SettingsSection(</span></a>
+<a name="132"><span class="lineNum">     132 </span>            :           title: const Text(&quot;App zurücksetzen&quot;),</a>
+<a name="133"><span class="lineNum">     133 </span><span class="lineCov">          1 :           tiles: [</span></a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineCov">          1 :             SettingsTile(</span></a>
+<a name="135"><span class="lineNum">     135 </span>            :               title: const Text(&quot;Zurücksetzen&quot;),</a>
+<a name="136"><span class="lineNum">     136 </span><span class="lineNoCov">          0 :               onPressed: (_) =&gt; StorageHandler.reset(),</span></a>
+<a name="137"><span class="lineNum">     137 </span>            :             ),</a>
+<a name="138"><span class="lineNum">     138 </span>            :           ],</a>
+<a name="139"><span class="lineNum">     139 </span>            :         ),</a>
+<a name="140"><span class="lineNum">     140 </span>            :       ],</a>
+<a name="141"><span class="lineNum">     141 </span>            :     );</a>
+<a name="142"><span class="lineNum">     142 </span>            :   }</a>
+<a name="143"><span class="lineNum">     143 </span>            : </a>
+<a name="144"><span class="lineNum">     144 </span>            :   /// Generates multiple setting tiles representing a multiselect of all given [choices].</a>
+<a name="145"><span class="lineNum">     145 </span>            :   /// It will be saved as a [List&lt;String&gt;] in the local storage with the key</a>
+<a name="146"><span class="lineNum">     146 </span>            :   /// [settingsKey]</a>
+<a name="147"><span class="lineNum">     147 </span><span class="lineCov">          1 :   List&lt;AbstractSettingsTile&gt; _generateChoiceTiles(</span></a>
+<a name="148"><span class="lineNum">     148 </span>            :     String settingsKey,</a>
+<a name="149"><span class="lineNum">     149 </span>            :     List&lt;String&gt; choices,</a>
+<a name="150"><span class="lineNum">     150 </span>            :     IconData icon,</a>
+<a name="151"><span class="lineNum">     151 </span>            :   ) {</a>
+<a name="152"><span class="lineNum">     152 </span>            :     return choices</a>
+<a name="153"><span class="lineNum">     153 </span><span class="lineCov">          1 :         .map(</span></a>
+<a name="154"><span class="lineNum">     154 </span><span class="lineCov">          2 :           (choice) =&gt; SettingsTile.switchTile(</span></a>
+<a name="155"><span class="lineNum">     155 </span><span class="lineCov">          1 :             title: Text(choice),</span></a>
+<a name="156"><span class="lineNum">     156 </span><span class="lineCov">          1 :             leading: Icon(icon),</span></a>
+<a name="157"><span class="lineNum">     157 </span><span class="lineCov">          1 :             initialValue: StorageHandler.getValue&lt;List&lt;String&gt;&gt;(settingsKey)</span></a>
+<a name="158"><span class="lineNum">     158 </span><span class="lineCov">          1 :                 .contains(choice),</span></a>
+<a name="159"><span class="lineNum">     159 </span><span class="lineCov">          1 :             onToggle: (selected) {</span></a>
+<a name="160"><span class="lineNum">     160 </span><span class="lineCov">          1 :               StorageHandler.updateList(</span></a>
+<a name="161"><span class="lineNum">     161 </span>            :                 settingsKey,</a>
+<a name="162"><span class="lineNum">     162 </span>            :                 choice,</a>
+<a name="163"><span class="lineNum">     163 </span>            :                 selected,</a>
+<a name="164"><span class="lineNum">     164 </span>            :               );</a>
+<a name="165"><span class="lineNum">     165 </span><span class="lineCov">          2 :               setState(() {});</span></a>
+<a name="166"><span class="lineNum">     166 </span>            :             },</a>
+<a name="167"><span class="lineNum">     167 </span>            :           ),</a>
+<a name="168"><span class="lineNum">     168 </span>            :         )</a>
+<a name="169"><span class="lineNum">     169 </span><span class="lineCov">          1 :         .toList();</span></a>
+<a name="170"><span class="lineNum">     170 </span>            :   }</a>
+<a name="171"><span class="lineNum">     171 </span>            : }</a>
 </pre>
       </td>
     </tr>
