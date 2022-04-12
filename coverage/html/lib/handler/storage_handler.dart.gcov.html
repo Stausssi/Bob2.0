@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-12 12:24:50</td>
+            <td class="headerValue">2022-04-12 15:07:50</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -117,7 +117,7 @@
 <a name="55"><span class="lineNum">      55 </span><span class="lineCov">          6 :       return _preferences.get(key) as T;</span></a>
 <a name="56"><span class="lineNum">      56 </span>            :     } else {</a>
 <a name="57"><span class="lineNum">      57 </span>            :       // This is an unknown key, save it and return the default value</a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          2 :       saveValue(key, defaultValue);</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          3 :       saveValue(key, defaultValue);</span></a>
 <a name="59"><span class="lineNum">      59 </span>            :       return defaultValue as T;</a>
 <a name="60"><span class="lineNum">      60 </span>            :     }</a>
 <a name="61"><span class="lineNum">      61 </span>            :   }</a>
@@ -129,7 +129,7 @@
 <a name="67"><span class="lineNum">      67 </span>            :     // Use a special method depending on the class of the value</a>
 <a name="68"><span class="lineNum">      68 </span>            :     // Color and MirrorLayout have to be converted back to a string</a>
 <a name="69"><span class="lineNum">      69 </span><span class="lineCov">          3 :     if (value is String) {</span></a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          2 :       _preferences.setString(key, value);</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          4 :       _preferences.setString(key, value);</span></a>
 <a name="71"><span class="lineNum">      71 </span><span class="lineCov">          3 :     } else if (value is int) {</span></a>
 <a name="72"><span class="lineNum">      72 </span><span class="lineCov">          6 :       _preferences.setInt(key, value);</span></a>
 <a name="73"><span class="lineNum">      73 </span><span class="lineCov">          2 :     } else if (value is bool) {</span></a>
@@ -201,7 +201,7 @@
 <a name="139"><span class="lineNum">     139 </span><span class="lineCov">          2 :         return getValue(SettingKeys.welcomeTime);</span></a>
 <a name="140"><span class="lineNum">     140 </span><span class="lineCov">          2 :       case UseCase.travel:</span></a>
 <a name="141"><span class="lineNum">     141 </span><span class="lineCov">          2 :         return getValue(SettingKeys.travelTime);</span></a>
-<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          2 :       case UseCase.finance:</span></a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          2 :       case UseCase.finances:</span></a>
 <a name="143"><span class="lineNum">     143 </span><span class="lineCov">          2 :         return getValue(SettingKeys.financeTime);</span></a>
 <a name="144"><span class="lineNum">     144 </span><span class="lineCov">          2 :       case UseCase.entertainment:</span></a>
 <a name="145"><span class="lineNum">     145 </span><span class="lineCov">          2 :         return getValue(SettingKeys.entertainmentTime);</span></a>
@@ -324,7 +324,7 @@
 <a name="262"><span class="lineNum">     262 </span>            :         homeLocation, workingLocation, gasolineType,</a>
 <a name="263"><span class="lineNum">     263 </span>            : </a>
 <a name="264"><span class="lineNum">     264 </span>            :         // Finance</a>
-<a name="265"><span class="lineNum">     265 </span>            :         publicBinanceApiKey, stockIndex, stockList,</a>
+<a name="265"><span class="lineNum">     265 </span>            :         publicBinanceApiKey, privateBinanceApiKey, stockIndex, stockList,</a>
 <a name="266"><span class="lineNum">     266 </span>            : </a>
 <a name="267"><span class="lineNum">     267 </span>            :         // Entertainment</a>
 <a name="268"><span class="lineNum">     268 </span>            :         movieGenres, footballClub</a>
