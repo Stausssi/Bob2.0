@@ -45,13 +45,16 @@ class ConversationHandler {
   ///
   /// ```
   /// {
-  ///   useCase: useCase,
+  ///   useCase: "useCase",
   ///   tts: "text_to_read",
   ///   further_questions: ["question 1", ..., "question n"]
   /// }
   /// ```
+  ///
+  /// Returns [null], if the answer was invalid
   Future<BackendAnswer?> askQuestion(String question) async {
     try {
+      // Make the request with all preferences
       Response<Map<String, dynamic>> response = await _connection.post(
         "/input",
         data: {
@@ -60,6 +63,7 @@ class ConversationHandler {
         },
       );
 
+      // No need to try parsing if no data was given
       if (response.data != null) {
         return _parseBackendAnswer(response.data!);
       }

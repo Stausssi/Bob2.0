@@ -34,14 +34,14 @@ class StorageHandler {
   /// Tries retrieving the value of the class [T] with the given [key].
   ///
   /// If the [key] is not present, it returns the given [defaultValue].
-  /// Usually, they [key] is a member of the class [SettingKeys]. This way, it is
-  /// ensured, that a [defaultValue] exists.
+  /// Usually, they [key] is a member of the class [SettingKeys]. This way, it
+  /// is ensured, that a [defaultValue] exists.
   static T getValue<T>(String key, [T? defaultValue]) {
     // Get the persistent default value if none is given
     defaultValue = defaultValue ?? _defaultValues[key] as T;
 
     if (_preferences.get(key) != null) {
-      // Lists need special treatment
+      // Lists, Time and Places need special treatment
       if (defaultValue is List) {
         return _preferences.getStringList(key) as T;
       } else if (defaultValue is Time) {

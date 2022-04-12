@@ -143,12 +143,13 @@ class NotificationHandler {
     UseCase useCase, [
     tz.TZDateTime? date,
   ]) async {
-    late tz.TZDateTime scheduledDate;
-
+    // Fallback to date in StorageHandler if not explicitly given
     if (date == null) {
       Time useCaseTime = StorageHandler.getUseCaseTime(useCase);
       tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-      scheduledDate = tz.TZDateTime(
+
+      // Create a time object in the local timezone
+      date = tz.TZDateTime(
         tz.local,
         now.year,
         now.month,
@@ -158,11 +159,10 @@ class NotificationHandler {
         useCaseTime.second,
       );
 
-      if (scheduledDate.isBefore(now)) {
-        scheduledDate = scheduledDate.add(const Duration(days: 1));
+      // Schedule for tomorrow if the given time is in the past
+      if (date.isBefore(now)) {
+        date = date.add(const Duration(days: 1));
       }
-    } else {
-      scheduledDate = date;
     }
 
     // print(
@@ -173,7 +173,7 @@ class NotificationHandler {
       _idMapping[useCase]!,
       _titleMapping[useCase]!,
       "Klicke auf diese Nachricht, um die Routine zu starten!",
-      scheduledDate,
+      date,
       _details,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
