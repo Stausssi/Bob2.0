@@ -326,7 +326,7 @@ Map<String, dynamic> _defaultValues = {
   /// welcome settings
   SettingKeys.raplaLink:
       "https://rapla.dhbw-stuttgart.de/rapla?key=txB1FOi5xd1wUJBWuX8lJhGDUgtMSFmnKLgAG_NVMhBUYcX7OIFJ2of49CgyjVbV",
-  SettingKeys.newsCategories: <String>[""],
+  SettingKeys.newsCategories: <String>["Deutschland", "Sport"],
   SettingKeys.weatherLocation: standardLocation,
 
   /// Travel settings
@@ -341,7 +341,7 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.stockList: <String>["AAPL", "TSLA", "GME", "AMZN"],
 
   /// Entertainment settings
-  SettingKeys.movieGenres: <String>["Fuck around and find out"],
+  SettingKeys.movieGenres: <String>["Action", "Sci-Fi"],
   SettingKeys.footballClub: "VfB Stuttgart",
 };
 
@@ -396,19 +396,19 @@ List<DropdownMenuItem<String>> get preferredVehicles => const [
 /// Each item in this list represents a news category the user can follow and be
 /// notified for
 List<String> get newsCategories => [
-      "Fake-News",
+      "Sport",
       "Coronavirus",
-      "Headlines",
-      "Cannabis-Legalisierung",
+      "Krieg",
+      "Deutschland",
+      "EU",
+      "Welt",
     ];
 
 /// Each item in this list represents a movie genre the user likes and wants to
 /// be notified of
 List<String> get movieGenres => [
       "Action",
-      "Fiction",
       "Sci-Fi",
       "Romance",
-      "Fuck around and find out",
-      "Comedy"
+      "Comedy",
     ];
