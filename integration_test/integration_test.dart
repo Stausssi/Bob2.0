@@ -56,7 +56,7 @@ void main() {
 
       // Check whether the notification from before is rendered
       expect(
-        find.text("Guten Morgen"),
+        find.text(UseCase.welcome.getGermanName()),
         findsOneWidget,
       );
       expect(
@@ -127,11 +127,9 @@ void main() {
 
       // Change the name
       await tester.enterText(find.byType(TextField), "Integration");
-      // await tester.pump();
 
       // Navigate back home
       await tester.pageBack();
-      // await tester.pageBack();
       await tester.pump();
       await tester.tap(find.text("Home"));
       await tester.pumpAndSettle();

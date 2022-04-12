@@ -17,35 +17,25 @@ class NotificationSettings extends StatefulWidget {
 class _NotificationSettingsState extends State<NotificationSettings> {
   @override
   Widget build(BuildContext context) {
+    List<SettingsSection> sections = [];
+
+    for (UseCase u in UseCase.values) {
+      sections.add(
+        SettingsSection(
+          title: Text(u.getGermanName()),
+          tiles: [
+            ...notificationTiles(u),
+          ],
+        ),
+      );
+    }
+
     return SettingsList(
       applicationType: ApplicationType.material,
       platform: DevicePlatform.iOS,
       shrinkWrap: false,
       sections: [
-        SettingsSection(
-          title: const Text('Willkommen'),
-          tiles: [
-            ...notificationTiles(UseCase.welcome),
-          ],
-        ),
-        SettingsSection(
-          title: const Text('Ankunft'),
-          tiles: [
-            ...notificationTiles(UseCase.travel),
-          ],
-        ),
-        SettingsSection(
-          title: const Text('Finanzen'),
-          tiles: [
-            ...notificationTiles(UseCase.finance),
-          ],
-        ),
-        SettingsSection(
-          title: const Text('Entertainment'),
-          tiles: [
-            ...notificationTiles(UseCase.entertainment),
-          ],
-        ),
+        ...sections,
         SettingsSection(
           title: const Text("Debug"),
           tiles: [

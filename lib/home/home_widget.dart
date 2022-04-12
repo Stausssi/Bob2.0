@@ -211,14 +211,6 @@ class ColoredBubble extends StatelessWidget {
 class ConversationList extends StatelessWidget {
   const ConversationList({Key? key}) : super(key: key);
 
-  /// Contains a german translation for each use case
-  static const Map<UseCase, String> translationMap = {
-    UseCase.finance: "Finanzen",
-    UseCase.welcome: "Guten Morgen",
-    UseCase.entertainment: "Unterhaltung",
-    UseCase.travel: "Reisen"
-  };
-
   @override
   Widget build(BuildContext context) {
     // Get the last X conversations and the corresponding dates
@@ -286,7 +278,7 @@ class ConversationList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      translationMap[useCaseFromString(useCase)]!,
+                      useCaseFromString(useCase).getGermanName(),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

@@ -14,14 +14,30 @@ enum UseCase {
   /// Greets the user every morning with an overview about the day
   welcome,
 
-  /// Recommends movies etc. to the user in the evening
-  entertainment,
+  /// Tells the user the best way to get to the next meeting
+  travel,
 
   /// Displays an overview about the financial status and depots of the user
   finance,
 
-  /// Tells the user the best way to get to the next meeting
-  travel
+  /// Recommends movies etc. to the user in the evening
+  entertainment
+}
+
+extension GermanName on UseCase {
+  /// Returns a german name for each use case to use in the frontend
+  String getGermanName() {
+    switch (this) {
+      case UseCase.welcome:
+        return "Willkommen";
+      case UseCase.entertainment:
+        return "Entertainment";
+      case UseCase.finance:
+        return "Finanzen";
+      case UseCase.travel:
+        return "Anfahrt";
+    }
+  }
 }
 
 /// Returns the [UseCase] with the name [value].

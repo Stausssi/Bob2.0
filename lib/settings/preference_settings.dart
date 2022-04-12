@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../handler/storage_handler.dart';
+import '../util.dart';
 
 class PreferenceSettings extends StatefulWidget {
   const PreferenceSettings({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
       sections: [
         /// Welcome
         SettingsSection(
-          title: const Text('Willkommen'),
+          title: Text(UseCase.welcome.getGermanName()),
           tiles: [
             ..._generateChoiceTiles(
               SettingKeys.newsCategories,
@@ -47,9 +48,9 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
         ),
 
         /// Travel
-        const SettingsSection(
-          title: Text('Travel'),
-          tiles: [
+        SettingsSection(
+          title: Text(UseCase.travel.getGermanName()),
+          tiles: const [
             LinkedSettingsTile(
               leading: Icon(Icons.home),
               title: "Standort Zuhause",
@@ -78,9 +79,9 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
         ),
 
         /// Finances
-        const SettingsSection(
-          title: Text('Finances'),
-          tiles: [
+        SettingsSection(
+          title: Text(UseCase.finance.getGermanName()),
+          tiles: const [
             LinkedSettingsTile(
               leading: Icon(Icons.currency_bitcoin),
               title: "Binance API Key",
@@ -104,7 +105,7 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
 
         /// Entertainment
         SettingsSection(
-          title: const Text('Entertainment'),
+          title: Text(UseCase.entertainment.getGermanName()),
           tiles: [
             ..._generateChoiceTiles(
               SettingKeys.movieGenres,
