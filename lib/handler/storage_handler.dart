@@ -343,7 +343,7 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.stockList: <String>["AAPL", "TSLA", "GME", "AMZN"],
 
   /// Entertainment settings
-  SettingKeys.movieGenres: <String>["Action", "Sci-Fi"],
+  SettingKeys.movieGenres: <String>["Action", "Sci-Fi", "Game-Show"],
   SettingKeys.footballClub: "VfB Stuttgart",
 };
 
@@ -413,4 +413,9 @@ List<String> get movieGenres => [
       "Sci-Fi",
       "Romance",
       "Comedy",
+      "Animation",
+      "Game-Show",
+      "Reality-TV",
+      "Horror",
+      "Thriller"
     ];
