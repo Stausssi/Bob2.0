@@ -27,12 +27,11 @@ class _ConversationState extends State<Conversation> {
     firstName: "You",
     id: "not_bob",
   );
-  final _bobUser = const chat_types.User(
+  final _bobUser = chat_types.User(
     firstName: "Bob",
     lastName: "2.0",
     role: chat_types.Role.agent,
-    // TODO: Use custom picture (hosted on own Server at BW Cloud)
-    imageUrl: "https://freesvg.org/img/1538298822.png",
+    imageUrl: "${ConversationHandler.instance.backendURL}/bob_head",
     id: "bob",
   );
 

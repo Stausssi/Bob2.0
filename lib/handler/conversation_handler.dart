@@ -39,6 +39,9 @@ class ConversationHandler {
     _connection.options.responseType = ResponseType.json;
   }
 
+  /// Returns the URL of the backend
+  String get backendURL => _connection.options.baseUrl;
+
   /// Ask the backend a question.
   ///
   /// The response is expected to have the following format:
