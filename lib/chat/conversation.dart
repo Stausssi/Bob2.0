@@ -56,6 +56,13 @@ class _ConversationState extends State<Conversation> {
     _speechProcessing = SpeechProcessing(onReady: _onSpeechReady);
   }
 
+  @override
+  void dispose() {
+    _speechProcessing.stopTalking();
+
+    super.dispose();
+  }
+
   /// (Re)sets the loading screen to the given [text], or "" if [text] is null
   void _setLoadingText([String? text]) {
     text ??= "";

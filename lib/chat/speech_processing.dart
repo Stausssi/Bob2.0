@@ -116,4 +116,11 @@ class SpeechProcessing {
 
     await _speechToText.stop();
   }
+
+  /// Stops reading the text out loud
+  void stopTalking() async {
+    _state = _SpeechProcessingState.idle;
+
+    await _flutterTTS.stop();
+  }
 }
