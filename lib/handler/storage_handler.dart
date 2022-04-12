@@ -337,8 +337,8 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.gasolineType: "Benzin",
 
   /// Finance settings
-  SettingKeys.publicBinanceApiKey: "",
-  SettingKeys.privateBinanceApiKey: "",
+  SettingKeys.publicBinanceApiKey: StorageHandler.getAPIKey("pubBinance"),
+  SettingKeys.privateBinanceApiKey: StorageHandler.getAPIKey("privBinance"),
   SettingKeys.stockIndex: "^gdaxi",
   SettingKeys.stockList: <String>["AAPL", "TSLA", "GME", "AMZN"],
 
