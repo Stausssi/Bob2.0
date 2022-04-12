@@ -5,6 +5,7 @@ import 'handler/storage_handler.dart';
 /// Design colors used all across the application
 class CustomColors {
   static const Color blackBackground = Color.fromRGBO(33, 34, 38, 1);
+  static const Color whiteBackground = Color.fromRGBO(242, 242, 247, 1);
   static const Color purpleForeground = Color.fromRGBO(93, 95, 239, 1);
   static const Color avatarBackground = Color.fromRGBO(255, 214, 220, 1);
 }
@@ -18,7 +19,7 @@ enum UseCase {
   travel,
 
   /// Displays an overview about the financial status and depots of the user
-  finance,
+  finances,
 
   /// Recommends movies etc. to the user in the evening
   entertainment
@@ -32,7 +33,7 @@ extension GermanName on UseCase {
         return "Willkommen";
       case UseCase.entertainment:
         return "Entertainment";
-      case UseCase.finance:
+      case UseCase.finances:
         return "Finanzen";
       case UseCase.travel:
         return "Anfahrt";
@@ -42,7 +43,7 @@ extension GermanName on UseCase {
 
 /// Returns the [UseCase] with the name [value].
 ///
-/// "finance" => [UseCase.finance], etc.
+/// "finances" => [UseCase.finances], etc.
 UseCase useCaseFromString(String value) {
   return UseCase.values.firstWhere(
     (element) => element.name == value,

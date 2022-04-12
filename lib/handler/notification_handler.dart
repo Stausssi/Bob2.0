@@ -59,7 +59,7 @@ class NotificationHandler {
 
   /// Maps a [UseCase] to an integer to provide unique IDs for each [UseCase]
   static const Map<UseCase, int> _idMapping = {
-    UseCase.finance: 0,
+    UseCase.finances: 0,
     UseCase.entertainment: 1,
     UseCase.travel: 2,
     UseCase.welcome: 3,
@@ -67,7 +67,7 @@ class NotificationHandler {
 
   /// Maps a string representing the title of the notification to each [UseCase]
   static const Map<UseCase, String> _titleMapping = {
-    UseCase.finance: "Finanzen",
+    UseCase.finances: "Finanzen",
     UseCase.entertainment: "Unterhaltung",
     UseCase.travel: "Arbeitsweg",
     UseCase.welcome: "Guten Morgen!",

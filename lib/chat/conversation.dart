@@ -88,8 +88,8 @@ class _ConversationState extends State<Conversation> {
         case UseCase.travel:
           sendMessage("Travel dialog");
           break;
-        case UseCase.finance:
-          sendMessage("Finanzübersicht");
+        case UseCase.finances:
+          sendMessage("Wie ist die aktuelle Marktsituation?");
           break;
         case UseCase.entertainment:
           sendMessage("Netflix&Chill");

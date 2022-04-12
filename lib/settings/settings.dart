@@ -69,6 +69,9 @@ class _SettingsState extends State<Settings> {
           SettingsList(
             applicationType: ApplicationType.cupertino,
             platform: DevicePlatform.iOS,
+            lightTheme: const SettingsThemeData(
+              settingsListBackground: Colors.transparent,
+            ),
             shrinkWrap: true,
             sections: [
               SettingsSection(

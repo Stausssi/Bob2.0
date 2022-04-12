@@ -65,7 +65,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
         notificationKey = SettingKeys.travelNotification;
         timeKey = SettingKeys.travelTime;
         break;
-      case UseCase.finance:
+      case UseCase.finances:
         notificationKey = SettingKeys.financeNotification;
         timeKey = SettingKeys.financeTime;
         break;

@@ -139,7 +139,7 @@ class StorageHandler {
         return getValue(SettingKeys.welcomeTime);
       case UseCase.travel:
         return getValue(SettingKeys.travelTime);
-      case UseCase.finance:
+      case UseCase.finances:
         return getValue(SettingKeys.financeTime);
       case UseCase.entertainment:
         return getValue(SettingKeys.entertainmentTime);
@@ -262,7 +262,7 @@ class SettingKeys {
         homeLocation, workingLocation, gasolineType,
 
         // Finance
-        publicBinanceApiKey, stockIndex, stockList,
+        publicBinanceApiKey, privateBinanceApiKey, stockIndex, stockList,
 
         // Entertainment
         movieGenres, footballClub

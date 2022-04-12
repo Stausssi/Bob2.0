@@ -24,8 +24,8 @@ void main() {
       () => expect(useCaseFromString("entertainment"), UseCase.entertainment),
     );
     test(
-      "'finance' should be converted from string",
-      () => expect(useCaseFromString("finance"), UseCase.finance),
+      "'finances' should be converted from string",
+      () => expect(useCaseFromString("finances"), UseCase.finances),
     );
     test(
       "'travel' should be converted from string",
@@ -34,12 +34,12 @@ void main() {
 
     test("BackendAnswer class", () {
       BackendAnswer answer = const BackendAnswer(
-        useCase: UseCase.finance,
+        useCase: UseCase.finances,
         tts: "Stonks",
         furtherQuestions: [],
       );
 
-      expect(answer.useCase, UseCase.finance);
+      expect(answer.useCase, UseCase.finances);
       expect(answer.tts, "Stonks");
       expect(answer.furtherQuestions.isEmpty, true);
     });
@@ -99,7 +99,7 @@ void main() {
     test("Use Case Times", () {
       expect(StorageHandler.getUseCaseTime(UseCase.welcome).hour, 7);
       expect(StorageHandler.getUseCaseTime(UseCase.travel).hour, 8);
-      expect(StorageHandler.getUseCaseTime(UseCase.finance).hour, 15);
+      expect(StorageHandler.getUseCaseTime(UseCase.finances).hour, 15);
       expect(StorageHandler.getUseCaseTime(UseCase.entertainment).hour, 20);
     });
 

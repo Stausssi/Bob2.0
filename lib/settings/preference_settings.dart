@@ -80,7 +80,7 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
 
         /// Finances
         SettingsSection(
-          title: Text(UseCase.finance.getGermanName()),
+          title: Text(UseCase.finances.getGermanName()),
           tiles: const [
             LinkedSettingsTile(
               leading: Icon(Icons.currency_bitcoin),
@@ -133,7 +133,7 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
           tiles: [
             SettingsTile(
               title: const Text("Zurücksetzen"),
-              onPressed: (_) => StorageHandler.reset(),
+              onPressed: (_) => setState(() => StorageHandler.reset()),
             ),
           ],
         ),

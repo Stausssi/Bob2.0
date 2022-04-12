@@ -34,6 +34,7 @@ class BobApp extends StatelessWidget {
       title: 'Bob 2.0',
       theme: ThemeData(
         textTheme: GoogleFonts.assistantTextTheme(),
+        scaffoldBackgroundColor: CustomColors.whiteBackground,
       ),
       themeMode: ThemeMode.light,
       home: const MainPage(),
