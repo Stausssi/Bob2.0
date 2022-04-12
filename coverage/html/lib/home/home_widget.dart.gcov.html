@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-10 18:27:48</td>
+            <td class="headerValue">2022-04-12 11:21:42</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -273,174 +273,166 @@
 <a name="211"><span class="lineNum">     211 </span>            : class ConversationList extends StatelessWidget {</a>
 <a name="212"><span class="lineNum">     212 </span><span class="lineCov">          4 :   const ConversationList({Key? key}) : super(key: key);</span></a>
 <a name="213"><span class="lineNum">     213 </span>            : </a>
-<a name="214"><span class="lineNum">     214 </span>            :   /// Contains a german translation for each use case</a>
-<a name="215"><span class="lineNum">     215 </span>            :   static const Map&lt;UseCase, String&gt; translationMap = {</a>
-<a name="216"><span class="lineNum">     216 </span>            :     UseCase.finance: &quot;Finanzen&quot;,</a>
-<a name="217"><span class="lineNum">     217 </span>            :     UseCase.welcome: &quot;Guten Morgen&quot;,</a>
-<a name="218"><span class="lineNum">     218 </span>            :     UseCase.entertainment: &quot;Unterhaltung&quot;,</a>
-<a name="219"><span class="lineNum">     219 </span>            :     UseCase.travel: &quot;Reisen&quot;</a>
-<a name="220"><span class="lineNum">     220 </span>            :   };</a>
-<a name="221"><span class="lineNum">     221 </span>            : </a>
-<a name="222"><span class="lineNum">     222 </span><span class="lineCov">          2 :   @override</span></a>
-<a name="223"><span class="lineNum">     223 </span>            :   Widget build(BuildContext context) {</a>
-<a name="224"><span class="lineNum">     224 </span>            :     // Get the last X conversations and the corresponding dates</a>
-<a name="225"><span class="lineNum">     225 </span><span class="lineCov">          2 :     List&lt;String&gt; previousConversations = StorageHandler.getValue(</span></a>
-<a name="226"><span class="lineNum">     226 </span>            :       SettingKeys.previousConversations,</a>
-<a name="227"><span class="lineNum">     227 </span>            :     );</a>
-<a name="228"><span class="lineNum">     228 </span><span class="lineCov">          2 :     List&lt;String&gt; previousDates = StorageHandler.getValue(</span></a>
-<a name="229"><span class="lineNum">     229 </span>            :       SettingKeys.previousConversationDates,</a>
-<a name="230"><span class="lineNum">     230 </span>            :     );</a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          2 :   @override</span></a>
+<a name="215"><span class="lineNum">     215 </span>            :   Widget build(BuildContext context) {</a>
+<a name="216"><span class="lineNum">     216 </span>            :     // Get the last X conversations and the corresponding dates</a>
+<a name="217"><span class="lineNum">     217 </span><span class="lineCov">          2 :     List&lt;String&gt; previousConversations = StorageHandler.getValue(</span></a>
+<a name="218"><span class="lineNum">     218 </span>            :       SettingKeys.previousConversations,</a>
+<a name="219"><span class="lineNum">     219 </span>            :     );</a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">          2 :     List&lt;String&gt; previousDates = StorageHandler.getValue(</span></a>
+<a name="221"><span class="lineNum">     221 </span>            :       SettingKeys.previousConversationDates,</a>
+<a name="222"><span class="lineNum">     222 </span>            :     );</a>
+<a name="223"><span class="lineNum">     223 </span>            : </a>
+<a name="224"><span class="lineNum">     224 </span>            :     /// Every item contained in the list</a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineCov">          2 :     List&lt;Widget&gt; listContents = [</span></a>
+<a name="226"><span class="lineNum">     226 </span>            :       const Text(</a>
+<a name="227"><span class="lineNum">     227 </span>            :         &quot;Letzte Konversationen&quot;,</a>
+<a name="228"><span class="lineNum">     228 </span>            :         style: TextStyle(fontWeight: FontWeight.bold),</a>
+<a name="229"><span class="lineNum">     229 </span>            :       )</a>
+<a name="230"><span class="lineNum">     230 </span>            :     ];</a>
 <a name="231"><span class="lineNum">     231 </span>            : </a>
-<a name="232"><span class="lineNum">     232 </span>            :     /// Every item contained in the list</a>
-<a name="233"><span class="lineNum">     233 </span><span class="lineCov">          2 :     List&lt;Widget&gt; listContents = [</span></a>
-<a name="234"><span class="lineNum">     234 </span>            :       const Text(</a>
-<a name="235"><span class="lineNum">     235 </span>            :         &quot;Letzte Konversationen&quot;,</a>
-<a name="236"><span class="lineNum">     236 </span>            :         style: TextStyle(fontWeight: FontWeight.bold),</a>
-<a name="237"><span class="lineNum">     237 </span>            :       )</a>
-<a name="238"><span class="lineNum">     238 </span>            :     ];</a>
-<a name="239"><span class="lineNum">     239 </span>            : </a>
-<a name="240"><span class="lineNum">     240 </span>            :     // An error occurred if conversation and dates are not of the same length</a>
-<a name="241"><span class="lineNum">     241 </span><span class="lineCov">          6 :     if (previousConversations.length != previousDates.length) {</span></a>
-<a name="242"><span class="lineNum">     242 </span><span class="lineCov">          1 :       StorageHandler.resetKey(SettingKeys.previousConversations);</span></a>
-<a name="243"><span class="lineNum">     243 </span><span class="lineCov">          1 :       StorageHandler.resetKey(SettingKeys.previousConversationDates);</span></a>
-<a name="244"><span class="lineNum">     244 </span><span class="lineCov">          1 :       listContents.add(</span></a>
-<a name="245"><span class="lineNum">     245 </span>            :         const Text(</a>
-<a name="246"><span class="lineNum">     246 </span>            :           &quot;Die letzten Konversationen konnten nicht geladen werden.&quot;,</a>
-<a name="247"><span class="lineNum">     247 </span>            :           style: TextStyle(</a>
-<a name="248"><span class="lineNum">     248 </span>            :             color: Colors.black38,</a>
-<a name="249"><span class="lineNum">     249 </span>            :           ),</a>
-<a name="250"><span class="lineNum">     250 </span>            :         ),</a>
-<a name="251"><span class="lineNum">     251 </span>            :       );</a>
-<a name="252"><span class="lineNum">     252 </span>            :     } else {</a>
-<a name="253"><span class="lineNum">     253 </span>            :       // There was no conversation with bob yet</a>
-<a name="254"><span class="lineNum">     254 </span><span class="lineCov">          2 :       if (previousConversations.isEmpty) {</span></a>
-<a name="255"><span class="lineNum">     255 </span><span class="lineCov">          1 :         listContents.add(</span></a>
-<a name="256"><span class="lineNum">     256 </span>            :           const Text(</a>
-<a name="257"><span class="lineNum">     257 </span>            :             &quot;Deine Konversationen werden hier aufgelistet&quot;,</a>
-<a name="258"><span class="lineNum">     258 </span>            :             style: TextStyle(</a>
-<a name="259"><span class="lineNum">     259 </span>            :               color: Colors.black38,</a>
-<a name="260"><span class="lineNum">     260 </span>            :             ),</a>
-<a name="261"><span class="lineNum">     261 </span>            :           ),</a>
-<a name="262"><span class="lineNum">     262 </span>            :         );</a>
-<a name="263"><span class="lineNum">     263 </span>            :       } else {</a>
-<a name="264"><span class="lineNum">     264 </span>            :         int count = 0;</a>
-<a name="265"><span class="lineNum">     265 </span>            :         // Go over every conversation and create a widget with the corresponding icon,</a>
-<a name="266"><span class="lineNum">     266 </span>            :         // UseCase name and timestamp</a>
-<a name="267"><span class="lineNum">     267 </span><span class="lineCov">          2 :         for (String useCase in previousConversations) {</span></a>
-<a name="268"><span class="lineNum">     268 </span><span class="lineCov">          1 :           ColoredBubble conversationWidget = ColoredBubble(</span></a>
-<a name="269"><span class="lineNum">     269 </span>            :             padding: 10,</a>
-<a name="270"><span class="lineNum">     270 </span>            :             margin: 0,</a>
-<a name="271"><span class="lineNum">     271 </span><span class="lineCov">          1 :             child: Row(</span></a>
-<a name="272"><span class="lineNum">     272 </span><span class="lineCov">          1 :               children: [</span></a>
-<a name="273"><span class="lineNum">     273 </span>            :                 // On the left, show a picture of the use case</a>
-<a name="274"><span class="lineNum">     274 </span><span class="lineCov">          1 :                 Flexible(</span></a>
-<a name="275"><span class="lineNum">     275 </span><span class="lineCov">          1 :                   child: CircleAvatar(</span></a>
-<a name="276"><span class="lineNum">     276 </span><span class="lineCov">          1 :                     foregroundImage: Image(</span></a>
-<a name="277"><span class="lineNum">     277 </span><span class="lineCov">          2 :                       image: AssetImage(&quot;assets/useCases/$useCase.png&quot;),</span></a>
-<a name="278"><span class="lineNum">     278 </span><span class="lineCov">          1 :                     ).image,</span></a>
-<a name="279"><span class="lineNum">     279 </span>            :                     backgroundColor: Colors.transparent,</a>
-<a name="280"><span class="lineNum">     280 </span>            :                     radius: 25,</a>
-<a name="281"><span class="lineNum">     281 </span>            :                   ),</a>
-<a name="282"><span class="lineNum">     282 </span>            :                 ),</a>
-<a name="283"><span class="lineNum">     283 </span>            :                 const Padding(padding: EdgeInsets.all(6)),</a>
-<a name="284"><span class="lineNum">     284 </span>            :                 // Show the use case of the conversation and the time difference</a>
-<a name="285"><span class="lineNum">     285 </span><span class="lineCov">          1 :                 Column(</span></a>
-<a name="286"><span class="lineNum">     286 </span>            :                   crossAxisAlignment: CrossAxisAlignment.start,</a>
-<a name="287"><span class="lineNum">     287 </span><span class="lineCov">          1 :                   children: [</span></a>
-<a name="288"><span class="lineNum">     288 </span><span class="lineCov">          1 :                     Text(</span></a>
-<a name="289"><span class="lineNum">     289 </span><span class="lineCov">          2 :                       translationMap[useCaseFromString(useCase)]!,</span></a>
-<a name="290"><span class="lineNum">     290 </span>            :                       style: const TextStyle(</a>
-<a name="291"><span class="lineNum">     291 </span>            :                         fontWeight: FontWeight.bold,</a>
-<a name="292"><span class="lineNum">     292 </span>            :                         fontSize: 16,</a>
-<a name="293"><span class="lineNum">     293 </span>            :                       ),</a>
-<a name="294"><span class="lineNum">     294 </span>            :                     ),</a>
-<a name="295"><span class="lineNum">     295 </span><span class="lineCov">          1 :                     Text(</span></a>
-<a name="296"><span class="lineNum">     296 </span><span class="lineCov">          1 :                       DateTime.now()</span></a>
-<a name="297"><span class="lineNum">     297 </span><span class="lineCov">          3 :                           .difference(DateTime.parse(previousDates[count]))</span></a>
-<a name="298"><span class="lineNum">     298 </span><span class="lineCov">          1 :                           .toFancyString(),</span></a>
-<a name="299"><span class="lineNum">     299 </span><span class="lineCov">          1 :                       style: GoogleFonts.actor(</span></a>
-<a name="300"><span class="lineNum">     300 </span>            :                         color: Colors.black38,</a>
-<a name="301"><span class="lineNum">     301 </span>            :                         fontSize: 12,</a>
-<a name="302"><span class="lineNum">     302 </span>            :                       ),</a>
-<a name="303"><span class="lineNum">     303 </span>            :                     ),</a>
-<a name="304"><span class="lineNum">     304 </span>            :                   ],</a>
-<a name="305"><span class="lineNum">     305 </span>            :                 )</a>
-<a name="306"><span class="lineNum">     306 </span>            :               ],</a>
-<a name="307"><span class="lineNum">     307 </span>            :             ),</a>
-<a name="308"><span class="lineNum">     308 </span>            :             color: Colors.white,</a>
-<a name="309"><span class="lineNum">     309 </span>            :           );</a>
-<a name="310"><span class="lineNum">     310 </span>            : </a>
-<a name="311"><span class="lineNum">     311 </span>            :           // Add the widget and a small padding</a>
-<a name="312"><span class="lineNum">     312 </span><span class="lineCov">          1 :           listContents.add(conversationWidget);</span></a>
-<a name="313"><span class="lineNum">     313 </span><span class="lineCov">          1 :           count++;</span></a>
-<a name="314"><span class="lineNum">     314 </span>            :         }</a>
-<a name="315"><span class="lineNum">     315 </span>            :       }</a>
-<a name="316"><span class="lineNum">     316 </span>            :     }</a>
-<a name="317"><span class="lineNum">     317 </span>            : </a>
-<a name="318"><span class="lineNum">     318 </span><span class="lineCov">          2 :     return Flexible(</span></a>
-<a name="319"><span class="lineNum">     319 </span><span class="lineCov">          2 :       child: Padding(</span></a>
-<a name="320"><span class="lineNum">     320 </span>            :         padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),</a>
-<a name="321"><span class="lineNum">     321 </span>            :         // Show all items in a list separated by padding</a>
-<a name="322"><span class="lineNum">     322 </span><span class="lineCov">          2 :         child: ListView.separated(</span></a>
-<a name="323"><span class="lineNum">     323 </span>            :           shrinkWrap: true,</a>
-<a name="324"><span class="lineNum">     324 </span><span class="lineCov">          2 :           itemBuilder: (_, index) {</span></a>
-<a name="325"><span class="lineNum">     325 </span><span class="lineCov">          2 :             return listContents[index];</span></a>
-<a name="326"><span class="lineNum">     326 </span>            :           },</a>
-<a name="327"><span class="lineNum">     327 </span><span class="lineCov">          2 :           separatorBuilder: (_, __) =&gt; const Padding(</span></a>
-<a name="328"><span class="lineNum">     328 </span>            :             padding: EdgeInsets.all(6),</a>
-<a name="329"><span class="lineNum">     329 </span>            :           ),</a>
-<a name="330"><span class="lineNum">     330 </span><span class="lineCov">          2 :           itemCount: listContents.length,</span></a>
-<a name="331"><span class="lineNum">     331 </span>            :           // We don't need scrolling, item extent is limited by the StorageHandler</a>
-<a name="332"><span class="lineNum">     332 </span>            :           physics: const NeverScrollableScrollPhysics(),</a>
-<a name="333"><span class="lineNum">     333 </span>            :         ),</a>
-<a name="334"><span class="lineNum">     334 </span>            :       ),</a>
-<a name="335"><span class="lineNum">     335 </span>            :     );</a>
-<a name="336"><span class="lineNum">     336 </span>            :   }</a>
-<a name="337"><span class="lineNum">     337 </span>            : }</a>
-<a name="338"><span class="lineNum">     338 </span>            : </a>
-<a name="339"><span class="lineNum">     339 </span>            : extension DurationString on Duration {</a>
-<a name="340"><span class="lineNum">     340 </span>            :   /// Returns the duration as string following the schema &quot;X Y ago&quot;, where X is</a>
-<a name="341"><span class="lineNum">     341 </span>            :   /// a number and Y is either days, hours or minutes.</a>
-<a name="342"><span class="lineNum">     342 </span>            :   ///</a>
-<a name="343"><span class="lineNum">     343 </span>            :   /// In extreme cases (&gt; 30 days or &lt; 1 minute) a special String is returned:</a>
-<a name="344"><span class="lineNum">     344 </span>            :   /// &quot;a long time ago&quot; or &quot;just now&quot; respectively</a>
-<a name="345"><span class="lineNum">     345 </span><span class="lineCov">          2 :   String toFancyString() {</span></a>
-<a name="346"><span class="lineNum">     346 </span>            :     // Handle a duration which is longer than a day</a>
-<a name="347"><span class="lineNum">     347 </span><span class="lineCov">          2 :     Duration difference = abs();</span></a>
-<a name="348"><span class="lineNum">     348 </span>            : </a>
-<a name="349"><span class="lineNum">     349 </span><span class="lineCov">          4 :     if (difference.inDays &gt; 0) {</span></a>
-<a name="350"><span class="lineNum">     350 </span><span class="lineCov">          2 :       if (difference.inDays &gt; 30) {</span></a>
-<a name="351"><span class="lineNum">     351 </span>            :         return &quot;Vor langer Zeit&quot;;</a>
-<a name="352"><span class="lineNum">     352 </span>            :       }</a>
-<a name="353"><span class="lineNum">     353 </span>            : </a>
-<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          2 :       if (difference.inDays == 1) {</span></a>
-<a name="355"><span class="lineNum">     355 </span>            :         return &quot;Gestern&quot;;</a>
-<a name="356"><span class="lineNum">     356 </span>            :       }</a>
-<a name="357"><span class="lineNum">     357 </span>            : </a>
-<a name="358"><span class="lineNum">     358 </span><span class="lineCov">          2 :       return &quot;Vor ${difference.inDays} Tagen&quot;;</span></a>
-<a name="359"><span class="lineNum">     359 </span>            :     }</a>
-<a name="360"><span class="lineNum">     360 </span>            : </a>
-<a name="361"><span class="lineNum">     361 </span>            :     // Handle 1d &gt; duration &gt;= 1h</a>
-<a name="362"><span class="lineNum">     362 </span><span class="lineCov">          4 :     if (difference.inHours &gt; 0) {</span></a>
-<a name="363"><span class="lineNum">     363 </span><span class="lineCov">          2 :       if (difference.inHours == 1) {</span></a>
-<a name="364"><span class="lineNum">     364 </span>            :         return &quot;Vor 1 Stunde&quot;;</a>
-<a name="365"><span class="lineNum">     365 </span>            :       }</a>
-<a name="366"><span class="lineNum">     366 </span>            : </a>
-<a name="367"><span class="lineNum">     367 </span><span class="lineCov">          2 :       return &quot;Vor ${difference.inHours} Stunden&quot;;</span></a>
-<a name="368"><span class="lineNum">     368 </span>            :     }</a>
-<a name="369"><span class="lineNum">     369 </span>            : </a>
-<a name="370"><span class="lineNum">     370 </span>            :     // Handle small durations (1h &gt; duration &gt;= 1m)</a>
-<a name="371"><span class="lineNum">     371 </span><span class="lineCov">          4 :     if (difference.inMinutes &gt; 0) {</span></a>
-<a name="372"><span class="lineNum">     372 </span><span class="lineCov">          4 :       if (difference.inMinutes == 1) {</span></a>
-<a name="373"><span class="lineNum">     373 </span>            :         return &quot;Vor 1 Minute&quot;;</a>
-<a name="374"><span class="lineNum">     374 </span>            :       }</a>
-<a name="375"><span class="lineNum">     375 </span>            : </a>
-<a name="376"><span class="lineNum">     376 </span><span class="lineCov">          4 :       return &quot;Vor ${difference.inMinutes} Minuten&quot;;</span></a>
-<a name="377"><span class="lineNum">     377 </span>            :     }</a>
-<a name="378"><span class="lineNum">     378 </span>            : </a>
-<a name="379"><span class="lineNum">     379 </span>            :     return &quot;Gerade eben&quot;;</a>
-<a name="380"><span class="lineNum">     380 </span>            :   }</a>
-<a name="381"><span class="lineNum">     381 </span>            : }</a>
+<a name="232"><span class="lineNum">     232 </span>            :     // An error occurred if conversation and dates are not of the same length</a>
+<a name="233"><span class="lineNum">     233 </span><span class="lineCov">          6 :     if (previousConversations.length != previousDates.length) {</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineCov">          1 :       StorageHandler.resetKey(SettingKeys.previousConversations);</span></a>
+<a name="235"><span class="lineNum">     235 </span><span class="lineCov">          1 :       StorageHandler.resetKey(SettingKeys.previousConversationDates);</span></a>
+<a name="236"><span class="lineNum">     236 </span><span class="lineCov">          1 :       listContents.add(</span></a>
+<a name="237"><span class="lineNum">     237 </span>            :         const Text(</a>
+<a name="238"><span class="lineNum">     238 </span>            :           &quot;Die letzten Konversationen konnten nicht geladen werden.&quot;,</a>
+<a name="239"><span class="lineNum">     239 </span>            :           style: TextStyle(</a>
+<a name="240"><span class="lineNum">     240 </span>            :             color: Colors.black38,</a>
+<a name="241"><span class="lineNum">     241 </span>            :           ),</a>
+<a name="242"><span class="lineNum">     242 </span>            :         ),</a>
+<a name="243"><span class="lineNum">     243 </span>            :       );</a>
+<a name="244"><span class="lineNum">     244 </span>            :     } else {</a>
+<a name="245"><span class="lineNum">     245 </span>            :       // There was no conversation with bob yet</a>
+<a name="246"><span class="lineNum">     246 </span><span class="lineCov">          2 :       if (previousConversations.isEmpty) {</span></a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineCov">          2 :         listContents.add(</span></a>
+<a name="248"><span class="lineNum">     248 </span>            :           const Text(</a>
+<a name="249"><span class="lineNum">     249 </span>            :             &quot;Deine Konversationen werden hier aufgelistet&quot;,</a>
+<a name="250"><span class="lineNum">     250 </span>            :             style: TextStyle(</a>
+<a name="251"><span class="lineNum">     251 </span>            :               color: Colors.black38,</a>
+<a name="252"><span class="lineNum">     252 </span>            :             ),</a>
+<a name="253"><span class="lineNum">     253 </span>            :           ),</a>
+<a name="254"><span class="lineNum">     254 </span>            :         );</a>
+<a name="255"><span class="lineNum">     255 </span>            :       } else {</a>
+<a name="256"><span class="lineNum">     256 </span>            :         int count = 0;</a>
+<a name="257"><span class="lineNum">     257 </span>            :         // Go over every conversation and create a widget with the corresponding icon,</a>
+<a name="258"><span class="lineNum">     258 </span>            :         // UseCase name and timestamp</a>
+<a name="259"><span class="lineNum">     259 </span><span class="lineCov">          2 :         for (String useCase in previousConversations) {</span></a>
+<a name="260"><span class="lineNum">     260 </span><span class="lineCov">          1 :           ColoredBubble conversationWidget = ColoredBubble(</span></a>
+<a name="261"><span class="lineNum">     261 </span>            :             padding: 10,</a>
+<a name="262"><span class="lineNum">     262 </span>            :             margin: 0,</a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineCov">          1 :             child: Row(</span></a>
+<a name="264"><span class="lineNum">     264 </span><span class="lineCov">          1 :               children: [</span></a>
+<a name="265"><span class="lineNum">     265 </span>            :                 // On the left, show a picture of the use case</a>
+<a name="266"><span class="lineNum">     266 </span><span class="lineCov">          1 :                 Flexible(</span></a>
+<a name="267"><span class="lineNum">     267 </span><span class="lineCov">          1 :                   child: CircleAvatar(</span></a>
+<a name="268"><span class="lineNum">     268 </span><span class="lineCov">          1 :                     foregroundImage: Image(</span></a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineCov">          2 :                       image: AssetImage(&quot;assets/useCases/$useCase.png&quot;),</span></a>
+<a name="270"><span class="lineNum">     270 </span><span class="lineCov">          1 :                     ).image,</span></a>
+<a name="271"><span class="lineNum">     271 </span>            :                     backgroundColor: Colors.transparent,</a>
+<a name="272"><span class="lineNum">     272 </span>            :                     radius: 25,</a>
+<a name="273"><span class="lineNum">     273 </span>            :                   ),</a>
+<a name="274"><span class="lineNum">     274 </span>            :                 ),</a>
+<a name="275"><span class="lineNum">     275 </span>            :                 const Padding(padding: EdgeInsets.all(6)),</a>
+<a name="276"><span class="lineNum">     276 </span>            :                 // Show the use case of the conversation and the time difference</a>
+<a name="277"><span class="lineNum">     277 </span><span class="lineCov">          1 :                 Column(</span></a>
+<a name="278"><span class="lineNum">     278 </span>            :                   crossAxisAlignment: CrossAxisAlignment.start,</a>
+<a name="279"><span class="lineNum">     279 </span><span class="lineCov">          1 :                   children: [</span></a>
+<a name="280"><span class="lineNum">     280 </span><span class="lineCov">          1 :                     Text(</span></a>
+<a name="281"><span class="lineNum">     281 </span><span class="lineCov">          2 :                       useCaseFromString(useCase).getGermanName(),</span></a>
+<a name="282"><span class="lineNum">     282 </span>            :                       style: const TextStyle(</a>
+<a name="283"><span class="lineNum">     283 </span>            :                         fontWeight: FontWeight.bold,</a>
+<a name="284"><span class="lineNum">     284 </span>            :                         fontSize: 16,</a>
+<a name="285"><span class="lineNum">     285 </span>            :                       ),</a>
+<a name="286"><span class="lineNum">     286 </span>            :                     ),</a>
+<a name="287"><span class="lineNum">     287 </span><span class="lineCov">          1 :                     Text(</span></a>
+<a name="288"><span class="lineNum">     288 </span><span class="lineCov">          1 :                       DateTime.now()</span></a>
+<a name="289"><span class="lineNum">     289 </span><span class="lineCov">          3 :                           .difference(DateTime.parse(previousDates[count]))</span></a>
+<a name="290"><span class="lineNum">     290 </span><span class="lineCov">          1 :                           .toFancyString(),</span></a>
+<a name="291"><span class="lineNum">     291 </span><span class="lineCov">          1 :                       style: GoogleFonts.actor(</span></a>
+<a name="292"><span class="lineNum">     292 </span>            :                         color: Colors.black38,</a>
+<a name="293"><span class="lineNum">     293 </span>            :                         fontSize: 12,</a>
+<a name="294"><span class="lineNum">     294 </span>            :                       ),</a>
+<a name="295"><span class="lineNum">     295 </span>            :                     ),</a>
+<a name="296"><span class="lineNum">     296 </span>            :                   ],</a>
+<a name="297"><span class="lineNum">     297 </span>            :                 )</a>
+<a name="298"><span class="lineNum">     298 </span>            :               ],</a>
+<a name="299"><span class="lineNum">     299 </span>            :             ),</a>
+<a name="300"><span class="lineNum">     300 </span>            :             color: Colors.white,</a>
+<a name="301"><span class="lineNum">     301 </span>            :           );</a>
+<a name="302"><span class="lineNum">     302 </span>            : </a>
+<a name="303"><span class="lineNum">     303 </span>            :           // Add the widget and a small padding</a>
+<a name="304"><span class="lineNum">     304 </span><span class="lineCov">          1 :           listContents.add(conversationWidget);</span></a>
+<a name="305"><span class="lineNum">     305 </span><span class="lineCov">          1 :           count++;</span></a>
+<a name="306"><span class="lineNum">     306 </span>            :         }</a>
+<a name="307"><span class="lineNum">     307 </span>            :       }</a>
+<a name="308"><span class="lineNum">     308 </span>            :     }</a>
+<a name="309"><span class="lineNum">     309 </span>            : </a>
+<a name="310"><span class="lineNum">     310 </span><span class="lineCov">          2 :     return Flexible(</span></a>
+<a name="311"><span class="lineNum">     311 </span><span class="lineCov">          2 :       child: Padding(</span></a>
+<a name="312"><span class="lineNum">     312 </span>            :         padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),</a>
+<a name="313"><span class="lineNum">     313 </span>            :         // Show all items in a list separated by padding</a>
+<a name="314"><span class="lineNum">     314 </span><span class="lineCov">          2 :         child: ListView.separated(</span></a>
+<a name="315"><span class="lineNum">     315 </span>            :           shrinkWrap: true,</a>
+<a name="316"><span class="lineNum">     316 </span><span class="lineCov">          2 :           itemBuilder: (_, index) {</span></a>
+<a name="317"><span class="lineNum">     317 </span><span class="lineCov">          2 :             return listContents[index];</span></a>
+<a name="318"><span class="lineNum">     318 </span>            :           },</a>
+<a name="319"><span class="lineNum">     319 </span><span class="lineCov">          2 :           separatorBuilder: (_, __) =&gt; const Padding(</span></a>
+<a name="320"><span class="lineNum">     320 </span>            :             padding: EdgeInsets.all(6),</a>
+<a name="321"><span class="lineNum">     321 </span>            :           ),</a>
+<a name="322"><span class="lineNum">     322 </span><span class="lineCov">          2 :           itemCount: listContents.length,</span></a>
+<a name="323"><span class="lineNum">     323 </span>            :           // We don't need scrolling, item extent is limited by the StorageHandler</a>
+<a name="324"><span class="lineNum">     324 </span>            :           physics: const NeverScrollableScrollPhysics(),</a>
+<a name="325"><span class="lineNum">     325 </span>            :         ),</a>
+<a name="326"><span class="lineNum">     326 </span>            :       ),</a>
+<a name="327"><span class="lineNum">     327 </span>            :     );</a>
+<a name="328"><span class="lineNum">     328 </span>            :   }</a>
+<a name="329"><span class="lineNum">     329 </span>            : }</a>
+<a name="330"><span class="lineNum">     330 </span>            : </a>
+<a name="331"><span class="lineNum">     331 </span>            : extension DurationString on Duration {</a>
+<a name="332"><span class="lineNum">     332 </span>            :   /// Returns the duration as string following the schema &quot;X Y ago&quot;, where X is</a>
+<a name="333"><span class="lineNum">     333 </span>            :   /// a number and Y is either days, hours or minutes.</a>
+<a name="334"><span class="lineNum">     334 </span>            :   ///</a>
+<a name="335"><span class="lineNum">     335 </span>            :   /// In extreme cases (&gt; 30 days or &lt; 1 minute) a special String is returned:</a>
+<a name="336"><span class="lineNum">     336 </span>            :   /// &quot;a long time ago&quot; or &quot;just now&quot; respectively</a>
+<a name="337"><span class="lineNum">     337 </span><span class="lineCov">          2 :   String toFancyString() {</span></a>
+<a name="338"><span class="lineNum">     338 </span>            :     // Handle a duration which is longer than a day</a>
+<a name="339"><span class="lineNum">     339 </span><span class="lineCov">          2 :     Duration difference = abs();</span></a>
+<a name="340"><span class="lineNum">     340 </span>            : </a>
+<a name="341"><span class="lineNum">     341 </span><span class="lineCov">          4 :     if (difference.inDays &gt; 0) {</span></a>
+<a name="342"><span class="lineNum">     342 </span><span class="lineCov">          2 :       if (difference.inDays &gt; 30) {</span></a>
+<a name="343"><span class="lineNum">     343 </span>            :         return &quot;Vor langer Zeit&quot;;</a>
+<a name="344"><span class="lineNum">     344 </span>            :       }</a>
+<a name="345"><span class="lineNum">     345 </span>            : </a>
+<a name="346"><span class="lineNum">     346 </span><span class="lineCov">          2 :       if (difference.inDays == 1) {</span></a>
+<a name="347"><span class="lineNum">     347 </span>            :         return &quot;Gestern&quot;;</a>
+<a name="348"><span class="lineNum">     348 </span>            :       }</a>
+<a name="349"><span class="lineNum">     349 </span>            : </a>
+<a name="350"><span class="lineNum">     350 </span><span class="lineCov">          2 :       return &quot;Vor ${difference.inDays} Tagen&quot;;</span></a>
+<a name="351"><span class="lineNum">     351 </span>            :     }</a>
+<a name="352"><span class="lineNum">     352 </span>            : </a>
+<a name="353"><span class="lineNum">     353 </span>            :     // Handle 1d &gt; duration &gt;= 1h</a>
+<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          4 :     if (difference.inHours &gt; 0) {</span></a>
+<a name="355"><span class="lineNum">     355 </span><span class="lineCov">          2 :       if (difference.inHours == 1) {</span></a>
+<a name="356"><span class="lineNum">     356 </span>            :         return &quot;Vor 1 Stunde&quot;;</a>
+<a name="357"><span class="lineNum">     357 </span>            :       }</a>
+<a name="358"><span class="lineNum">     358 </span>            : </a>
+<a name="359"><span class="lineNum">     359 </span><span class="lineCov">          2 :       return &quot;Vor ${difference.inHours} Stunden&quot;;</span></a>
+<a name="360"><span class="lineNum">     360 </span>            :     }</a>
+<a name="361"><span class="lineNum">     361 </span>            : </a>
+<a name="362"><span class="lineNum">     362 </span>            :     // Handle small durations (1h &gt; duration &gt;= 1m)</a>
+<a name="363"><span class="lineNum">     363 </span><span class="lineCov">          4 :     if (difference.inMinutes &gt; 0) {</span></a>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          2 :       if (difference.inMinutes == 1) {</span></a>
+<a name="365"><span class="lineNum">     365 </span>            :         return &quot;Vor 1 Minute&quot;;</a>
+<a name="366"><span class="lineNum">     366 </span>            :       }</a>
+<a name="367"><span class="lineNum">     367 </span>            : </a>
+<a name="368"><span class="lineNum">     368 </span><span class="lineCov">          2 :       return &quot;Vor ${difference.inMinutes} Minuten&quot;;</span></a>
+<a name="369"><span class="lineNum">     369 </span>            :     }</a>
+<a name="370"><span class="lineNum">     370 </span>            : </a>
+<a name="371"><span class="lineNum">     371 </span>            :     return &quot;Gerade eben&quot;;</a>
+<a name="372"><span class="lineNum">     372 </span>            :   }</a>
+<a name="373"><span class="lineNum">     373 </span>            : }</a>
 </pre>
       </td>
     </tr>

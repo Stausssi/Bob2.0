@@ -95,12 +95,13 @@ void main() {
 
       await tester.tap(find.text("Ich möchte schreiben"));
       await tester.pumpAndSettle();
-      await tester.enterText(find.byType(TextField), "Guten Morgen");
+      await tester.enterText(
+          find.byType(TextField), "Wie wird das Wetter heute");
       await tester.pump();
       await tester.tap(find.byIcon(Icons.send));
       await tester.pump();
 
-      expect(find.text("Guten Morgen"), findsOneWidget);
+      expect(find.text("Wie wird das Wetter heute"), findsOneWidget);
 
       // Test voice
       await tester.tap(find.byType(MicrophoneCircle));
@@ -110,6 +111,8 @@ void main() {
 
       // Wait for the response of the backend
       await binding.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+      await binding.delayed(const Duration(seconds: 2));
     });
 
     testWidgets("Change username", (WidgetTester tester) async {

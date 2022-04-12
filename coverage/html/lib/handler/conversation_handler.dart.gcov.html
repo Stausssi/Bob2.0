@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">25</td>
-            <td class="headerCovTableEntry">27</td>
-            <td class="headerCovTableEntryHi">92.6 %</td>
+            <td class="headerCovTableEntry">26</td>
+            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntryHi">92.9 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-10 18:27:48</td>
+            <td class="headerValue">2022-04-12 11:21:42</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -101,57 +101,64 @@
 <a name="39"><span class="lineNum">      39 </span><span class="lineCov">          6 :     _connection.options.responseType = ResponseType.json;</span></a>
 <a name="40"><span class="lineNum">      40 </span>            :   }</a>
 <a name="41"><span class="lineNum">      41 </span>            : </a>
-<a name="42"><span class="lineNum">      42 </span>            :   /// Ask the backend a question.</a>
-<a name="43"><span class="lineNum">      43 </span>            :   ///</a>
-<a name="44"><span class="lineNum">      44 </span>            :   /// The response is expected to have the following format:</a>
-<a name="45"><span class="lineNum">      45 </span>            :   ///</a>
-<a name="46"><span class="lineNum">      46 </span>            :   /// ```</a>
-<a name="47"><span class="lineNum">      47 </span>            :   /// {</a>
-<a name="48"><span class="lineNum">      48 </span>            :   ///   useCase: useCase,</a>
-<a name="49"><span class="lineNum">      49 </span>            :   ///   tts: &quot;text_to_read&quot;,</a>
-<a name="50"><span class="lineNum">      50 </span>            :   ///   further_questions: [&quot;question 1&quot;, ..., &quot;question n&quot;]</a>
-<a name="51"><span class="lineNum">      51 </span>            :   /// }</a>
-<a name="52"><span class="lineNum">      52 </span>            :   /// ```</a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          2 :   Future&lt;BackendAnswer?&gt; askQuestion(String question) async {</span></a>
-<a name="54"><span class="lineNum">      54 </span>            :     try {</a>
-<a name="55"><span class="lineNum">      55 </span><span class="lineCov">          6 :       Response&lt;Map&lt;String, dynamic&gt;&gt; response = await _connection.post(</span></a>
-<a name="56"><span class="lineNum">      56 </span>            :         &quot;/input&quot;,</a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          2 :         data: {</span></a>
-<a name="58"><span class="lineNum">      58 </span>            :           &quot;speech&quot;: question,</a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          2 :           &quot;preferences&quot;: StorageHandler.getPreferences(),</span></a>
-<a name="60"><span class="lineNum">      60 </span>            :         },</a>
-<a name="61"><span class="lineNum">      61 </span>            :       );</a>
-<a name="62"><span class="lineNum">      62 </span>            : </a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          1 :       if (response.data != null) {</span></a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          2 :         return _parseBackendAnswer(response.data!);</span></a>
-<a name="65"><span class="lineNum">      65 </span>            :       }</a>
-<a name="66"><span class="lineNum">      66 </span>            :     } catch (e) {</a>
-<a name="67"><span class="lineNum">      67 </span>            :       return null;</a>
-<a name="68"><span class="lineNum">      68 </span>            :     }</a>
-<a name="69"><span class="lineNum">      69 </span>            : </a>
-<a name="70"><span class="lineNum">      70 </span>            :     return null;</a>
-<a name="71"><span class="lineNum">      71 </span>            :   }</a>
-<a name="72"><span class="lineNum">      72 </span>            : </a>
-<a name="73"><span class="lineNum">      73 </span>            :   /// Parse the given response data and create a [BackendAnswer] object to make</a>
-<a name="74"><span class="lineNum">      74 </span>            :   /// the response easier to handle</a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          1 :   BackendAnswer? _parseBackendAnswer(Map&lt;String, dynamic&gt; responseData) {</span></a>
-<a name="76"><span class="lineNum">      76 </span>            :     try {</a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          4 :       currentUseCase = useCaseFromString(responseData[&quot;use_case&quot;][0]);</span></a>
-<a name="78"><span class="lineNum">      78 </span>            : </a>
-<a name="79"><span class="lineNum">      79 </span><span class="lineCov">          1 :       return BackendAnswer(</span></a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineCov">          1 :         useCase: currentUseCase!,</span></a>
-<a name="81"><span class="lineNum">      81 </span><span class="lineCov">          1 :         tts: responseData[&quot;tts&quot;],</span></a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          1 :         furtherQuestions: (responseData[&quot;further_questions&quot;] as List&lt;dynamic&gt;)</span></a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          3 :             .map((e) =&gt; e.toString())</span></a>
-<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          1 :             .toList(),</span></a>
-<a name="85"><span class="lineNum">      85 </span>            :       );</a>
-<a name="86"><span class="lineNum">      86 </span>            :     } catch (e) {</a>
-<a name="87"><span class="lineNum">      87 </span><span class="lineNoCov">          0 :       print(e);</span></a>
-<a name="88"><span class="lineNum">      88 </span><span class="lineNoCov">          0 :       print(responseData);</span></a>
-<a name="89"><span class="lineNum">      89 </span>            :       return null;</a>
-<a name="90"><span class="lineNum">      90 </span>            :     }</a>
-<a name="91"><span class="lineNum">      91 </span>            :   }</a>
-<a name="92"><span class="lineNum">      92 </span>            : }</a>
+<a name="42"><span class="lineNum">      42 </span>            :   /// Returns the URL of the backend</a>
+<a name="43"><span class="lineNum">      43 </span><span class="lineCov">          4 :   String get backendURL =&gt; _connection.options.baseUrl;</span></a>
+<a name="44"><span class="lineNum">      44 </span>            : </a>
+<a name="45"><span class="lineNum">      45 </span>            :   /// Ask the backend a question.</a>
+<a name="46"><span class="lineNum">      46 </span>            :   ///</a>
+<a name="47"><span class="lineNum">      47 </span>            :   /// The response is expected to have the following format:</a>
+<a name="48"><span class="lineNum">      48 </span>            :   ///</a>
+<a name="49"><span class="lineNum">      49 </span>            :   /// ```</a>
+<a name="50"><span class="lineNum">      50 </span>            :   /// {</a>
+<a name="51"><span class="lineNum">      51 </span>            :   ///   useCase: &quot;useCase&quot;,</a>
+<a name="52"><span class="lineNum">      52 </span>            :   ///   tts: &quot;text_to_read&quot;,</a>
+<a name="53"><span class="lineNum">      53 </span>            :   ///   further_questions: [&quot;question 1&quot;, ..., &quot;question n&quot;]</a>
+<a name="54"><span class="lineNum">      54 </span>            :   /// }</a>
+<a name="55"><span class="lineNum">      55 </span>            :   /// ```</a>
+<a name="56"><span class="lineNum">      56 </span>            :   ///</a>
+<a name="57"><span class="lineNum">      57 </span>            :   /// Returns [null], if the answer was invalid</a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          2 :   Future&lt;BackendAnswer?&gt; askQuestion(String question) async {</span></a>
+<a name="59"><span class="lineNum">      59 </span>            :     try {</a>
+<a name="60"><span class="lineNum">      60 </span>            :       // Make the request with all preferences</a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          6 :       Response&lt;Map&lt;String, dynamic&gt;&gt; response = await _connection.post(</span></a>
+<a name="62"><span class="lineNum">      62 </span>            :         &quot;/input&quot;,</a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          2 :         data: {</span></a>
+<a name="64"><span class="lineNum">      64 </span>            :           &quot;speech&quot;: question,</a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          2 :           &quot;preferences&quot;: StorageHandler.getPreferences(),</span></a>
+<a name="66"><span class="lineNum">      66 </span>            :         },</a>
+<a name="67"><span class="lineNum">      67 </span>            :       );</a>
+<a name="68"><span class="lineNum">      68 </span>            : </a>
+<a name="69"><span class="lineNum">      69 </span>            :       // No need to try parsing if no data was given</a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          1 :       if (response.data != null) {</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          2 :         return _parseBackendAnswer(response.data!);</span></a>
+<a name="72"><span class="lineNum">      72 </span>            :       }</a>
+<a name="73"><span class="lineNum">      73 </span>            :     } catch (e) {</a>
+<a name="74"><span class="lineNum">      74 </span>            :       return null;</a>
+<a name="75"><span class="lineNum">      75 </span>            :     }</a>
+<a name="76"><span class="lineNum">      76 </span>            : </a>
+<a name="77"><span class="lineNum">      77 </span>            :     return null;</a>
+<a name="78"><span class="lineNum">      78 </span>            :   }</a>
+<a name="79"><span class="lineNum">      79 </span>            : </a>
+<a name="80"><span class="lineNum">      80 </span>            :   /// Parse the given response data and create a [BackendAnswer] object to make</a>
+<a name="81"><span class="lineNum">      81 </span>            :   /// the response easier to handle</a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          1 :   BackendAnswer? _parseBackendAnswer(Map&lt;String, dynamic&gt; responseData) {</span></a>
+<a name="83"><span class="lineNum">      83 </span>            :     try {</a>
+<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          4 :       currentUseCase = useCaseFromString(responseData[&quot;use_case&quot;][0]);</span></a>
+<a name="85"><span class="lineNum">      85 </span>            : </a>
+<a name="86"><span class="lineNum">      86 </span><span class="lineCov">          1 :       return BackendAnswer(</span></a>
+<a name="87"><span class="lineNum">      87 </span><span class="lineCov">          1 :         useCase: currentUseCase!,</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          1 :         tts: responseData[&quot;tts&quot;],</span></a>
+<a name="89"><span class="lineNum">      89 </span><span class="lineCov">          1 :         furtherQuestions: (responseData[&quot;further_questions&quot;] as List&lt;dynamic&gt;)</span></a>
+<a name="90"><span class="lineNum">      90 </span><span class="lineCov">          3 :             .map((e) =&gt; e.toString())</span></a>
+<a name="91"><span class="lineNum">      91 </span><span class="lineCov">          1 :             .toList(),</span></a>
+<a name="92"><span class="lineNum">      92 </span>            :       );</a>
+<a name="93"><span class="lineNum">      93 </span>            :     } catch (e) {</a>
+<a name="94"><span class="lineNum">      94 </span><span class="lineNoCov">          0 :       print(e);</span></a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineNoCov">          0 :       print(responseData);</span></a>
+<a name="96"><span class="lineNum">      96 </span>            :       return null;</a>
+<a name="97"><span class="lineNum">      97 </span>            :     }</a>
+<a name="98"><span class="lineNum">      98 </span>            :   }</a>
+<a name="99"><span class="lineNum">      99 </span>            : }</a>
 </pre>
       </td>
     </tr>
