@@ -73,6 +73,7 @@ class _ConversationState extends State<Conversation> {
     _setLoadingText();
 
     // Send a start message to init a use case started by a notification
+    // TODO: Text for every use case
     if (widget.startUseCase != null) {
       switch (widget.startUseCase!) {
         case UseCase.welcome:
@@ -285,7 +286,17 @@ class _ConversationState extends State<Conversation> {
   ///
   /// [messageWidth] is required by the chat framework
   Widget _buildQuestionChoices(message, {required int messageWidth}) {
-    List<Widget> questionButtons = [];
+    List<Widget> questionButtons = [
+      const Text(
+        "Weiterführende Fragen: ",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          height: 1.5,
+        ),
+      )
+    ];
 
     // Display a list of possible further questions after the most
     // recent message if the author is bob and further questions are provided
@@ -319,14 +330,17 @@ class _ConversationState extends State<Conversation> {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 0,
-        horizontal: 12,
+      padding: const EdgeInsets.only(
+        left: 16,
+        top: 8,
+        bottom: 4,
+        right: 8,
       ),
       decoration: const BoxDecoration(
         color: Colors.white60,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: questionButtons,
       ),
     );
