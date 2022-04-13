@@ -61,7 +61,7 @@ class NotificationHandler {
   static const Map<UseCase, int> _idMapping = {
     UseCase.finances: 0,
     UseCase.entertainment: 1,
-    UseCase.travel: 2,
+    UseCase.journey: 2,
     UseCase.welcome: 3,
   };
 
@@ -69,7 +69,7 @@ class NotificationHandler {
   static const Map<UseCase, String> _titleMapping = {
     UseCase.finances: "Finanzen",
     UseCase.entertainment: "Unterhaltung",
-    UseCase.travel: "Arbeitsweg",
+    UseCase.journey: "Arbeitsweg",
     UseCase.welcome: "Guten Morgen!",
   };
 

@@ -16,7 +16,7 @@ enum UseCase {
   welcome,
 
   /// Tells the user the best way to get to the next meeting
-  travel,
+  journey,
 
   /// Displays an overview about the financial status and depots of the user
   finances,
@@ -35,7 +35,7 @@ extension GermanName on UseCase {
         return "Entertainment";
       case UseCase.finances:
         return "Finanzen";
-      case UseCase.travel:
+      case UseCase.journey:
         return "Anfahrt";
     }
   }

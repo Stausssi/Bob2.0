@@ -61,7 +61,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
         notificationKey = SettingKeys.welcomeNotification;
         timeKey = SettingKeys.welcomeTime;
         break;
-      case UseCase.travel:
+      case UseCase.journey:
         notificationKey = SettingKeys.travelNotification;
         timeKey = SettingKeys.travelTime;
         break;

@@ -85,7 +85,7 @@ class _ConversationState extends State<Conversation> {
         case UseCase.welcome:
           sendMessage("Guten Morgen Bob!");
           break;
-        case UseCase.travel:
+        case UseCase.journey:
           sendMessage("Wie lange brauche ich zur Arbeit?");
           break;
         case UseCase.finances:

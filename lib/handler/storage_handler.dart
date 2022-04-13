@@ -137,7 +137,7 @@ class StorageHandler {
     switch (useCase) {
       case UseCase.welcome:
         return getValue(SettingKeys.welcomeTime);
-      case UseCase.travel:
+      case UseCase.journey:
         return getValue(SettingKeys.travelTime);
       case UseCase.finances:
         return getValue(SettingKeys.financeTime);
@@ -235,7 +235,7 @@ class SettingKeys {
   static const String newsCategories = "newsCategories";
   static const String weatherLocation = "weatherLocation";
 
-  /// Travel settings
+  /// Journey settings
   static const String homeLocation = "homeLocation";
   static const String workingLocation = "workingLocation";
   static const String preferredVehicle = "preferredVehicle";
@@ -258,7 +258,7 @@ class SettingKeys {
         // Welcome
         raplaLink, newsCategories, weatherLocation,
 
-        // Travel
+        // Journey
         homeLocation, workingLocation, gasolineType,
 
         // Finance
@@ -330,7 +330,7 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.newsCategories: <String>["Deutschland", "Sport"],
   SettingKeys.weatherLocation: standardLocation,
 
-  /// Travel settings
+  /// Journey settings
   SettingKeys.homeLocation: standardLocation,
   SettingKeys.workingLocation: standardLocation,
   SettingKeys.preferredVehicle: "Auto",

@@ -47,9 +47,9 @@ class _PreferenceSettingsState extends State<PreferenceSettings> {
           ],
         ),
 
-        /// Travel
+        /// Journey
         SettingsSection(
-          title: Text(UseCase.travel.getGermanName()),
+          title: Text(UseCase.journey.getGermanName()),
           tiles: const [
             LinkedSettingsTile(
               leading: Icon(Icons.home),

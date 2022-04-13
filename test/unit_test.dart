@@ -28,8 +28,8 @@ void main() {
       () => expect(useCaseFromString("finances"), UseCase.finances),
     );
     test(
-      "'travel' should be converted from string",
-      () => expect(useCaseFromString("travel"), UseCase.travel),
+      "'journey' should be converted from string",
+      () => expect(useCaseFromString("journey"), UseCase.journey),
     );
 
     test("BackendAnswer class", () {
@@ -98,7 +98,7 @@ void main() {
 
     test("Use Case Times", () {
       expect(StorageHandler.getUseCaseTime(UseCase.welcome).hour, 7);
-      expect(StorageHandler.getUseCaseTime(UseCase.travel).hour, 8);
+      expect(StorageHandler.getUseCaseTime(UseCase.journey).hour, 8);
       expect(StorageHandler.getUseCaseTime(UseCase.finances).hour, 15);
       expect(StorageHandler.getUseCaseTime(UseCase.entertainment).hour, 20);
     });

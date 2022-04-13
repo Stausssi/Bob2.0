@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-12 15:07:50</td>
+            <td class="headerValue">2022-04-13 21:16:41</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -306,7 +306,7 @@
 <a name="244"><span class="lineNum">     244 </span>            :     } else {</a>
 <a name="245"><span class="lineNum">     245 </span>            :       // There was no conversation with bob yet</a>
 <a name="246"><span class="lineNum">     246 </span><span class="lineCov">          2 :       if (previousConversations.isEmpty) {</span></a>
-<a name="247"><span class="lineNum">     247 </span><span class="lineCov">          2 :         listContents.add(</span></a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineCov">          1 :         listContents.add(</span></a>
 <a name="248"><span class="lineNum">     248 </span>            :           const Text(</a>
 <a name="249"><span class="lineNum">     249 </span>            :             &quot;Deine Konversationen werden hier aufgelistet&quot;,</a>
 <a name="250"><span class="lineNum">     250 </span>            :             style: TextStyle(</a>
@@ -423,11 +423,11 @@
 <a name="361"><span class="lineNum">     361 </span>            : </a>
 <a name="362"><span class="lineNum">     362 </span>            :     // Handle small durations (1h &gt; duration &gt;= 1m)</a>
 <a name="363"><span class="lineNum">     363 </span><span class="lineCov">          4 :     if (difference.inMinutes &gt; 0) {</span></a>
-<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          2 :       if (difference.inMinutes == 1) {</span></a>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          4 :       if (difference.inMinutes == 1) {</span></a>
 <a name="365"><span class="lineNum">     365 </span>            :         return &quot;Vor 1 Minute&quot;;</a>
 <a name="366"><span class="lineNum">     366 </span>            :       }</a>
 <a name="367"><span class="lineNum">     367 </span>            : </a>
-<a name="368"><span class="lineNum">     368 </span><span class="lineCov">          2 :       return &quot;Vor ${difference.inMinutes} Minuten&quot;;</span></a>
+<a name="368"><span class="lineNum">     368 </span><span class="lineCov">          4 :       return &quot;Vor ${difference.inMinutes} Minuten&quot;;</span></a>
 <a name="369"><span class="lineNum">     369 </span>            :     }</a>
 <a name="370"><span class="lineNum">     370 </span>            : </a>
 <a name="371"><span class="lineNum">     371 </span>            :     return &quot;Gerade eben&quot;;</a>
