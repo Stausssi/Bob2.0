@@ -35,7 +35,7 @@ class ConversationHandler {
     _connection = Dio();
     _connection.options.baseUrl = "http://193.196.52.233:80";
     _connection.options.connectTimeout = 5000;
-    _connection.options.receiveTimeout = 2000;
+    _connection.options.receiveTimeout = 10000;
     _connection.options.responseType = ResponseType.json;
   }
 

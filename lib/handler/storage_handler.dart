@@ -377,10 +377,10 @@ List<DropdownMenuItem<String>> get gasolineTypes => const [
         child: Text("Super E10"),
         value: "Super E10",
       ),
-      DropdownMenuItem(
-        child: Text("Salatöl"),
-        value: "Salatöl",
-      )
+      // DropdownMenuItem(
+      //   child: Text("Salatöl"),
+      //   value: "Salatöl",
+      // )
     ];
 
 /// Choices for preferredVehicle
@@ -397,6 +397,10 @@ List<DropdownMenuItem<String>> get preferredVehicles => const [
         child: Text("Fahrrad"),
         value: "Fahrrad",
       ),
+      DropdownMenuItem(
+        child: Text("Gehen"),
+        value: "Gehen",
+      )
     ];
 
 /// Each item in this list represents a news category the user can follow and be

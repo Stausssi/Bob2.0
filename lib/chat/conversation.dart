@@ -86,13 +86,13 @@ class _ConversationState extends State<Conversation> {
           sendMessage("Guten Morgen Bob!");
           break;
         case UseCase.travel:
-          sendMessage("Travel dialog");
+          sendMessage("Wie lange brauche ich zur Arbeit?");
           break;
         case UseCase.finances:
           sendMessage("Wie ist die aktuelle Marktsituation?");
           break;
         case UseCase.entertainment:
-          sendMessage("Netflix&Chill");
+          sendMessage("Schlage mir ein Abendprogramm vor.");
           break;
       }
     }
