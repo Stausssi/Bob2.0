@@ -334,7 +334,7 @@ Map<String, dynamic> _defaultValues = {
   SettingKeys.homeLocation: standardLocation,
   SettingKeys.workingLocation: standardLocation,
   SettingKeys.preferredVehicle: "Auto",
-  SettingKeys.gasolineType: "Benzin",
+  SettingKeys.gasolineType: "Super",
 
   /// Finance settings
   SettingKeys.publicBinanceApiKey: StorageHandler.getAPIKey("pubBinance"),
@@ -370,8 +370,12 @@ List<DropdownMenuItem<String>> get gasolineTypes => const [
         value: "Diesel",
       ),
       DropdownMenuItem(
-        child: Text("Benzin"),
-        value: "Benzin",
+        child: Text("Super"),
+        value: "Super",
+      ),
+      DropdownMenuItem(
+        child: Text("Super E10"),
+        value: "Super E10",
       ),
       DropdownMenuItem(
         child: Text("Salatöl"),
