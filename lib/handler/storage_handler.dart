@@ -259,7 +259,7 @@ class SettingKeys {
         raplaLink, newsCategories, weatherLocation,
 
         // Journey
-        homeLocation, workingLocation, gasolineType,
+        homeLocation, workingLocation, preferredVehicle, gasolineType,
 
         // Finance
         publicBinanceApiKey, privateBinanceApiKey, stockIndex, stockList,
@@ -388,10 +388,6 @@ List<DropdownMenuItem<String>> get preferredVehicles => const [
       DropdownMenuItem(
         child: Text("Auto"),
         value: "Auto",
-      ),
-      DropdownMenuItem(
-        child: Text("Bahn"),
-        value: "Bahn",
       ),
       DropdownMenuItem(
         child: Text("Fahrrad"),
